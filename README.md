@@ -1,4 +1,0 @@
-Venus
-=====
-
-Venus App
