@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface VenusFilmViewController : UIViewController
+- (IBAction)buttonPressed:(UIBarButtonItem *)sender;
 
 - (IBAction)cancel:(id)sender;
 @end

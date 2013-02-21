@@ -14,6 +14,10 @@
 
 @implementation VenusFilmViewController
 
+- (IBAction)buttonPressed:(UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)cancel:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
