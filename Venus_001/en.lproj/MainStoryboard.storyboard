@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C3103" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+    </dependencies>
+    <scenes>
+        <!--Venus View Controller-->
+        <scene sceneID="5">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+                <viewController id="2" customClass="VenusViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3">
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfO-Zh-9kF">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Touch to select your image">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="2" eventType="touchUpInside" id="B3P-rF-S3G"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tN-5i-JTn">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Hidden Button">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="woJ-Tj-H4O" kind="modal" identifier="VenusFilmViewControllerId" id="ufB-HS-i5j"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq5-tm-9D4">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Paper">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-dI-I0d">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Chemical">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddt-cD-6Nz">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Album">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ygd-of-EMH">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Store">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qfO-Zh-9kF" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="3js-0i-UE3"/>
+                            <constraint firstItem="xq5-tm-9D4" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="A8K-ps-WgM"/>
+                            <constraint firstAttribute="trailing" secondItem="ddt-cD-6Nz" secondAttribute="trailing" constant="153" id="OAe-Dk-HDQ"/>
+                            <constraint firstItem="ddt-cD-6Nz" firstAttribute="baseline" secondItem="Ygd-of-EMH" secondAttribute="baseline" type="default" id="PDD-gT-5lq"/>
+                            <constraint firstAttribute="bottom" secondItem="Ygd-of-EMH" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="R4H-O0-lLo"/>
+                            <constraint firstItem="xq5-tm-9D4" firstAttribute="baseline" secondItem="8tN-5i-JTn" secondAttribute="baseline" type="default" id="UCD-2T-a4E"/>
+                            <constraint firstItem="mnu-dI-I0d" firstAttribute="baseline" secondItem="xq5-tm-9D4" secondAttribute="baseline" type="default" id="Vbm-Bd-xXO"/>
+                            <constraint firstItem="8tN-5i-JTn" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="214" id="YCO-XH-VOy"/>
+                            <constraint firstAttribute="bottom" secondItem="mnu-dI-I0d" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="abz-SU-0CK"/>
+                            <constraint firstAttribute="bottom" secondItem="xq5-tm-9D4" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="b9N-zg-8GA"/>
+                            <constraint firstAttribute="trailing" secondItem="Ygd-of-EMH" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="c5t-KW-55P"/>
+                            <constraint firstAttribute="bottom" secondItem="8tN-5i-JTn" secondAttribute="bottom" constant="101" id="dOT-sz-PaX"/>
+                            <constraint firstAttribute="bottom" secondItem="ddt-cD-6Nz" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="gzy-uN-MLb"/>
+                            <constraint firstItem="qfO-Zh-9kF" firstAttribute="top" secondItem="3" secondAttribute="top" constant="116" id="iBP-cm-hpr"/>
+                            <constraint firstItem="ddt-cD-6Nz" firstAttribute="baseline" secondItem="mnu-dI-I0d" secondAttribute="baseline" type="default" id="mhD-c6-ivw"/>
+                            <constraint firstItem="mnu-dI-I0d" firstAttribute="leading" secondItem="qfO-Zh-9kF" secondAttribute="leading" type="default" id="o72-LF-pVh"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="58" y="25"/>
+        </scene>
+        <!--Venus Film View Controller-->
+        <scene sceneID="Vmc-2D-tBP">
+            <objects>
+                <viewController id="woJ-Tj-H4O" customClass="VenusFilmViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4zG-TM-X6Y">
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEc-ht-SXe">
+                                <items>
+                                    <barButtonItem title="Cancel" id="Of8-av-y6B">
+                                        <connections>
+                                            <segue destination="2" kind="modal" id="sVI-R1-7FH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="DARKROOM IN USE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNY-DG-vlA">
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gEc-ht-SXe" firstAttribute="top" secondItem="4zG-TM-X6Y" secondAttribute="top" type="default" id="6cF-6o-Xcc"/>
+                            <constraint firstItem="gEc-ht-SXe" firstAttribute="trailing" secondItem="4zG-TM-X6Y" secondAttribute="trailing" type="default" id="E34-yq-obP"/>
+                            <constraint firstItem="gEc-ht-SXe" firstAttribute="leading" secondItem="4zG-TM-X6Y" secondAttribute="leading" type="default" id="Q8t-4w-xRA"/>
+                            <constraint firstItem="RNY-DG-vlA" firstAttribute="centerX" secondItem="gEc-ht-SXe" secondAttribute="centerX" type="default" id="eSh-zT-O3L"/>
+                            <constraint firstItem="RNY-DG-vlA" firstAttribute="top" secondItem="4zG-TM-X6Y" secondAttribute="top" constant="11" id="zV1-4v-kaq"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ns-yF-99Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="687" y="25"/>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="VenusFilmViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenusFilmViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+            </relationships>
+        </class>
+        <class className="VenusViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VenusViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
