@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VenusFilmViewController : UIViewController
+@interface VenusFilmViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 - (IBAction)buttonPressed:(UIBarButtonItem *)sender;
 
-- (IBAction)cancel:(id)sender;
+@property (nonatomic, retain) NSMutableArray *assets;
+
 @end

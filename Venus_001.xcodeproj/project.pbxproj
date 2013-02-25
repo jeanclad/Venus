@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214378DD16DB4F10003581FD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 214378DC16DB4F10003581FD /* AssetsLibrary.framework */; };
 		219E07E116D4BE4000B2EBD1 /* VenusFilmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */; };
 		219FE4B816D35414003939EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219FE4B716D35414003939EF /* UIKit.framework */; };
 		219FE4BA16D35414003939EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219FE4B916D35414003939EF /* Foundation.framework */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		214378DC16DB4F10003581FD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		219E07DF16D4BE4000B2EBD1 /* VenusFilmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmViewController.h; sourceTree = "<group>"; };
 		219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmViewController.m; sourceTree = "<group>"; };
 		219FE4B416D35414003939EF /* Venus_001.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venus_001.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				214378DD16DB4F10003581FD /* AssetsLibrary.framework in Frameworks */,
 				219FE4B816D35414003939EF /* UIKit.framework in Frameworks */,
 				219FE4BA16D35414003939EF /* Foundation.framework in Frameworks */,
 				219FE4BC16D35414003939EF /* CoreGraphics.framework in Frameworks */,
@@ -59,6 +62,7 @@
 		219FE4AB16D35414003939EF = {
 			isa = PBXGroup;
 			children = (
+				214378DC16DB4F10003581FD /* AssetsLibrary.framework */,
 				219FE4BD16D35414003939EF /* Venus_001 */,
 				219FE4B616D35414003939EF /* Frameworks */,
 				219FE4B516D35414003939EF /* Products */,

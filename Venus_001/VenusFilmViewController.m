@@ -7,15 +7,16 @@
 //
 
 #import "VenusFilmViewController.h"
+#import "AssetsLibrary/AssetsLibrary.h"
 
 @interface VenusFilmViewController ()
-
 @end
-
 @implementation VenusFilmViewController
+@synthesize assets;
 
 - (IBAction)buttonPressed:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"%@", getObjects:assets);
 }
 
 - (IBAction)cancel:(id)sender{
@@ -35,8 +36,36 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    NSLog(@"bbbbbb");
+   
+    ALAssetsLibrary *al = [[ALAssetsLibrary alloc] init];
+
+    NSLog(@"start");
+    assets = [[NSMutableArray alloc] init];
+    [al enumerateGroupsWithTypes:ALAssetsGroupAll
+                      usingBlock:^(ALAssetsGroup *group, BOOL *stop){
+                          [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop){
+                              if (asset){
+                                  NSLog(@"%@",asset);
+                                  [assets addObject:asset];
+                              }
+                          }];
+                      }failureBlock:^(NSError *error){
+                          // User did not allow access to library
+                          // .. handle error
+                          NSString *errorMessage = nil;
+                          switch ([error code]) {
+                              case ALAssetsLibraryAccessUserDeniedError:
+                              case ALAssetsLibraryAccessGloballyDeniedError:
+                                  errorMessage = @"The user has declined access to it.";
+                                  break;
+                                  
+                              default:
+                                  errorMessage = @"Reason unkwon.";
+                                  break;
+                          }
+     }];
+    NSLog(@"end");
+
     
     /*
      UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
@@ -49,5 +78,9 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
 }
 @end
