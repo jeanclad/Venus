@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		211C512E16DC948700817EC1 /* 1rg1024_Film.png in Resources */ = {isa = PBXBuildFile; fileRef = 211C512D16DC948700817EC1 /* 1rg1024_Film.png */; };
 		211C513016DC9AF100817EC1 /* VenusFilmPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 211C512F16DC9AF100817EC1 /* VenusFilmPhotoCell.xib */; };
 		211C513316DC9D8100817EC1 /* VenusFilmPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 211C513216DC9D8100817EC1 /* VenusFilmPhotoCell.m */; };
 		21370BEA16DC619C00088A51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21370BEC16DC619C00088A51 /* Localizable.strings */; };
@@ -24,10 +23,10 @@
 		219FE4CE16D35414003939EF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 219FE4CD16D35414003939EF /* Default-568h@2x.png */; };
 		219FE4D116D35414003939EF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 219FE4CF16D35414003939EF /* MainStoryboard.storyboard */; };
 		219FE4D416D35414003939EF /* VenusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 219FE4D316D35414003939EF /* VenusViewController.m */; };
+		E684DE4416DCE885000B9AE9 /* 1rg1024_Film.png in Resources */ = {isa = PBXBuildFile; fileRef = E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		211C512D16DC948700817EC1 /* 1rg1024_Film.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1rg1024_Film.png; path = "../../../../../../jeanclad/Google 드라이브/Project_Venus/storyboard/assets/1rg1024_Film.png"; sourceTree = "<group>"; };
 		211C512F16DC9AF100817EC1 /* VenusFilmPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusFilmPhotoCell.xib; sourceTree = "<group>"; };
 		211C513116DC9D8100817EC1 /* VenusFilmPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmPhotoCell.h; sourceTree = "<group>"; };
 		211C513216DC9D8100817EC1 /* VenusFilmPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmPhotoCell.m; sourceTree = "<group>"; };
@@ -53,6 +52,7 @@
 		219FE4D016D35414003939EF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		219FE4D216D35414003939EF /* VenusViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VenusViewController.h; sourceTree = "<group>"; };
 		219FE4D316D35414003939EF /* VenusViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VenusViewController.m; sourceTree = "<group>"; };
+		E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1rg1024_Film.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +73,7 @@
 		211C512C16DC944C00817EC1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				211C512D16DC948700817EC1 /* 1rg1024_Film.png */,
+				E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -199,8 +199,8 @@
 				219FE4CE16D35414003939EF /* Default-568h@2x.png in Resources */,
 				219FE4D116D35414003939EF /* MainStoryboard.storyboard in Resources */,
 				21370BEA16DC619C00088A51 /* Localizable.strings in Resources */,
-				211C512E16DC948700817EC1 /* 1rg1024_Film.png in Resources */,
 				211C513016DC9AF100817EC1 /* VenusFilmPhotoCell.xib in Resources */,
+				E684DE4416DCE885000B9AE9 /* 1rg1024_Film.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
