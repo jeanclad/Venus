@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  Venus_001
+
+  Created by 권 회경 on 13. 2. 26..
+  Copyright (c) 2013년 Max. All rights reserved.
+*/
+
+/* 취소   */
+"Cancel" = "취소";
+
+/* 사진첩  */
+"SelectFromLibrary" = "앨범에서 가져오기";
+
+/* 카메라  */
+"ShootWithCamera" = "사진촬영";
+
+/* 카메라 에러 타이틀   */
+"ErrCameraTitle" = "카메라 접근 에러";
+
+/* 카메라 에러 메세지   */
+"ErrCameraMessage" = "카메라에 접근할수 없습니다.";

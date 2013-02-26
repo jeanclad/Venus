@@ -27,11 +27,17 @@
 }
 
 - (IBAction)buttonPressed:(UIButton *)sender {
-    // 버튼종류를 알기위한 코드
+    /*
+    버튼종류를 알기위한 코드
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
     NSLog(@"%@", buttonName);
+    */
     
-    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"취소" destructiveButtonTitle:@"사진촬영" otherButtonTitles:@"앨범에서 가져오기", nil];
+    NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
+    NSString *string2 = NSLocalizedString(@"ShootWithCamera", @"카메라");
+    NSString *string3 = NSLocalizedString(@"SelectFromLibrary", @"사진앨범");
+    
+    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:string3, nil];
     
     [actionsheet showInView:self.view];
 }
@@ -51,9 +57,18 @@
     [imagepickerController setDelegate:self];
     [imagepickerController setAllowsEditing:NO];
     
+    NSString *string1 = NSLocalizedString(@"ErrCameraTitle", @"카메라 에러 타이틀");
+    NSString *string2 = NSLocalizedString(@"ErrCameraMessage", @"카메라 에러 메세지");
+    NSString *string3 = NSLocalizedString(@"Cancel", "취소");
+    
     if (buttonIndex == 0){
-        [imagepickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
-        [self presentModalViewController:imagepickerController animated:YES];
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES){
+            [imagepickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
+            [self presentModalViewController:imagepickerController animated:YES];
+        } else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            [alert show];
+        }
     } else if (buttonIndex == 1){
         [self performSegueWithIdentifier:@"VenusFilmViewControllerId" sender:self];
     }

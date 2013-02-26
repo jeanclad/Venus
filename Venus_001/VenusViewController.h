@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VenusViewController : UIViewController <UIActionSheetDelegate,UIImagePickerControllerDelegate>
+@interface VenusViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (IBAction)buttonPressed:(UIButton *)sender;
 
