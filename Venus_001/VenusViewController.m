@@ -13,11 +13,15 @@
 @end
 
 @implementation VenusViewController
+@synthesize selectImageButton;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    NSString *string1 = NSLocalizedString(@"SelectImageButton", @"사진선택 버튼");
+    
+    [selectImageButton setTitle:string1 forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,4 +80,9 @@
 }
 
 #pragma mark UIImagePickerController Delegate
+- (void)viewDidUnload {
+    [self setSelectImageButton:nil];
+    [self setSelectImageButton:nil];
+    [super viewDidUnload];
+}
 @end

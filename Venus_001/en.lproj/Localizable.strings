@@ -20,3 +20,6 @@
 
 /* 카메라 에러 메세지   */
 "ErrCameraMessage" = "Device does not support a Camera";
+
+/* 사진 선택    */
+"SelectImageButton" = "Touch to Select Your Image";

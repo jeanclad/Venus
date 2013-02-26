@@ -20,3 +20,6 @@
 
 /* 카메라 에러 메세지   */
 "ErrCameraMessage" = "카메라에 접근할수 없습니다.";
+
+/* 사진 선택    */
+"SelectImageButton" = "사진을 선택하세요.";

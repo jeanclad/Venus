@@ -11,5 +11,6 @@
 @interface VenusViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (IBAction)buttonPressed:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *selectImageButton;
 
 @end
