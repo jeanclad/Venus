@@ -7,12 +7,15 @@
 //
 
 #import "VenusFilmViewController.h"
+#import "VenusFilmPhotoCell.h"
 #import "AssetsLibrary/AssetsLibrary.h"
 
 @interface VenusFilmViewController ()
 @end
 @implementation VenusFilmViewController
 @synthesize assets;
+@synthesize cancelButton;
+@synthesize nibsRegistered;
 
 - (IBAction)buttonPressed:(UIBarButtonItem *)sender {
 /*
@@ -41,17 +44,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    nibsRegistered = NO;
+    NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
+    [cancelButton setTitle:string1];
    
     ALAssetsLibrary *al = [[ALAssetsLibrary alloc] init];
 
-    NSLog(@"start");
     assets = [[NSMutableArray alloc] init];
     [al enumerateGroupsWithTypes:ALAssetsGroupAll
                       usingBlock:^(ALAssetsGroup *group, BOOL *stop){
                           [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop){
                               if (asset){
                                   //ex 1
-                                  NSLog(@"%@",asset);
+                                  //NSLog(@"%@",asset);
                                   [assets addObject:[asset valueForProperty:ALAssetPropertyURLs]];
                                   
                                   //ex 2
@@ -75,7 +80,6 @@
                                   break;
                           }
      }];
-    NSLog(@"end");
 
     
     /*
@@ -102,13 +106,49 @@
 }
 
 - (void)viewDidUnload {
+    [self setCancelButton:nil];
     [super viewDidUnload];
 }
 
 #pragma ALAssetsLibrary selector
 - (void)usePhotolibraryimage:(UIImage *)myImage{
     //Do your all UI related and all stuff here
-    NSLog(@"assets = %@", assets);
+    //NSLog(@"assets = %@", assets);
+}
+
+#pragma mark -
+#pragma mark Table Data Source Methods
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section {
+    NSInteger count = self.assets.count / 4;
+    NSLog(@"assets count = %d, line count = %d", self.assets.count, count);
+    return (count+1);
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView
+        cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellTableIdentifier = @"CellTableIdentifier";
+    
+    if (!nibsRegistered) {
+        UINib *nib = [UINib nibWithNibName:@"VenusFilmPhotoCell" bundle:nil];
+        [tableView registerNib:nib forCellReuseIdentifier:CellTableIdentifier];
+        nibsRegistered = YES;
+    }
+    VenusFilmPhotoCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                 CellTableIdentifier];
+    
+    //NSUInteger row = [indexPath row];
+    //NSDictionary *rowData = [self.assets objectAtIndex:row];
+    
+    //cell.name = [rowData objectForKey:@"Name"];
+    //cell.color = [rowData objectForKey:@"Color"];
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 130.0; // Same number we used in Interface Builder
 }
 @end
 

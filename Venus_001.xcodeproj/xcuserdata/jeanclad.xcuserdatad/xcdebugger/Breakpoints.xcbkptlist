@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Venus_001/VenusFilmViewController.m"
-         timestampString = "383551637.802045"
+         timestampString = "383562393.606669"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,26 +21,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Venus_001/VenusFilmViewController.m"
-         timestampString = "383551637.802045"
+         timestampString = "383562393.606669"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Venus_001/VenusFilmViewController.h"
-         timestampString = "383550943.506328"
+         timestampString = "383562393.606669"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "12"
-         endingLineNumber = "12"
-         landmarkName = "-buttonPressed:"
-         landmarkType = "4">
+         startingLineNumber = "11"
+         endingLineNumber = "11"
+         landmarkName = "@interface VenusFilmViewController"
+         landmarkType = "2">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -53,6 +53,19 @@
          startingLineNumber = "11"
          endingLineNumber = "11"
          landmarkName = "@interface VenusAppDelegate"
+         landmarkType = "2">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Venus_001/VenusFilmViewController.h"
+         timestampString = "383562393.606669"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "11"
+         endingLineNumber = "11"
+         landmarkName = "@interface VenusFilmViewController"
          landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>

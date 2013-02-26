@@ -11,6 +11,7 @@
 @interface VenusFilmViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 - (IBAction)buttonPressed:(UIBarButtonItem *)sender;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (nonatomic, retain) NSMutableArray *assets;
-
+@property BOOL nibsRegistered;
 @end

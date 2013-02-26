@@ -129,6 +129,15 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="yHI-a7-WRc">
+                                <rect key="frame" x="20" y="62" width="440" height="238"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="woJ-Tj-H4O" id="TF8-CM-POJ"/>
+                                    <outlet property="delegate" destination="woJ-Tj-H4O" id="WJh-Y0-dnN"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -136,6 +145,9 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="0AJ-lu-uSL" id="Uor-CQ-utx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ns-yF-99Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -148,6 +160,7 @@
             <relationships>
                 <relationship kind="action" name="buttonPressed:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="VenusViewController" superclassName="UIViewController">
