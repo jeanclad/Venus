@@ -8,6 +8,7 @@
 
 #import "VenusFilmMainViewController.h"
 #import "AssetsDataIsInaccessibleViewController.h"
+#import "AlbumContentsViewController.h"
 
 @interface VenusFilmMainViewController ()
 
@@ -92,8 +93,8 @@
         
         assetsDataInaccessibleViewController.explanation = errorMessage;
         [self presentModalViewController:assetsDataInaccessibleViewController animated:NO];
-        //[assetsDataInaccessibleViewController release];
     };
+    NSLog(@"Group = %@", groups);
     
     NSUInteger groupTypes = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupFaces;
     [assetsLibrary enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
@@ -143,7 +144,6 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
@@ -157,6 +157,16 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
+}
+
+#pragma mark -
+#pragma mark Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (groups.count > indexPath.row) {
+        AlbumContentsViewController *albumContentsViewController = [[AlbumContentsViewController alloc] initWithNibName:@"AlbumContentsViewController" bundle:nil];
+        albumContentsViewController.assetsGroup = [groups objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:albumContentsViewController animated:YES];
+    }
 }
 
 - (IBAction)buttonPressed:(UIBarButtonItem *)sender {
