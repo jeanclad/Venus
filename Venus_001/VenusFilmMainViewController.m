@@ -115,6 +115,8 @@
 }
 
 - (void)viewDidUnload {
+    assetsLibrary = nil;
+    groups = nil;
     [self setTableview:nil];
     [super viewDidUnload];
 }
@@ -145,10 +147,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-     NSLog (@"returning cell %@ at %@", cell, indexPath);
-    
-    NSLog(@"row = %d", indexPath.row);
-    
+    NSLog (@"returning cell %@ at %@", cell, indexPath);
+  
     ALAssetsGroup *groupForCell = [groups objectAtIndex:indexPath.row];
     CGImageRef posterImageRef = [groupForCell posterImage];
     UIImage *posterImage = [UIImage imageWithCGImage:posterImageRef];
