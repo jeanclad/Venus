@@ -94,7 +94,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="i3H-8f-hov" kind="modal" identifier="VenusFilmMainViewControllerId" id="mOp-3o-cZQ"/>
+                                    <segue destination="XUV-Me-lHI" kind="modal" identifier="VenusFilmMainViewControllerId" id="Erb-MW-Mur"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -164,6 +164,59 @@
             </objects>
             <point key="canvasLocation" x="687" y="25"/>
         </scene>
+        <!--Table View Controller - Root View Controller-->
+        <scene sceneID="hKf-Wm-Vxh">
+            <objects>
+                <tableViewController id="BCV-72-0hR" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Qvz-i7-hLr">
+                        <rect key="frame" x="0.0" y="44" width="568" height="276"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <tableView key="tableFooterView" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vlR-9d-Yja">
+                            <rect key="frame" x="0.0" y="66" width="568" height="53"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="i3H-8f-hov" id="eBG-V7-Za3"/>
+                                <outlet property="delegate" destination="i3H-8f-hov" id="g8a-50-vnP"/>
+                            </connections>
+                        </tableView>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="oOh-nx-zcK">
+                                <rect key="frame" x="0.0" y="22" width="568" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="568" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="2EO-2r-L8J"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pj2-Ht-JAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1035" y="986"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xGp-gC-5A1">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="XUV-Me-lHI" sceneMemberID="viewController">
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hac-d7-u5j">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BCV-72-0hR" kind="relationship" relationship="rootViewController" id="Dli-MU-4zb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MI5-B9-ioX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="310" y="986"/>
+        </scene>
         <!--Venus Film Main View Controller-->
         <scene sceneID="hrV-Fy-4hA">
             <objects>
@@ -181,20 +234,6 @@
                                     <outlet property="delegate" destination="i3H-8f-hov" id="M67-db-lcn"/>
                                 </connections>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" id="7OR-O1-qGW">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <items>
-                                    <navigationItem title="Title" id="lVf-Z4-FwE">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="ePj-oC-m6l">
-                                            <connections>
-                                                <action selector="buttonPressed:" destination="i3H-8f-hov" id="Zhr-jY-4va"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

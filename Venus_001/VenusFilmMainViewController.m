@@ -31,7 +31,6 @@
     
 	// Do any additional setup after loading the view.
  
-    /*
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
     float w,h;
@@ -44,10 +43,9 @@
         h = 320;
     }
     
-    
     //---   네비게이션바, Cancel버튼 설정
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, w, 44)];
-    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"aaaaaa"];
+    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"bbb"];
 
     [navBar pushNavigationItem:item animated:NO];
     navBar.tintColor = [UIColor blackColor];
@@ -55,7 +53,6 @@
     item.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(buttonPressed:)];
     
     [self.view addSubview:navBar];
-     */
     
     
     //---   Photo Library에서 Group 불러오기
