@@ -74,7 +74,8 @@
             [alert show];
         }
     } else if (buttonIndex == 1){
-        [self performSegueWithIdentifier:@"VenusFilmViewControllerId" sender:self];
+//        [self performSegueWithIdentifier:@"VenusFilmViewControllerId" sender:self];
+        [self performSegueWithIdentifier:@"VenusFilmMainViewControllerId" sender:self];
     }
     
 }

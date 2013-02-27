@@ -23,6 +23,9 @@
 		219FE4CE16D35414003939EF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 219FE4CD16D35414003939EF /* Default-568h@2x.png */; };
 		219FE4D116D35414003939EF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 219FE4CF16D35414003939EF /* MainStoryboard.storyboard */; };
 		219FE4D416D35414003939EF /* VenusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 219FE4D316D35414003939EF /* VenusViewController.m */; };
+		21B3B3D616DDDC17008A1D15 /* VenusFilmMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B3D516DDDC17008A1D15 /* VenusFilmMainViewController.m */; };
+		21B3B3DE16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B3DC16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m */; };
+		21B3B3DF16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B3DD16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib */; };
 		E684DE4416DCE885000B9AE9 /* 1rg1024_Film.png in Resources */ = {isa = PBXBuildFile; fileRef = E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +55,11 @@
 		219FE4D016D35414003939EF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		219FE4D216D35414003939EF /* VenusViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VenusViewController.h; sourceTree = "<group>"; };
 		219FE4D316D35414003939EF /* VenusViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VenusViewController.m; sourceTree = "<group>"; };
+		21B3B3D416DDDC17008A1D15 /* VenusFilmMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmMainViewController.h; sourceTree = "<group>"; };
+		21B3B3D516DDDC17008A1D15 /* VenusFilmMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmMainViewController.m; sourceTree = "<group>"; };
+		21B3B3DB16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsDataIsInaccessibleViewController.h; sourceTree = "<group>"; };
+		21B3B3DC16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetsDataIsInaccessibleViewController.m; sourceTree = "<group>"; };
+		21B3B3DD16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssetsDataIsInaccessibleViewController.xib; sourceTree = "<group>"; };
 		E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1rg1024_Film.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,18 +117,23 @@
 		219FE4BD16D35414003939EF /* Venus_001 */ = {
 			isa = PBXGroup;
 			children = (
-				211C512C16DC944C00817EC1 /* Resources */,
+				21B3B3DB16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.h */,
+				21B3B3DC16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m */,
+				21B3B3DD16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib */,
 				219FE4CF16D35414003939EF /* MainStoryboard.storyboard */,
+				211C512C16DC944C00817EC1 /* Resources */,
 				219FE4BE16D35414003939EF /* Supporting Files */,
 				219FE4C616D35414003939EF /* VenusAppDelegate.h */,
 				219FE4C716D35414003939EF /* VenusAppDelegate.m */,
-				219FE4D216D35414003939EF /* VenusViewController.h */,
-				219FE4D316D35414003939EF /* VenusViewController.m */,
-				219E07DF16D4BE4000B2EBD1 /* VenusFilmViewController.h */,
-				219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */,
-				211C512F16DC9AF100817EC1 /* VenusFilmPhotoCell.xib */,
+				21B3B3D416DDDC17008A1D15 /* VenusFilmMainViewController.h */,
+				21B3B3D516DDDC17008A1D15 /* VenusFilmMainViewController.m */,
 				211C513116DC9D8100817EC1 /* VenusFilmPhotoCell.h */,
 				211C513216DC9D8100817EC1 /* VenusFilmPhotoCell.m */,
+				211C512F16DC9AF100817EC1 /* VenusFilmPhotoCell.xib */,
+				219E07DF16D4BE4000B2EBD1 /* VenusFilmViewController.h */,
+				219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */,
+				219FE4D216D35414003939EF /* VenusViewController.h */,
+				219FE4D316D35414003939EF /* VenusViewController.m */,
 			);
 			path = Venus_001;
 			sourceTree = "<group>";
@@ -201,6 +214,7 @@
 				21370BEA16DC619C00088A51 /* Localizable.strings in Resources */,
 				211C513016DC9AF100817EC1 /* VenusFilmPhotoCell.xib in Resources */,
 				E684DE4416DCE885000B9AE9 /* 1rg1024_Film.png in Resources */,
+				21B3B3DF16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +230,8 @@
 				219FE4D416D35414003939EF /* VenusViewController.m in Sources */,
 				219E07E116D4BE4000B2EBD1 /* VenusFilmViewController.m in Sources */,
 				211C513316DC9D8100817EC1 /* VenusFilmPhotoCell.m in Sources */,
+				21B3B3D616DDDC17008A1D15 /* VenusFilmMainViewController.m in Sources */,
+				21B3B3DE16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

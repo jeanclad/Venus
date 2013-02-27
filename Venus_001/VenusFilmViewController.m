@@ -61,8 +61,11 @@
                                   
                                   //ex 2
                                   NSLog(@"%d",index);
-                                  UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                                  //UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+                                  UIImage *image = [UIImage imageWithCGImage:asset.thumbnail];
                                   [self performSelectorOnMainThread:@selector(usePhotolibraryimage:) withObject:image waitUntilDone:NO];
+//                                  [self performSelectorOnMainThread:@selector(reload:) withObject:image waitUntilDone:NO];
+
                               }
                           }];
                       }failureBlock:^(NSError *error){
@@ -111,7 +114,8 @@
 }
 
 #pragma ALAssetsLibrary selector
-- (void)usePhotolibraryimage:(UIImage *)myImage{
+//- (void)usePhotolibraryimage:(UIImage *)myImage{
+- (void)usePhotolibraryimage:(CGImageRef )myImage{
     //Do your all UI related and all stuff here
     //NSLog(@"assets = %@", assets);
 }
