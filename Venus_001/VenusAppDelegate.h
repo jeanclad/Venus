@@ -8,12 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VenusAppDelegate : UIResponder <UIApplicationDelegate>{
-    UIWindow *window;
-    UINavigationController *navigationController;
-}
+@interface VenusAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
 @end
