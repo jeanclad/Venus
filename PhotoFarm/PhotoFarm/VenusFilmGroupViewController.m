@@ -58,19 +58,31 @@
     ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
         AssetsDataIsInaccessibleViewController *assetsDataInaccessibleViewController = [[AssetsDataIsInaccessibleViewController alloc] initWithNibName:@"AssetsDataIsInaccessibleViewController" bundle:nil];
         
-        NSString *errorMessage = nil;
+        NSString *errorMessage1 = nil;
+        NSString *errorMessage2 = nil;
+        NSString *errorMessage3 = nil;
+        
         switch ([error code]) {
             case ALAssetsLibraryAccessUserDeniedError:
             case ALAssetsLibraryAccessGloballyDeniedError:
-                errorMessage = @"The user has declined access to it.";
+                //errorMessage = @"The user has declined access to it.";
+                errorMessage2 = NSLocalizedString(@"PhotoNotAccess", @"사진접근에러 메세지 1");
                 break;
             default:
-                errorMessage = @"Reason unknown.";
+                //errorMessage = @"Reason unknown.";
+                errorMessage2 = NSLocalizedString(@"ReasonUnknown", @"사진접근에러 메세지 2");
                 break;
         }
         
-        assetsDataInaccessibleViewController.explanation = errorMessage;
-        [self presentModalViewController:assetsDataInaccessibleViewController animated:NO];
+        errorMessage1 = NSLocalizedString(@"DataNotAvailable", @"사진첩 접근 에러");
+        errorMessage3 = NSLocalizedString(@"Cancel", @"취소");
+        
+       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:errorMessage1 message:errorMessage2 delegate:nil cancelButtonTitle:errorMessage3 otherButtonTitles:nil];
+        
+        [alert show];
+        
+//        assetsDataInaccessibleViewController.explanation = errorMessage;
+        //[self presentModalViewController:assetsDataInaccessibleViewController animated:NO];
     };
     NSLog(@"Group = %@", groups);
     

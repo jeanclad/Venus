@@ -69,7 +69,7 @@
      */
     
     NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
-    NSString *string2 = NSLocalizedString(@"ShootWiithCamera", @"카메라");
+    NSString *string2 = NSLocalizedString(@"ShootWithCamera", @"카메라");
     NSString *string3 = NSLocalizedString(@"SelectFromLibrary", @"사진앨범");
     
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:string3, nil];
