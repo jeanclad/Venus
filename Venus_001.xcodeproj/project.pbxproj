@@ -11,7 +11,6 @@
 		211C513316DC9D8100817EC1 /* VenusFilmPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 211C513216DC9D8100817EC1 /* VenusFilmPhotoCell.m */; };
 		21370BEA16DC619C00088A51 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21370BEC16DC619C00088A51 /* Localizable.strings */; };
 		214378DD16DB4F10003581FD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 214378DC16DB4F10003581FD /* AssetsLibrary.framework */; };
-		219E07E116D4BE4000B2EBD1 /* VenusFilmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */; };
 		219FE4B816D35414003939EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219FE4B716D35414003939EF /* UIKit.framework */; };
 		219FE4BA16D35414003939EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219FE4B916D35414003939EF /* Foundation.framework */; };
 		219FE4BC16D35414003939EF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 219FE4BB16D35414003939EF /* CoreGraphics.framework */; };
@@ -26,6 +25,7 @@
 		21B3B3D616DDDC17008A1D15 /* VenusFilmMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B3D516DDDC17008A1D15 /* VenusFilmMainViewController.m */; };
 		21B3B3DE16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B3DC16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m */; };
 		21B3B3DF16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B3DD16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib */; };
+		21B3B3E216DEE879008A1D15 /* VenusFilmMainNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B3E116DEE879008A1D15 /* VenusFilmMainNavViewController.m */; };
 		E684DE4416DCE885000B9AE9 /* 1rg1024_Film.png in Resources */ = {isa = PBXBuildFile; fileRef = E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */; };
 		E6DA5AA716DE5993008A989A /* AlbumContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DA5AA516DE5992008A989A /* AlbumContentsViewController.m */; };
 		E6DA5AA816DE5993008A989A /* AlbumContentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6DA5AA616DE5992008A989A /* AlbumContentsViewController.xib */; };
@@ -43,8 +43,6 @@
 		21370BEB16DC619C00088A51 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		21370BED16DC61A000088A51 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		214378DC16DB4F10003581FD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		219E07DF16D4BE4000B2EBD1 /* VenusFilmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmViewController.h; sourceTree = "<group>"; };
-		219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmViewController.m; sourceTree = "<group>"; };
 		219FE4B416D35414003939EF /* Venus_001.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Venus_001.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		219FE4B716D35414003939EF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		219FE4B916D35414003939EF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -66,6 +64,8 @@
 		21B3B3DB16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsDataIsInaccessibleViewController.h; sourceTree = "<group>"; };
 		21B3B3DC16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetsDataIsInaccessibleViewController.m; sourceTree = "<group>"; };
 		21B3B3DD16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssetsDataIsInaccessibleViewController.xib; sourceTree = "<group>"; };
+		21B3B3E016DEE879008A1D15 /* VenusFilmMainNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmMainNavViewController.h; sourceTree = "<group>"; };
+		21B3B3E116DEE879008A1D15 /* VenusFilmMainNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmMainNavViewController.m; sourceTree = "<group>"; };
 		E684DE4316DCE885000B9AE9 /* 1rg1024_Film.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1rg1024_Film.png; sourceTree = "<group>"; };
 		E6DA5AA416DE5992008A989A /* AlbumContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumContentsViewController.h; sourceTree = "<group>"; };
 		E6DA5AA516DE5992008A989A /* AlbumContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumContentsViewController.m; sourceTree = "<group>"; };
@@ -132,9 +132,6 @@
 		219FE4BD16D35414003939EF /* Venus_001 */ = {
 			isa = PBXGroup;
 			children = (
-				E6DA5AAE16DE5C5B008A989A /* ThumbnailImageView.h */,
-				E6DA5AAF16DE5C5B008A989A /* ThumbnailImageView.m */,
-				E6DA5AB016DE5C5B008A989A /* ThumbnailHighlight.png */,
 				E6DA5AA916DE5BAE008A989A /* AlbumContentsTableViewCell.h */,
 				E6DA5AAA16DE5BAE008A989A /* AlbumContentsTableViewCell.m */,
 				E6DA5AAB16DE5BAE008A989A /* AlbumContentsTableViewCell.xib */,
@@ -145,8 +142,13 @@
 				21B3B3DC16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m */,
 				21B3B3DD16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.xib */,
 				219FE4CF16D35414003939EF /* MainStoryboard.storyboard */,
+				21B3B3E016DEE879008A1D15 /* VenusFilmMainNavViewController.h */,
+				21B3B3E116DEE879008A1D15 /* VenusFilmMainNavViewController.m */,
 				211C512C16DC944C00817EC1 /* Resources */,
 				219FE4BE16D35414003939EF /* Supporting Files */,
+				E6DA5AB016DE5C5B008A989A /* ThumbnailHighlight.png */,
+				E6DA5AAE16DE5C5B008A989A /* ThumbnailImageView.h */,
+				E6DA5AAF16DE5C5B008A989A /* ThumbnailImageView.m */,
 				219FE4C616D35414003939EF /* VenusAppDelegate.h */,
 				219FE4C716D35414003939EF /* VenusAppDelegate.m */,
 				21B3B3D416DDDC17008A1D15 /* VenusFilmMainViewController.h */,
@@ -154,8 +156,6 @@
 				211C513116DC9D8100817EC1 /* VenusFilmPhotoCell.h */,
 				211C513216DC9D8100817EC1 /* VenusFilmPhotoCell.m */,
 				211C512F16DC9AF100817EC1 /* VenusFilmPhotoCell.xib */,
-				219E07DF16D4BE4000B2EBD1 /* VenusFilmViewController.h */,
-				219E07E016D4BE4000B2EBD1 /* VenusFilmViewController.m */,
 				219FE4D216D35414003939EF /* VenusViewController.h */,
 				219FE4D316D35414003939EF /* VenusViewController.m */,
 			);
@@ -255,13 +255,13 @@
 				219FE4C416D35414003939EF /* main.m in Sources */,
 				219FE4C816D35414003939EF /* VenusAppDelegate.m in Sources */,
 				219FE4D416D35414003939EF /* VenusViewController.m in Sources */,
-				219E07E116D4BE4000B2EBD1 /* VenusFilmViewController.m in Sources */,
 				211C513316DC9D8100817EC1 /* VenusFilmPhotoCell.m in Sources */,
 				21B3B3D616DDDC17008A1D15 /* VenusFilmMainViewController.m in Sources */,
 				21B3B3DE16DDEDA0008A1D15 /* AssetsDataIsInaccessibleViewController.m in Sources */,
 				E6DA5AA716DE5993008A989A /* AlbumContentsViewController.m in Sources */,
 				E6DA5AAC16DE5BAE008A989A /* AlbumContentsTableViewCell.m in Sources */,
 				E6DA5AB116DE5C5B008A989A /* ThumbnailImageView.m in Sources */,
+				21B3B3E216DEE879008A1D15 /* VenusFilmMainNavViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
