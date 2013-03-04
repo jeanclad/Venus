@@ -144,9 +144,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="VQ2-rO-Bfe">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="RwQ-9n-4Wr"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Title" id="VQ2-rO-Bfe"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pj2-Ht-JAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
