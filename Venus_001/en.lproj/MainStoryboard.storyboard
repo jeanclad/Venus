@@ -94,7 +94,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="XUV-Me-lHI" kind="modal" identifier="VenusFilmMainViewControllerId" id="Erb-MW-Mur"/>
+                                    <segue destination="woJ-Tj-H4O" kind="modal" identifier="VenusFilmMainViewControllerId" id="xH6-5n-J2P"/>
                                 </connections>
                             </button>
                         </subviews>
