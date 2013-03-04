@@ -8,7 +8,8 @@
 
 #import "VenusAppDelegate.h"
 
-#import "VenusMasterViewController.h"
+//#import "VenusMasterViewController.h"
+#import "VenusMainViewController.h"
 
 @implementation VenusAppDelegate
 
@@ -17,10 +18,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    VenusMasterViewController *masterViewController = [[VenusMasterViewController alloc] initWithNibName:@"VenusMasterViewController" bundle:nil];
+//---   Edited by jeanclad
+/*
+   VenusMasterViewController *masterViewController = [[VenusMasterViewController alloc] initWithNibName:@"VenusMasterViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    self.window.rootViewController = self.navigationController;
+*/
+
+    VenusMainViewController *masterViewController = [[VenusMainViewController alloc] initWithNibName:@"VenusMainViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

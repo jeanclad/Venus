@@ -1,0 +1,19 @@
+/* Localized versions of Info.plist keys */
+
+/* 취소   */
+"Cancel" = "취소";
+
+/* 사진첩  */
+"SelectFromLibrary" = "앨범에서 가져오기";
+
+/* 카메라  */
+"ShootWithCamera" = "사진촬영";
+
+/* 카메라 에러 타이틀   */
+"ErrCameraTitle" = "카메라 접근 에러";
+
+/* 카메라 에러 메세지   */
+"ErrCameraMessage" = "카메라에 접근할수 없습니다.";
+
+/* 사진 선택    */
+"SelectImageButton" = "사진을 선택하세요.";
