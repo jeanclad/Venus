@@ -170,6 +170,7 @@
         AlbumContentsViewController *albumContentsViewController = [[AlbumContentsViewController alloc] initWithNibName:@"AlbumContentsViewController" bundle:nil];
         albumContentsViewController.assetsGroup = [groups objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:albumContentsViewController animated:YES];
+        //[self.navigationController presentModalViewController:albumContentsViewController animated:YES];
     }
     
     /*

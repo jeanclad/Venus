@@ -123,8 +123,8 @@
 		21B3B51C16E43C76008A1D15 /* PhotoFarm */ = {
 			isa = PBXGroup;
 			children = (
-				21B3B54016E43F85008A1D15 /* Resources */,
 				21B3B53F16E43F7D008A1D15 /* Classes */,
+				21B3B54016E43F85008A1D15 /* Resources */,
 				21B3B51D16E43C76008A1D15 /* Supporting Files */,
 			);
 			path = PhotoFarm;
@@ -171,8 +171,8 @@
 		21B3B54016E43F85008A1D15 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				215EF5FB16E591620043C029 /* 1rg1024_Film.png */,
 				215EF5F816E4968C0043C029 /* AlbumContentsTableViewCell.xib */,
+				215EF5FB16E591620043C029 /* 1rg1024_Film.png */,
 				215EF5F316E496450043C029 /* AlbumContentsViewController.xib */,
 				215EF5E716E48F6D0043C029 /* ThumbnailHighlight.png */,
 				21B3B53416E43C76008A1D15 /* VenusMasterViewController.xib */,
