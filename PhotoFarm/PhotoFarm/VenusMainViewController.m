@@ -103,6 +103,7 @@
     } else if (buttonIndex == 1){
         VenusFilmGroupViewController *VenusFilmGroupView = [[VenusFilmGroupViewController alloc] initWithNibName:@"VenusFilmGroupViewController" bundle:nil];
         [self.navigationController pushViewController:VenusFilmGroupView animated:YES];
+//        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
     }
     
 }

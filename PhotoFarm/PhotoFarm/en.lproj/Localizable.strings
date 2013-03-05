@@ -25,10 +25,10 @@
 "SelectImageButton" = "Touch to Select Your Image";
 
 /* 사진첩 접근 에러 타이틀    */
-"DataNotAvailable" = "Data not available ";
+"DataNotAvailable" = "Data is not available ";
 
 /*  사진접근에러 메세지 1"   */
 "PhotoNotAccess" = "The user has declined access to it.";
 
 /*  사진접근에러 메세지 2"  */
-"ReasonUnknown" = "Reason unknown.";
+"ReasonUnknown" = "Unknwon Reason.";

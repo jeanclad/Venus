@@ -108,9 +108,13 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return ceil((float)assets.count / 4); // there are four photos per row.
+//    return ceil((float)assets.count / 3); // there are four photos per row.
+    return ceilf((float)assets.count / 3);
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 160;
+}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -128,8 +132,8 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     cell.selectionDelegate = self;
     
     // Configure the cell...
-    NSUInteger firstPhotoInCell = indexPath.row * 4;
-    NSUInteger lastPhotoInCell  = firstPhotoInCell + 4;
+    NSUInteger firstPhotoInCell = indexPath.row * 3;
+    NSUInteger lastPhotoInCell  = firstPhotoInCell + 3;
     
     if (assets.count <= firstPhotoInCell) {
         NSLog(@"We are out of range, asking to start with photo %d but we only have %d", firstPhotoInCell, assets.count);
@@ -153,9 +157,6 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
                 break;
             case 2:
                 [cell photo3].image = thumbnail;
-                break;
-            case 3:
-                [cell photo4].image = thumbnail;
                 break;
             default:
                 break;

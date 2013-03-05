@@ -60,7 +60,6 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     IBOutlet ThumbnailImageView *photo1;
     IBOutlet ThumbnailImageView *photo2;
     IBOutlet ThumbnailImageView *photo3;
-    IBOutlet ThumbnailImageView *photo4;
     
     NSUInteger rowNumber;
     __weak id <AlbumContentsTableViewCellSelectionDelegate> selectionDelegate;
@@ -72,7 +71,6 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 - (UIImageView *)photo1;
 - (UIImageView *)photo2;
 - (UIImageView *)photo3;
-- (UIImageView *)photo4;
 
 - (void)clearSelection;
 @end
