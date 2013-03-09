@@ -30,8 +30,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:YES];
-    
-    if (asset)
+ 
+/*
+    if (asset == Nil){
+        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        selectButton.frame = CGRectMake(320, 480, 67, 67);
+        [selectButton setTitle:@"Select to image" forState:UIControlStateNormal];
+        [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:selectButton];
+    }
+ */
 }
 
 - (void)viewWillAppear:(BOOL)animated
