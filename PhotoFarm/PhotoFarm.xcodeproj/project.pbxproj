@@ -32,6 +32,7 @@
 		21B3B54A16E44C95008A1D15 /* VenusMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B54816E44C95008A1D15 /* VenusMainViewController.xib */; };
 		21B3B54E16E46B97008A1D15 /* VenusFilmGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B54C16E46B96008A1D15 /* VenusFilmGroupViewController.m */; };
 		21B3B54F16E46B97008A1D15 /* VenusFilmGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */; };
+		E69B165416EB29F20075365E /* VenusGlobalDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E69B165316EB29F20075365E /* VenusGlobalDataManager.m */; };
 		E6DA5AB616E4EC3D008A989A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6DA5AB816E4EC3D008A989A /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,9 @@
 		21B3B54B16E46B96008A1D15 /* VenusFilmGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmGroupViewController.h; sourceTree = "<group>"; };
 		21B3B54C16E46B96008A1D15 /* VenusFilmGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmGroupViewController.m; sourceTree = "<group>"; };
 		21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusFilmGroupViewController.xib; sourceTree = "<group>"; };
+		E69B165216EB29F20075365E /* VenusGlobalDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusGlobalDataManager.h; sourceTree = "<group>"; };
+		E69B165316EB29F20075365E /* VenusGlobalDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusGlobalDataManager.m; sourceTree = "<group>"; };
+		E69B165516EB2C040075365E /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		E6DA5AB316E4E563008A989A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6DA5AB716E4EC3D008A989A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E6DA5AB916E4EC44008A989A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -148,12 +152,9 @@
 		21B3B53F16E43F7D008A1D15 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				215EF5F616E4968C0043C029 /* AlbumContentsTableViewCell.h */,
-				215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */,
+				E69B164E16EB18DB0075365E /* Additional Views and Cells */,
 				215EF5F116E496440043C029 /* AlbumContentsViewController.h */,
 				215EF5F216E496440043C029 /* AlbumContentsViewController.m */,
-				215EF5E816E48F6D0043C029 /* ThumbnailImageView.h */,
-				215EF5E916E48F6D0043C029 /* ThumbnailImageView.m */,
 				21B3B52516E43C76008A1D15 /* VenusAppDelegate.h */,
 				21B3B52616E43C76008A1D15 /* VenusAppDelegate.m */,
 				21B3B52E16E43C76008A1D15 /* VenusMasterViewController.h */,
@@ -181,6 +182,20 @@
 				21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		E69B164E16EB18DB0075365E /* Additional Views and Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E69B165516EB2C040075365E /* SynthesizeSingleton.h */,
+				215EF5E816E48F6D0043C029 /* ThumbnailImageView.h */,
+				215EF5E916E48F6D0043C029 /* ThumbnailImageView.m */,
+				215EF5F616E4968C0043C029 /* AlbumContentsTableViewCell.h */,
+				215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */,
+				E69B165216EB29F20075365E /* VenusGlobalDataManager.h */,
+				E69B165316EB29F20075365E /* VenusGlobalDataManager.m */,
+			);
+			name = "Additional Views and Cells";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +283,7 @@
 				215EF5EB16E48F6D0043C029 /* ThumbnailImageView.m in Sources */,
 				215EF5F416E496450043C029 /* AlbumContentsViewController.m in Sources */,
 				215EF5F916E4968C0043C029 /* AlbumContentsTableViewCell.m in Sources */,
+				E69B165416EB29F20075365E /* VenusGlobalDataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

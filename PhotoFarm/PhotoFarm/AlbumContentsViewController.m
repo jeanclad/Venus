@@ -49,6 +49,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 
 #import "AlbumContentsTableViewCell.h"
 //#import "PhotoDisplayViewController.h"
+#import "VenusMainSelectImageView.h"
 
 @implementation AlbumContentsViewController
 
