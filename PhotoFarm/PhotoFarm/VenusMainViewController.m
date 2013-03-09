@@ -8,7 +8,6 @@
 
 #import "VenusMainViewController.h"
 #import "VenusFilmGroupViewController.h"
-#import "AlbumContentsTableViewCell.h"
 
 @interface VenusMainViewController ()
 
@@ -33,16 +32,16 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:YES];
  
+    
+    NSLog(@"aaaa");
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
     float w,h;
     
     if (screen.bounds.size.height== 568) {
-        NSLog(@"aaa");
         w = 568;
         h = 320;
     }else{
-        NSLog(@"bbb");
         w = 480;
         h = 320;
     }
@@ -67,6 +66,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (asset == Nil)
+        NSLog(@"bbb");
+    else
+        NSLog(@"ccc");
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
@@ -138,15 +142,5 @@
 //        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
     }
     
-}
-
-#pragma mark -
-#pragma mark AlbumContentsTableViewCellSelectionDelegate
-
-- (void)albumContentsTableViewCell:(AlbumContentsTableViewCell *)cell selectedPhotoAtIndex:(NSUInteger)index {
-    
-    [self setAsset:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
-    [[self navigationController] pushViewController:photoViewController animated:YES];
-    [photoViewController release];
 }
 @end

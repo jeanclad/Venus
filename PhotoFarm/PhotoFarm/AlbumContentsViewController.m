@@ -49,6 +49,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 
 #import "AlbumContentsTableViewCell.h"
 //#import "PhotoDisplayViewController.h"
+#import "VenusMainViewController.h"
 
 @implementation AlbumContentsViewController
 
@@ -195,6 +196,8 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     [[self navigationController] pushViewController:photoViewController animated:YES];
      */
     NSLog(@"cell.rowNumber = %d, index = %d", cell.rowNumber, index);
+    
+    [venusMainViewController setAsset:[assets objectAtIndex:(cell.rowNumber * 5) + index]];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

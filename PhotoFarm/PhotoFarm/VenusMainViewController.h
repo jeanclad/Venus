@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "AlbumContentsTableViewCell.h"
 
-@interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, AlbumContentsTableViewCellSelectionDelegate>{
+@interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
     ALAsset *asset;
 }
 @property (nonatomic, retain) ALAsset *asset;
