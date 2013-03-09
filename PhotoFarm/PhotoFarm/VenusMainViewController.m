@@ -8,12 +8,14 @@
 
 #import "VenusMainViewController.h"
 #import "VenusFilmGroupViewController.h"
+#import "AlbumContentsTableViewCell.h"
 
 @interface VenusMainViewController ()
 
 @end
 
 @implementation VenusMainViewController
+@synthesize asset;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,15 +33,35 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:YES];
  
-/*
-    if (asset == Nil){
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float w,h;
+    
+    if (screen.bounds.size.height== 568) {
+        NSLog(@"aaa");
+        w = 568;
+        h = 320;
+    }else{
+        NSLog(@"bbb");
+        w = 480;
+        h = 320;
+    }
+    
+    // Will Edit to button position
+    if (asset != Nil){
         UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        selectButton.frame = CGRectMake(320, 480, 67, 67);
+//        selectButton.frame = CGRectMake(200, 200, 67, 67);
+        selectButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
+        [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:selectButton];
+    } else{
+        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        selectButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
         [selectButton setTitle:@"Select to image" forState:UIControlStateNormal];
         [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectButton];
     }
- */
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,7 +93,7 @@
     return NO;
 }
 
-- (IBAction)buttonPressed:(UIButton *)sender {
+- (void)buttonPressed:(UIButton *)sender {
     /*
      버튼종류를 알기위한 코드
      NSString *buttonName = [sender titleForState:UIControlStateNormal];
@@ -116,5 +138,15 @@
 //        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
     }
     
+}
+
+#pragma mark -
+#pragma mark AlbumContentsTableViewCellSelectionDelegate
+
+- (void)albumContentsTableViewCell:(AlbumContentsTableViewCell *)cell selectedPhotoAtIndex:(NSUInteger)index {
+    
+    [self setAsset:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
+    [[self navigationController] pushViewController:photoViewController animated:YES];
+    [photoViewController release];
 }
 @end

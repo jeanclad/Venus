@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "AlbumContentsTableViewCell.h"
 
-@interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
+@interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, AlbumContentsTableViewCellSelectionDelegate>{
     ALAsset *asset;
 }
-- (IBAction)buttonPressed:(UIButton *)sender;
+@property (nonatomic, retain) ALAsset *asset;
 
 @end
