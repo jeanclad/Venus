@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface VenusFilmGroupViewController : UITableViewController{
+@interface VenusFilmGroupViewController : UITableViewController <UIAlertViewDelegate>{
     ALAssetsLibrary *assetsLibrary;
     NSMutableArray *groups;
 }

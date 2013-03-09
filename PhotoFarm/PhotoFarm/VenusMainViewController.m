@@ -30,6 +30,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:YES];
+<<<<<<< HEAD
+=======
+ 
+/*
+    if (asset == Nil){
+        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        selectButton.frame = CGRectMake(320, 480, 67, 67);
+        [selectButton setTitle:@"Select to image" forState:UIControlStateNormal];
+        [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:selectButton];
+    }
+ */
+>>>>>>> be6cfe697ece6b97b761ba97a9a80f0298004d74
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -69,7 +82,7 @@
      */
     
     NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
-    NSString *string2 = NSLocalizedString(@"ShootWiithCamera", @"카메라");
+    NSString *string2 = NSLocalizedString(@"ShootWithCamera", @"카메라");
     NSString *string3 = NSLocalizedString(@"SelectFromLibrary", @"사진앨범");
     
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:string3, nil];
@@ -103,6 +116,7 @@
     } else if (buttonIndex == 1){
         VenusFilmGroupViewController *VenusFilmGroupView = [[VenusFilmGroupViewController alloc] initWithNibName:@"VenusFilmGroupViewController" bundle:nil];
         [self.navigationController pushViewController:VenusFilmGroupView animated:YES];
+//        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
     }
     
 }

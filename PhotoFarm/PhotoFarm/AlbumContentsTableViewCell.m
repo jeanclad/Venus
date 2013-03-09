@@ -67,6 +67,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     photo2.delegate = self;
     photo3.delegate = self;
     photo4.delegate = self;
+    photo5.delegate = self;
 }
 
 - (UIImageView *)photo1 {
@@ -85,11 +86,16 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     return photo4;
 }
 
+- (UIImageView *)photo5 {
+    return photo5;
+}
+
 - (void)clearSelection {
     [photo1 clearSelection];
     [photo2 clearSelection];
     [photo3 clearSelection];
     [photo4 clearSelection];
+    [photo5 clearSelection];
 }
 
 - (void)thumbnailImageViewWasSelected:(ThumbnailImageView *)thumbnailImageView {
@@ -102,6 +108,8 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
         selectedPhotoIndex = 2;
     } else if (thumbnailImageView == photo4) {
         selectedPhotoIndex = 3;
+    } else if (thumbnailImageView == photo5) {
+        selectedPhotoIndex = 4;
     }
     [selectionDelegate albumContentsTableViewCell:self selectedPhotoAtIndex:selectedPhotoIndex];
 }

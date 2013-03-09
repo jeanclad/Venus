@@ -7,7 +7,6 @@
 //
 
 #import "VenusFilmGroupViewController.h"
-#import "AssetsDataIsInaccessibleViewController.h"
 #import "AlbumContentsViewController.h"
 
 @interface VenusFilmGroupViewController ()
@@ -35,7 +34,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.title = @"DARKROOM IN USE";
-    
+
     //---   Photo Library에서 Group 불러오기
     if (!assetsLibrary) {
         assetsLibrary = [[ALAssetsLibrary alloc] init];
@@ -55,26 +54,30 @@
         }
     };
     
-    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
-        AssetsDataIsInaccessibleViewController *assetsDataInaccessibleViewController = [[AssetsDataIsInaccessibleViewController alloc] initWithNibName:@"AssetsDataIsInaccessibleViewController" bundle:nil];
+    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {    
+        NSString *errorMessage1 = NSLocalizedString(@"DataNotAvailable", @"사진첩 접근 에러");
+        NSString *errorMessage2 = nil;
+        NSString *errorMessage3 = NSLocalizedString(@"Cancel", @"취소");
         
-        NSString *errorMessage = nil;
         switch ([error code]) {
             case ALAssetsLibraryAccessUserDeniedError:
             case ALAssetsLibraryAccessGloballyDeniedError:
-                errorMessage = @"The user has declined access to it.";
+                errorMessage2 = NSLocalizedString(@"PhotoNotAccess", @"사진접근에러 메세지 1");
                 break;
             default:
-                errorMessage = @"Reason unknown.";
+                errorMessage2 = NSLocalizedString(@"ReasonUnknown", @"사진접근에러 메세지 2");
                 break;
         }
         
-        assetsDataInaccessibleViewController.explanation = errorMessage;
-        [self presentModalViewController:assetsDataInaccessibleViewController animated:NO];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:errorMessage1 message:errorMessage2 delegate:self cancelButtonTitle:errorMessage3 otherButtonTitles:nil];
+        
+        [alert show];
+
     };
     NSLog(@"Group = %@", groups);
     
-    NSUInteger groupTypes = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupFaces;
+//    NSUInteger groupTypes = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupFaces;
+    NSUInteger groupTypes = ALAssetsGroupAll;
     [assetsLibrary enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
 }
 
@@ -167,6 +170,7 @@
         AlbumContentsViewController *albumContentsViewController = [[AlbumContentsViewController alloc] initWithNibName:@"AlbumContentsViewController" bundle:nil];
         albumContentsViewController.assetsGroup = [groups objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:albumContentsViewController animated:YES];
+        //[self.navigationController presentModalViewController:albumContentsViewController animated:YES];
     }
     
     /*
@@ -177,6 +181,13 @@
      */
 }
 
+#pragma mark - Alert View delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //NSLog(@"button = %d", buttonIndex);
+    
+   [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 // IOS 6.0 이하 버전에서 landscape로 시작하지 않기 때문에 강제로 설정해주는 부분 (IOS 6.0 이상에서는 Call 되지 않음)
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
