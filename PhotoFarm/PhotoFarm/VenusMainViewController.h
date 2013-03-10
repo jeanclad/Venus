@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>
-
+@interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
+    UIButton    *selectedButton;
+}
 @end

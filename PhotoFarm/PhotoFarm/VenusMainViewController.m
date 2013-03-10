@@ -37,7 +37,6 @@
 {
     [super viewWillAppear:animated];
     
-    NSLog(@"aaaa");
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
     float w,h;
@@ -55,30 +54,38 @@
         CGImageRef thumbnailImageRef = [[GlobalDataManager sharedGlobalDataManager].asset thumbnail];
         UIImage *thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
         
-        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
-        selectButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
-        [selectButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
-        [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:selectButton];
+        selectedButton.frame = CGRectMake(w/2-43, h/2-86, 152, 152);
+        [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
+        [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:selectedButton];
     } else {
-        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        selectButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
-        [selectButton setTitle:@"Select to image" forState:UIControlStateNormal];
-        [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:selectButton];
+        selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        selectedButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
+        [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
+        [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:selectedButton];
+        
     }
-    
-    NSLog(@"%@", [GlobalDataManager sharedGlobalDataManager].asset);
+
+    NSLog(@"assets = %@", [GlobalDataManager sharedGlobalDataManager].asset);
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"bbbb");
+
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
     [super viewWillDisappear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    /* 메인 중앙 이미지 버튼이 없어질 때
+     1. 필름 선택뷰로 넘어갔을때
+     2. 사진 찍어서 선택되었을때
+     */
 }
 
 - (void)didReceiveMemoryWarning
