@@ -11,5 +11,6 @@
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
     UIButton    *selectedButton;
+    CGImageRef  mainImageRef;
 }
 @end

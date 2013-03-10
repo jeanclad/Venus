@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 
 
 @interface GlobalDataManager : NSObject 
 {
-    ALAsset *asset;
+    CGImageRef selectedImageRef;
 }
 + (GlobalDataManager *) sharedGlobalDataManager;
-@property (nonatomic, retain) ALAsset *asset;
+@property (nonatomic, assign) CGImageRef selectedImageRef;
 
 @end

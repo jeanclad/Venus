@@ -194,7 +194,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
      */
     NSLog(@"cell.rowNumber = %d, index = %d", cell.rowNumber, index);
     
-    [GlobalDataManager sharedGlobalDataManager].asset = [assets objectAtIndex:(cell.rowNumber * 4) + index];
+    [GlobalDataManager sharedGlobalDataManager].selectedImageRef = [[assets objectAtIndex:(cell.rowNumber * 4) + index] thumbnail];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
