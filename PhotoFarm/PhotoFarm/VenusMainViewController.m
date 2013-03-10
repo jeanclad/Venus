@@ -8,13 +8,13 @@
 
 #import "VenusMainViewController.h"
 #import "VenusFilmGroupViewController.h"
+#import "GlobalDataManager.h"
 
 @interface VenusMainViewController ()
 
 @end
 
 @implementation VenusMainViewController
-@synthesize asset;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,7 +31,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:YES];
- 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     NSLog(@"aaaa");
     //---   아이폰4,5 해상도 대응
@@ -47,30 +51,25 @@
     }
     
     // Will Edit to button position
-    if (asset != Nil){
-        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//        selectButton.frame = CGRectMake(200, 200, 67, 67);
+    if ([GlobalDataManager sharedGlobalDataManager].asset != Nil){
+        CGImageRef thumbnailImageRef = [[GlobalDataManager sharedGlobalDataManager].asset thumbnail];
+        UIImage *thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
+        
+        UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //        selectButton.frame = CGRectMake(200, 200, 67, 67);
         selectButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
+        [selectButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
         [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectButton];
-    } else{
+    } else {
         UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         selectButton.frame = CGRectMake(w/2-54, h/2-38, 76, 76);
         [selectButton setTitle:@"Select to image" forState:UIControlStateNormal];
         [selectButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectButton];
     }
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
-    if (asset == Nil)
-        NSLog(@"bbb");
-    else
-        NSLog(@"ccc");
+    NSLog(@"%@", [GlobalDataManager sharedGlobalDataManager].asset);
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
@@ -143,4 +142,5 @@
     }
     
 }
+
 @end

@@ -49,7 +49,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 
 #import "AlbumContentsTableViewCell.h"
 //#import "PhotoDisplayViewController.h"
-#import "VenusMainViewController.h"
+#import "GlobalDataManager.h"
 
 @implementation AlbumContentsViewController
 
@@ -110,12 +110,12 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-//    return ceil((float)assets.count / 4); // there are four photos per row.
-    return ceilf((float)assets.count / 5);
+    return ceil((float)assets.count / 4); // there are four photos per 
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 150;
+    //return indexPath.row;
 }
 
 // Customize the appearance of table view cells.
@@ -134,8 +134,8 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     cell.selectionDelegate = self;
     
     // Configure the cell...
-    NSUInteger firstPhotoInCell = indexPath.row * 5;
-    NSUInteger lastPhotoInCell  = firstPhotoInCell + 5;
+    NSUInteger firstPhotoInCell = indexPath.row * 4;
+    NSUInteger lastPhotoInCell  = firstPhotoInCell + 4;
     
     if (assets.count <= firstPhotoInCell) {
         NSLog(@"We are out of range, asking to start with photo %d but we only have %d", firstPhotoInCell, assets.count);
@@ -162,9 +162,6 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
                 break;
             case 3:
                 [cell photo4].image = thumbnail;
-                break;
-            case 4:
-                [cell photo5].image = thumbnail;
                 break;
             default:
                 break;
@@ -197,7 +194,8 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
      */
     NSLog(@"cell.rowNumber = %d, index = %d", cell.rowNumber, index);
     
-    [venusMainViewController setAsset:[assets objectAtIndex:(cell.rowNumber * 5) + index]];
+    [GlobalDataManager sharedGlobalDataManager].asset = [assets objectAtIndex:(cell.rowNumber * 4) + index];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
