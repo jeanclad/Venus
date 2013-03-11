@@ -10,12 +10,12 @@
 #import "SynthesizeSingleton.h"
 
 @implementation GlobalDataManager
-@synthesize selectedImageRef;
+@synthesize assets;
 SYNTHESIZE_SINGLETON_FOR_CLASS(GlobalDataManager);
 - (id) init
 {
 	if(self = [super init]){
-		self.selectedImageRef = nil;
+		self.assets = nil;
 	}
 	return self;
 }

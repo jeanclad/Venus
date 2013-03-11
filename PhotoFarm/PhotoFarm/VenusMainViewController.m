@@ -15,6 +15,7 @@
 @end
 
 @implementation VenusMainViewController
+@synthesize asset;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,11 +51,14 @@
     }
     
     // Will Edit to button position
-    NSLog(@"assets = %@", [GlobalDataManager sharedGlobalDataManager].selectedImageRef);
-    mainImageRef = [GlobalDataManager sharedGlobalDataManager].selectedImageRef;
+    NSLog(@"assets = %@", [GlobalDataManager sharedGlobalDataManager].assets);
     
-    if (mainImageRef != nil){
-        UIImage *thumbnail = [UIImage imageWithCGImage:mainImageRef];
+    [self setAsset:(ALAsset *)[[GlobalDataManager sharedGlobalDataManager].assets objectAtIndex:0]];
+    
+    
+    if (asset != nil){
+        CGImageRef thumbnailImageRef = [asset thumbnail];
+        UIImage *thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
         
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
@@ -129,13 +133,14 @@
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
     NSLog(@"ccc");
-    [GlobalDataManager sharedGlobalDataManager].selectedImageRef = nil;
+    [GlobalDataManager sharedGlobalDataManager].assets = nil;
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
     NSLog(@"ddd");
     CGImageRef shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
     NSLog(@"eee");
-    
-    [GlobalDataManager sharedGlobalDataManager].selectedImageRef = shrunkenImage;
+  
+    //  Will Edit
+//    [GlobalDataManager sharedGlobalDataManager].assets = shrunkenImage;
     NSLog(@"fff");
     [picker dismissModalViewControllerAnimated:YES];
     NSLog(@"ggg");

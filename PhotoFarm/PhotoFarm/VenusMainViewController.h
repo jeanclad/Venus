@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
     UIButton    *selectedButton;
-    CGImageRef  mainImageRef;
+    ALAsset     *asset;
 }
+@property (nonatomic, strong) ALAsset *asset;
 @end

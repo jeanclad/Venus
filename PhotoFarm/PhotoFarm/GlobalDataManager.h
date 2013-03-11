@@ -11,9 +11,9 @@
 
 @interface GlobalDataManager : NSObject 
 {
-    CGImageRef selectedImageRef;
+    NSMutableArray  *assets;
 }
 + (GlobalDataManager *) sharedGlobalDataManager;
-@property (nonatomic, assign) CGImageRef selectedImageRef;
+@property (nonatomic, strong) NSMutableArray *assets;
 
 @end
