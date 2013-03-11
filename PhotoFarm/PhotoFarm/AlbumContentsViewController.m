@@ -141,9 +141,8 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
         NSLog(@"We are out of range, asking to start with photo %d but we only have %d", firstPhotoInCell, assets.count);
         return nil;
     }
-    
     NSUInteger currentPhotoIndex = 0;
-    NSUInteger lastPhotoIndex = MIN(lastPhotoInCell, assets.count);
+    lastPhotoIndex = MIN(lastPhotoInCell, assets.count);
     for ( ; firstPhotoInCell + currentPhotoIndex < lastPhotoIndex ; currentPhotoIndex++) {
         
         ALAsset *asset = [assets objectAtIndex:firstPhotoInCell + currentPhotoIndex];
@@ -193,13 +192,14 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     [[self navigationController] pushViewController:photoViewController animated:YES];
      */
     NSLog(@"cell.rowNumber = %d, index = %d", cell.rowNumber, index);
-    NSLog(@"selected assets = %@", [assets objectAtIndex:(cell.rowNumber * 4) + index]);
 
-    [[GlobalDataManager sharedGlobalDataManager] setSelectedAssets:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
+    NSUInteger currentSelectedPhotoIndex = (cell.rowNumber * 4) + index;
+    if (currentSelectedPhotoIndex < lastPhotoIndex) {
+        [[GlobalDataManager sharedGlobalDataManager] setSelectedAssets:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
+        NSLog(@"shared assets = %@", [GlobalDataManager sharedGlobalDataManager].selectedAssets);
 
-    NSLog(@"shared assets = %@", [GlobalDataManager sharedGlobalDataManager].selectedAssets);
-
-    [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 

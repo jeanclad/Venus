@@ -64,6 +64,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [highlightView removeFromSuperview];
     [delegate thumbnailImageViewWasSelected:self];
 }
 

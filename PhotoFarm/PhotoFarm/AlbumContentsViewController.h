@@ -55,6 +55,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     NSMutableArray *assets;
     __unsafe_unretained IBOutlet AlbumContentsTableViewCell *tmpCell;
     NSInteger lastSelectedRow;
+    NSUInteger lastPhotoIndex;
 }
 
 @property (nonatomic, retain) ALAssetsGroup *assetsGroup;
