@@ -7,8 +7,9 @@
 //
 
 #import "VenusMainViewController.h"
-#import "VenusFilmGroupViewController.h"
 #import "GlobalDataManager.h"
+#import "VenusFilmGroupViewController.h"
+#import "VenusAlbumPageViewController.h"
 
 @interface VenusMainViewController ()
 
@@ -222,4 +223,14 @@ static CGImageRef shrinkImage(UIImage *original, CGSize size) {
 }
  */
 
+- (IBAction)UnderButtonPressed:(UIButton *)sender
+{
+    NSString *buttonName = [sender titleForState:UIControlStateNormal];
+    NSLog(@"buttonName = %@", buttonName);
+    
+    if ([buttonName isEqualToString:@"Papers"]){
+        VenusAlbumPageViewController *VenusAlbumPageView= [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
+        [self.navigationController pushViewController:VenusAlbumPageView animated:YES];
+    }
+}
 @end

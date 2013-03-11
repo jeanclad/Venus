@@ -18,4 +18,5 @@
     BOOL        firstSelect;
 }
 @property (nonatomic, strong) ALAsset *asset;
+- (IBAction)UnderButtonPressed:(UIButton *)sender;
 @end

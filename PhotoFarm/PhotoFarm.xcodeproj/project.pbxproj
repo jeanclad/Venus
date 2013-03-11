@@ -34,6 +34,11 @@
 		21B3B54F16E46B97008A1D15 /* VenusFilmGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */; };
 		E69B165A16EC43D10075365E /* GlobalDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E69B165916EC43D10075365E /* GlobalDataManager.m */; };
 		E6DA5AB616E4EC3D008A989A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6DA5AB816E4EC3D008A989A /* Localizable.strings */; };
+		E6F9BDC816EDF193002241FA /* VenusAlbumPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9BDC616EDF192002241FA /* VenusAlbumPageViewController.m */; };
+		E6F9BDC916EDF193002241FA /* VenusAlbumPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDC716EDF192002241FA /* VenusAlbumPageViewController.xib */; };
+		E6F9BDCD16EDF26F002241FA /* album_main.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDCC16EDF26F002241FA /* album_main.png */; };
+		E6F9BDD116EDFCF8002241FA /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */; };
+		E6F9BDD216EDFCF8002241FA /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDD016EDFCF7002241FA /* ContentViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +84,13 @@
 		E6DA5AB316E4E563008A989A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6DA5AB716E4EC3D008A989A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E6DA5AB916E4EC44008A989A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E6F9BDC516EDF192002241FA /* VenusAlbumPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusAlbumPageViewController.h; sourceTree = "<group>"; };
+		E6F9BDC616EDF192002241FA /* VenusAlbumPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusAlbumPageViewController.m; sourceTree = "<group>"; };
+		E6F9BDC716EDF192002241FA /* VenusAlbumPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusAlbumPageViewController.xib; sourceTree = "<group>"; };
+		E6F9BDCC16EDF26F002241FA /* album_main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = album_main.png; sourceTree = "<group>"; };
+		E6F9BDCE16EDFCF7002241FA /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
+		E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
+		E6F9BDD016EDFCF7002241FA /* ContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +177,8 @@
 				21B3B54716E44C95008A1D15 /* VenusMainViewController.m */,
 				21B3B54B16E46B96008A1D15 /* VenusFilmGroupViewController.h */,
 				21B3B54C16E46B96008A1D15 /* VenusFilmGroupViewController.m */,
+				E6F9BDC516EDF192002241FA /* VenusAlbumPageViewController.h */,
+				E6F9BDC616EDF192002241FA /* VenusAlbumPageViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -172,14 +186,8 @@
 		21B3B54016E43F85008A1D15 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				215EF5F816E4968C0043C029 /* AlbumContentsTableViewCell.xib */,
-				215EF5FB16E591620043C029 /* 1rg1024_Film.png */,
-				215EF5F316E496450043C029 /* AlbumContentsViewController.xib */,
-				215EF5E716E48F6D0043C029 /* ThumbnailHighlight.png */,
-				21B3B53416E43C76008A1D15 /* VenusMasterViewController.xib */,
-				21B3B53716E43C76008A1D15 /* VenusDetailViewController.xib */,
-				21B3B54816E44C95008A1D15 /* VenusMainViewController.xib */,
-				21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */,
+				E6F9BDD316EDFD1B002241FA /* XIBs */,
+				E6F9BDCA16EDF23C002241FA /* Images */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -187,6 +195,8 @@
 		E69B165616EC43A30075365E /* Additional Views and Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E6F9BDCE16EDFCF7002241FA /* ContentViewController.h */,
+				E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */,
 				E69B165716EC43D10075365E /* SynthesizeSingleton.h */,
 				E69B165816EC43D10075365E /* GlobalDataManager.h */,
 				E69B165916EC43D10075365E /* GlobalDataManager.m */,
@@ -196,6 +206,39 @@
 				215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */,
 			);
 			name = "Additional Views and Cells";
+			sourceTree = "<group>";
+		};
+		E6F9BDCA16EDF23C002241FA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E6F9BDCB16EDF24B002241FA /* Album */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		E6F9BDCB16EDF24B002241FA /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				215EF5E716E48F6D0043C029 /* ThumbnailHighlight.png */,
+				215EF5FB16E591620043C029 /* 1rg1024_Film.png */,
+				E6F9BDCC16EDF26F002241FA /* album_main.png */,
+			);
+			name = Album;
+			sourceTree = "<group>";
+		};
+		E6F9BDD316EDFD1B002241FA /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				215EF5F816E4968C0043C029 /* AlbumContentsTableViewCell.xib */,
+				215EF5F316E496450043C029 /* AlbumContentsViewController.xib */,
+				E6F9BDD016EDFCF7002241FA /* ContentViewController.xib */,
+				E6F9BDC716EDF192002241FA /* VenusAlbumPageViewController.xib */,
+				21B3B53716E43C76008A1D15 /* VenusDetailViewController.xib */,
+				21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */,
+				21B3B54816E44C95008A1D15 /* VenusMainViewController.xib */,
+				21B3B53416E43C76008A1D15 /* VenusMasterViewController.xib */,
+			);
+			name = XIBs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +307,9 @@
 				215EF5FA16E4968C0043C029 /* AlbumContentsTableViewCell.xib in Resources */,
 				E6DA5AB616E4EC3D008A989A /* Localizable.strings in Resources */,
 				215EF5FC16E591620043C029 /* 1rg1024_Film.png in Resources */,
+				E6F9BDC916EDF193002241FA /* VenusAlbumPageViewController.xib in Resources */,
+				E6F9BDCD16EDF26F002241FA /* album_main.png in Resources */,
+				E6F9BDD216EDFCF8002241FA /* ContentViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +330,8 @@
 				215EF5F416E496450043C029 /* AlbumContentsViewController.m in Sources */,
 				215EF5F916E4968C0043C029 /* AlbumContentsTableViewCell.m in Sources */,
 				E69B165A16EC43D10075365E /* GlobalDataManager.m in Sources */,
+				E6F9BDC816EDF193002241FA /* VenusAlbumPageViewController.m in Sources */,
+				E6F9BDD116EDFCF8002241FA /* ContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
