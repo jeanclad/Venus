@@ -30,11 +30,23 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.mContentLabel.text = self.mContentString;
+    if ([self.mContentString isEqualToString:@"Page 0"]){
+        self.mContentLabel.text = nil;
+        self.albumSubImage.hidden = YES;
+    }else{
+        self.mContentLabel.text = self.mContentString;
+        self.albumTitleImage.hidden = YES;
+    }
+    
+    [self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }
+
+
 
 - (void)viewDidUnload
 {
+    [self setAlbumTitleImage:nil];
+    [self setAlbumSubImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

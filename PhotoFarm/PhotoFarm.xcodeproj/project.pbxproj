@@ -39,6 +39,7 @@
 		E6F9BDCD16EDF26F002241FA /* album_main.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDCC16EDF26F002241FA /* album_main.png */; };
 		E6F9BDD116EDFCF8002241FA /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */; };
 		E6F9BDD216EDFCF8002241FA /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDD016EDFCF7002241FA /* ContentViewController.xib */; };
+		E6F9BDD516EE2625002241FA /* album_sub.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDD416EE2625002241FA /* album_sub.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		E6F9BDCE16EDFCF7002241FA /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
 		E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
 		E6F9BDD016EDFCF7002241FA /* ContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
+		E6F9BDD416EE2625002241FA /* album_sub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = album_sub.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +221,7 @@
 		E6F9BDCB16EDF24B002241FA /* Album */ = {
 			isa = PBXGroup;
 			children = (
+				E6F9BDD416EE2625002241FA /* album_sub.png */,
 				215EF5E716E48F6D0043C029 /* ThumbnailHighlight.png */,
 				215EF5FB16E591620043C029 /* 1rg1024_Film.png */,
 				E6F9BDCC16EDF26F002241FA /* album_main.png */,
@@ -310,6 +313,7 @@
 				E6F9BDC916EDF193002241FA /* VenusAlbumPageViewController.xib in Resources */,
 				E6F9BDCD16EDF26F002241FA /* album_main.png in Resources */,
 				E6F9BDD216EDFCF8002241FA /* ContentViewController.xib in Resources */,
+				E6F9BDD516EE2625002241FA /* album_sub.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
