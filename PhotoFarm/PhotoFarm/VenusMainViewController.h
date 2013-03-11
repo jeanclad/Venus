@@ -13,6 +13,9 @@
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
     UIButton    *selectedButton;
     ALAsset     *asset;
+    CGImageRef thumbnailImageRef;
+    UIImage     *thumbnail;
+    BOOL        firstSelect;
 }
 @property (nonatomic, strong) ALAsset *asset;
 @end

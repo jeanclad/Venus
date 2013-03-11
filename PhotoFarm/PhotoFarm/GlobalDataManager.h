@@ -11,9 +11,8 @@
 
 @interface GlobalDataManager : NSObject 
 {
-    NSMutableArray  *assets;
+    NSMutableArray  *selectedAssets;
 }
 + (GlobalDataManager *) sharedGlobalDataManager;
-@property (nonatomic, strong) NSMutableArray *assets;
-
+@property (nonatomic, strong) NSMutableArray *selectedAssets;
 @end

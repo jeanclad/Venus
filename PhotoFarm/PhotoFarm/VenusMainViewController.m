@@ -51,21 +51,21 @@
     }
     
     // Will Edit to button position
-    NSLog(@"assets = %@", [GlobalDataManager sharedGlobalDataManager].assets);
-    
-    [self setAsset:(ALAsset *)[[GlobalDataManager sharedGlobalDataManager].assets objectAtIndex:0]];
-    
-    
-    if (asset != nil){
-        CGImageRef thumbnailImageRef = [asset thumbnail];
-        UIImage *thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
-        
+
+    [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
+
+    if ((asset != nil) || (firstSelect == YES)){
+        if (asset != nil){
+            thumbnailImageRef = [asset thumbnail];
+            thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
+        }  
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
         selectedButton.frame = CGRectMake(w/2-43, h/2-86, 134, 134);
         [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
+        firstSelect = YES;
     } else {
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         selectedButton.frame = CGRectMake(w/2-100, h/2-38, 200, 76);
@@ -80,8 +80,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"bbbb");
-
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];
@@ -91,6 +89,13 @@
      2. 사진 찍어서 선택되었을때
      */
     [selectedButton removeFromSuperview];
+    
+    /* 필름 선택뷰에서 넘어온 selectedAssets값이 해당 class가 pop 되면서 더이상 접어서 nil이 넘어온다.
+     그래서 asset값을 강제로 nil로 만든다음 필름 뷰에서 nil이 넘어오면 필름뷰에서 사진을 선택하지 않고 Back 키로
+     넘어왔다고 판단해서 예전에 저장해 놓은 이미지를 사용하여 Custom Button을 꾸민다.
+     */
+    asset = nil;
+    [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,7 +108,7 @@
 #pragma mark UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     UIImagePickerController *imagepickerController = [[UIImagePickerController alloc]init];
-    [imagepickerController setDelegate:self];
+    [imagepickerController setDelegate:(id<UINavigationControllerDelegate, UIImagePickerControllerDelegate>)self];
     [imagepickerController setAllowsEditing:NO];
     
     NSString *string1 = NSLocalizedString(@"ErrCameraTitle", @"카메라 에러 타이틀");
@@ -132,18 +137,13 @@
 #pragma mark UIImagePickerController delegate methods
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSLog(@"ccc");
-    [GlobalDataManager sharedGlobalDataManager].assets = nil;
+    [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    NSLog(@"ddd");
-    CGImageRef shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
-    NSLog(@"eee");
-  
-    //  Will Edit
-//    [GlobalDataManager sharedGlobalDataManager].assets = shrunkenImage;
-    NSLog(@"fff");
+    UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
+    thumbnail = shrunkenImage;
+    
     [picker dismissModalViewControllerAnimated:YES];
-    NSLog(@"ggg");
+
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -182,7 +182,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
      */
 }
 
-/*
+
 static UIImage *shrinkImage(UIImage *original, CGSize size) {
     CGFloat scale = [UIScreen mainScreen].scale;
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -200,7 +200,9 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     return final;
 }
-*/
+
+
+/*
 static CGImageRef shrinkImage(UIImage *original, CGSize size) {
     CGFloat scale = [UIScreen mainScreen].scale;
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -218,5 +220,6 @@ static CGImageRef shrinkImage(UIImage *original, CGSize size) {
     
     return shrunken;
 }
+ */
 
 @end

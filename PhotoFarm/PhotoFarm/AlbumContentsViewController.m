@@ -193,13 +193,11 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     [[self navigationController] pushViewController:photoViewController animated:YES];
      */
     NSLog(@"cell.rowNumber = %d, index = %d", cell.rowNumber, index);
-
-//    [[GlobalDataManager sharedGlobalDataManager] setAssets:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
-    
-    [GlobalDataManager sharedGlobalDataManager].assets = [assets mutableCopy];
-    
     NSLog(@"selected assets = %@", [assets objectAtIndex:(cell.rowNumber * 4) + index]);
-    NSLog(@"shared assets = %@", [GlobalDataManager sharedGlobalDataManager].assets);
+
+    [[GlobalDataManager sharedGlobalDataManager] setSelectedAssets:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
+
+    NSLog(@"shared assets = %@", [GlobalDataManager sharedGlobalDataManager].selectedAssets);
 
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
