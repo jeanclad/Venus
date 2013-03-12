@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>{
+@interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource>{
     UIPageViewController* _mPageViewController;
     int _mCurrentPage;
     int _mMaxPage;

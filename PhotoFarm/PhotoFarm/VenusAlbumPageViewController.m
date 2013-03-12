@@ -59,14 +59,21 @@
     NSArray *viewControllers =
     [NSArray arrayWithObject:initialViewController];
     
+    //  제스쳐 설정
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
+                                         initWithTarget:self action:@selector(onSingleTap:)];
+    //[self.view addGestureRecognizer:singleTap];
+    [self.mPageViewController.view addGestureRecognizer:singleTap];
+    
     [self.mPageViewController setViewControllers:viewControllers
                                        direction:UIPageViewControllerNavigationDirectionForward
                                         animated:NO
                                       completion:nil];
     
+
+    
     [self addChildViewController:self.mPageViewController];
     [self.view addSubview:self.mPageViewController.view];
-    [self.mPageViewController didMoveToParentViewController:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,10 +104,10 @@
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
-    NSLog(@"dddd");
     if (self.mCurrentPage == 0) {
         return nil;
     }
+ 
     self.mCurrentPage--;
     return [self viewControllerAtIndex:self.mCurrentPage];
 }
@@ -108,21 +115,16 @@
 - (UIViewController *)pageViewController:
 (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSLog(@"cccc");
     if (self.mCurrentPage >= self.mMaxPage -1) {
         return nil;
     }
+
     self.mCurrentPage++;
     return [self viewControllerAtIndex:self.mCurrentPage];
 }
 
--(void) pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
-{
-    NSLog(@"aaaaa");
-}
-
--(void) pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    NSLog(@"bbbb");
+#pragma jeanclad
+- (void) onSingleTap:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"gestureRecognizer: %d",gestureRecognizer.view.tag);
 }
 @end
