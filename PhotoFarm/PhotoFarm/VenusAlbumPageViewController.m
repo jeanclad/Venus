@@ -59,19 +59,16 @@
     NSArray *viewControllers =
     [NSArray arrayWithObject:initialViewController];
     
-    //  제스쳐 설정
+    //  제스쳐 설정 (페이지뷰 컨틀로러가 좌/우측 탭만 하여도 넘어가기 때문에 텝 이벤트를 오버라이딩하여
+    //  네비게이션 바를 숨기고 보이는 용도로 사용함
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(onSingleTap:)];
-    //[self.view addGestureRecognizer:singleTap];
     [self.mPageViewController.view addGestureRecognizer:singleTap];
     
     [self.mPageViewController setViewControllers:viewControllers
                                        direction:UIPageViewControllerNavigationDirectionForward
                                         animated:NO
                                       completion:nil];
-    
-
-    
     [self addChildViewController:self.mPageViewController];
     [self.view addSubview:self.mPageViewController.view];
 }
