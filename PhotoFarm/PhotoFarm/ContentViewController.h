@@ -18,5 +18,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *albumTitleImage;
 @property (weak, nonatomic) IBOutlet UIImageView *albumSubImage;
+- (IBAction)bottomButtonPressed:(UIButton *)sender;
 
 @end

@@ -65,15 +65,8 @@
     return NO;
 }
 
-/*
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (IBAction)bottomButtonPressed:(UIButton *)sender
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
- */
-
-- (IBAction)barButtonPressed:(id)sender
-{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSLog(@"3333");
 }
 @end
