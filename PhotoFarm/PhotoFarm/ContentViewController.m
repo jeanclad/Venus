@@ -17,7 +17,6 @@
 
 @synthesize mContentString = _mContentString;
 @synthesize mContentLabel = _mContentLabel;
-@synthesize mContentBottomToolBar = _mContentBottomToolBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,16 +42,6 @@
     // Navigation Bar 설정
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
-    // Bottom Tool Bar 설정
-    if ([GlobalDataManager sharedGlobalDataManager].albumBottomToolBarHidden == YES){
-        NSLog(@"111");
-        [self.mContentBottomToolBar setHidden:YES];
-    }
-    else{
-        NSLog(@"222");
-        [self.mContentBottomToolBar setHidden:NO];
-    }
-    
     //[self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }
 
@@ -62,7 +51,6 @@
 {
     [self setAlbumTitleImage:nil];
     [self setAlbumSubImage:nil];
-    _mContentBottomToolBar = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -78,8 +66,4 @@
     return NO;
 }
 
-- (IBAction)bottomButtonPressed:(UIButton *)sender
-{
-    NSLog(@"3333");
-}
 @end

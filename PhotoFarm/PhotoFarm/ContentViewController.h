@@ -12,17 +12,12 @@
 {
     NSString* _mContentString;
     IBOutlet UILabel* _mContentLabel;
-    IBOutlet UIToolbar *_mContentBottomToolBar;
     
 }
 @property (strong, nonatomic) NSString* mContentString;
 @property (strong, nonatomic) UILabel* mContentLabel;
-@property (strong, nonatomic) UIToolbar *mContentBottomToolBar;
 
 @property (weak, nonatomic) IBOutlet UIImageView *albumTitleImage;
 @property (weak, nonatomic) IBOutlet UIImageView *albumSubImage;
-
-
-- (IBAction)bottomButtonPressed:(UIButton *)sender;
 
 @end

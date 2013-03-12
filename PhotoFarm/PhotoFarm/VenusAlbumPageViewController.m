@@ -9,7 +9,7 @@
 #import "VenusAlbumPageViewController.h"
 #import "ContentViewController.h"
 #import "VenusMainViewController.h"
-#import "GlobalDataManager.h"
+#import "VenusAlbumDetailViewController.h"
 
 @interface VenusAlbumPageViewController ()
 // 굳이 외부로 노출 시킬 필요가 없는 함수 (Private 함수) 선언
@@ -59,12 +59,12 @@
     NSArray *viewControllers =
     [NSArray arrayWithObject:initialViewController];
     
+    
     //  제스쳐 설정 (페이지뷰 컨틀로러가 좌/우측 탭만 하여도 넘어가기 때문에 텝 이벤트를 오버라이딩하여
     //  네비게이션 바를 숨기고 보이는 용도로 사용함
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(onSingleTap:)];
     [self.mPageViewController.view addGestureRecognizer:singleTap];
-    
     currentNavBarHidden = NO;
     
     [self.mPageViewController setViewControllers:viewControllers
@@ -73,6 +73,11 @@
                                       completion:nil];
     [self addChildViewController:self.mPageViewController];
     [self.view addSubview:self.mPageViewController.view];
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Detail" style:UIBarButtonItemStyleBordered target:self action:@selector(rightBarButtonPressed:)];
+
+    self.navigationItem.rightBarButtonItem = barButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,24 +131,20 @@
 - (void) onSingleTap:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"gestureRecognizer: %d",gestureRecognizer.view.tag);
     if (currentNavBarHidden == NO){
-        NSLog(@"aaa");
-        [initialViewController.mContentBottomToolBar setHidden:YES];
-        [contentViewController.mContentBottomToolBar setHidden:YES];
-        [GlobalDataManager sharedGlobalDataManager].albumBottomToolBarHidden = YES;
-        
         [self.rootNaviController setNavigationBarHidden:YES animated:YES];
         currentNavBarHidden = YES;
-        
-
-    
     }else{
-        NSLog(@"bbbb");
-        [initialViewController.mContentBottomToolBar setHidden:NO];
-        [contentViewController.mContentBottomToolBar setHidden:NO];
-        [GlobalDataManager sharedGlobalDataManager].albumBottomToolBarHidden = NO;
-        
         [self.rootNaviController setNavigationBarHidden:NO animated:YES];
         currentNavBarHidden = NO;
     }
+}
+
+- (void) rightBarButtonPressed:(id)sender
+{
+    NSLog(@"ddddd");
+    
+    VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController pushViewController:venusAlbumDetailView animated:YES];
 }
 @end

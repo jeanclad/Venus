@@ -12,9 +12,7 @@
 @interface GlobalDataManager : NSObject 
 {
     NSMutableArray  *selectedAssets;
-    BOOL            _albumBottomToolBarHidden;
 }
 + (GlobalDataManager *) sharedGlobalDataManager;
 @property (nonatomic, strong) NSMutableArray *selectedAssets;
-@property (nonatomic) BOOL albumBottomToolBarHidden;
 @end
