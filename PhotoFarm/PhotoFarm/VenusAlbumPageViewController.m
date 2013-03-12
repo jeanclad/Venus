@@ -19,7 +19,7 @@
 @synthesize mPageViewController = _mPageViewController;
 @synthesize mCurrentPage = _mCurrentPage;
 @synthesize mMaxPage = _mMaxPage;
-
+@synthesize rootNaviController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,6 +64,8 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(onSingleTap:)];
     [self.mPageViewController.view addGestureRecognizer:singleTap];
+    
+    currentNavBarHidden = NO;
     
     [self.mPageViewController setViewControllers:viewControllers
                                        direction:UIPageViewControllerNavigationDirectionForward
@@ -123,5 +125,12 @@
 #pragma jeanclad
 - (void) onSingleTap:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"gestureRecognizer: %d",gestureRecognizer.view.tag);
+    if (currentNavBarHidden == NO){
+        [self.rootNaviController setNavigationBarHidden:YES animated:YES];
+        currentNavBarHidden = YES;
+    }else{
+        [self.rootNaviController setNavigationBarHidden:NO animated:YES];
+        currentNavBarHidden = NO;
+    }
 }
 @end

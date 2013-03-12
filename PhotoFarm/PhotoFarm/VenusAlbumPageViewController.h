@@ -12,10 +12,12 @@
     UIPageViewController* _mPageViewController;
     int _mCurrentPage;
     int _mMaxPage;
+    UINavigationController *rootNaviController;
+    BOOL    currentNavBarHidden;
 }
 
 @property (strong, nonatomic) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;
 @property (nonatomic) int mMaxPage;
-
+@property (strong, nonatomic) UINavigationController *rootNaviController;
 @end

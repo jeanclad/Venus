@@ -229,7 +229,8 @@ static CGImageRef shrinkImage(UIImage *original, CGSize size) {
     
     if ([buttonName isEqualToString:@"Album"]){
         VenusAlbumPageViewController *VenusAlbumPageView= [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
+        VenusAlbumPageView.rootNaviController = self.navigationController;
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:VenusAlbumPageView animated:YES];
     }
 }
