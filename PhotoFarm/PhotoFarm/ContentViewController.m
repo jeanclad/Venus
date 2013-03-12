@@ -38,6 +38,9 @@
         self.albumTitleImage.hidden = YES;
     }
     
+    // Navigation Bar 설정
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     [self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }
 
@@ -69,4 +72,8 @@
 }
  */
 
+- (IBAction)barButtonPressed:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 @end

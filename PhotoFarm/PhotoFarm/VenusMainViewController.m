@@ -81,8 +81,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
     [super viewWillDisappear:animated];
     
     /* 메인 중앙 이미지 버튼이 없어질 때
@@ -120,7 +118,7 @@
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES){
             [imagepickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
             imagepickerController.allowsEditing = YES;
-            
+
             [self presentModalViewController:imagepickerController animated:YES];
         } else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
@@ -128,6 +126,7 @@
         }
     } else if (buttonIndex == 1){
         VenusFilmGroupViewController *VenusFilmGroupView = [[VenusFilmGroupViewController alloc] initWithNibName:@"VenusFilmGroupViewController" bundle:nil];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:VenusFilmGroupView animated:YES];
 //        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
     }
@@ -228,8 +227,9 @@ static CGImageRef shrinkImage(UIImage *original, CGSize size) {
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
     NSLog(@"buttonName = %@", buttonName);
     
-    if ([buttonName isEqualToString:@"Papers"]){
+    if ([buttonName isEqualToString:@"Album"]){
         VenusAlbumPageViewController *VenusAlbumPageView= [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
         [self.navigationController pushViewController:VenusAlbumPageView animated:YES];
     }
 }

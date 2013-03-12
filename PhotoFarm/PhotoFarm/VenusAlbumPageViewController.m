@@ -8,6 +8,7 @@
 
 #import "VenusAlbumPageViewController.h"
 #import "ContentViewController.h"
+#import "VenusMainViewController.h"
 
 @interface VenusAlbumPageViewController ()
 // 굳이 외부로 노출 시킬 필요가 없는 함수 (Private 함수) 선언
@@ -96,6 +97,7 @@
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
+    NSLog(@"dddd");
     if (self.mCurrentPage == 0) {
         return nil;
     }
@@ -106,10 +108,21 @@
 - (UIViewController *)pageViewController:
 (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
+    NSLog(@"cccc");
     if (self.mCurrentPage >= self.mMaxPage -1) {
         return nil;
     }
     self.mCurrentPage++;
     return [self viewControllerAtIndex:self.mCurrentPage];
+}
+
+-(void) pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+    NSLog(@"aaaaa");
+}
+
+-(void) pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    NSLog(@"bbbb");
 }
 @end
