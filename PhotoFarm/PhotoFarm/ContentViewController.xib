@@ -69,48 +69,15 @@
 							<string key="NSResourceName">album_sub.png</string>
 						</object>
 					</object>
-					<object class="IBUILabel" id="767272406">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{320, 61}, {120, 21}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<int key="IBUIContentMode">7</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Label</string>
-						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAgMC42AA</bytes>
-						</object>
-						<nil key="IBUIHighlightedColor"/>
-						<int key="IBUIBaselineAdjustment">0</int>
-						<float key="IBUIMinimumFontSize">10</float>
-						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<string key="name">BodoniSvtyTwoITCTT-Bold</string>
-							<string key="family">Bodoni 72</string>
-							<int key="traits">2</int>
-							<double key="pointSize">17</double>
-						</object>
-						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">BodoniSvtyTwoITCTT-Bold</string>
-							<double key="NSSize">17</double>
-							<int key="NSfFlags">16</int>
-						</object>
-					</object>
-					<object class="IBUIToolbar" id="95563992">
+					<object class="IBUIToolbar" id="700910334">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">266</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIButton" id="807582188">
-								<reference key="NSNextResponder" ref="95563992"/>
+							<object class="IBUIButton" id="956506105">
+								<reference key="NSNextResponder" ref="700910334"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{12, 6}, {73, 33}}</string>
-								<reference key="NSSuperview" ref="95563992"/>
+								<reference key="NSSuperview" ref="700910334"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -145,18 +112,53 @@
 						<string key="NSFrame">{{0, 276}, {480, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="956506105"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIBarStyle">2</int>
 						<array class="NSMutableArray" key="IBUIItems">
-							<object class="IBUIBarButtonItem" id="856547742">
+							<object class="IBUIBarButtonItem" id="348000588">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUICustomView" ref="807582188"/>
-								<reference key="IBUIToolbar" ref="95563992"/>
+								<reference key="IBUICustomView" ref="956506105"/>
+								<reference key="IBUIToolbar" ref="700910334"/>
 							</object>
 						</array>
+					</object>
+					<object class="IBUILabel" id="767272406">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{320, 61}, {120, 21}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="700910334"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClipsSubviews">YES</bool>
+						<int key="IBUIContentMode">7</int>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<string key="IBUIText">Label</string>
+						<object class="NSColor" key="IBUITextColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAgMC42AA</bytes>
+						</object>
+						<nil key="IBUIHighlightedColor"/>
+						<int key="IBUIBaselineAdjustment">0</int>
+						<float key="IBUIMinimumFontSize">10</float>
+						<int key="IBUITextAlignment">1</int>
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
+							<string key="name">BodoniSvtyTwoITCTT-Bold</string>
+							<string key="family">Bodoni 72</string>
+							<int key="traits">2</int>
+							<double key="pointSize">17</double>
+						</object>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">BodoniSvtyTwoITCTT-Bold</string>
+							<double key="NSSize">17</double>
+							<int key="NSfFlags">16</int>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrameSize">{480, 320}</string>
@@ -216,9 +218,17 @@
 					<int key="connectionID">13</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">_mContentBottomToolBar</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="700910334"/>
+					</object>
+					<int key="connectionID">40</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">bottomButtonPressed:</string>
-						<reference key="source" ref="807582188"/>
+						<reference key="source" ref="956506105"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -227,7 +237,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">bottomButtonPressed:</string>
-						<reference key="source" ref="856547742"/>
+						<reference key="source" ref="348000588"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">30</int>
@@ -248,7 +258,7 @@
 							<reference ref="219197434"/>
 							<reference ref="766074686"/>
 							<reference ref="767272406"/>
-							<reference ref="95563992"/>
+							<reference ref="700910334"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -280,24 +290,24 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">24</int>
-						<reference key="object" ref="95563992"/>
+						<reference key="object" ref="700910334"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="856547742"/>
+							<reference ref="348000588"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">27</int>
-						<reference key="object" ref="856547742"/>
+						<reference key="object" ref="348000588"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="807582188"/>
+							<reference ref="956506105"/>
 						</array>
-						<reference key="parent" ref="95563992"/>
+						<reference key="parent" ref="700910334"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">26</int>
-						<reference key="object" ref="807582188"/>
-						<reference key="parent" ref="856547742"/>
+						<reference key="object" ref="956506105"/>
+						<reference key="parent" ref="348000588"/>
 					</object>
 				</array>
 			</object>
@@ -318,7 +328,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">37</int>
+			<int key="maxID">40</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -337,11 +347,16 @@
 						</object>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_mContentBottomToolBar">UIToolbar</string>
 						<string key="_mContentLabel">UILabel</string>
 						<string key="albumSubImage">UIImageView</string>
 						<string key="albumTitleImage">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_mContentBottomToolBar">
+							<string key="name">_mContentBottomToolBar</string>
+							<string key="candidateClassName">UIToolbar</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_mContentLabel">
 							<string key="name">_mContentLabel</string>
 							<string key="candidateClassName">UILabel</string>

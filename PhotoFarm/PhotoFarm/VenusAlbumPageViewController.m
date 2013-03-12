@@ -9,6 +9,7 @@
 #import "VenusAlbumPageViewController.h"
 #import "ContentViewController.h"
 #import "VenusMainViewController.h"
+#import "GlobalDataManager.h"
 
 @interface VenusAlbumPageViewController ()
 // 굳이 외부로 노출 시킬 필요가 없는 함수 (Private 함수) 선언
@@ -53,8 +54,7 @@
     self.mPageViewController.dataSource = self;
     self.mPageViewController.view.frame = self.view.bounds;
     
-    
-    ContentViewController *initialViewController =
+    initialViewController =
     [self viewControllerAtIndex:self.mCurrentPage];
     NSArray *viewControllers =
     [NSArray arrayWithObject:initialViewController];
@@ -93,7 +93,7 @@
 
 - (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
-    ContentViewController* contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
+    contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
     contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
     return contentViewController;
 }
@@ -126,9 +126,22 @@
 - (void) onSingleTap:(UIGestureRecognizer *)gestureRecognizer {
     NSLog(@"gestureRecognizer: %d",gestureRecognizer.view.tag);
     if (currentNavBarHidden == NO){
+        NSLog(@"aaa");
+        [initialViewController.mContentBottomToolBar setHidden:YES];
+        [contentViewController.mContentBottomToolBar setHidden:YES];
+        [GlobalDataManager sharedGlobalDataManager].albumBottomToolBarHidden = YES;
+        
         [self.rootNaviController setNavigationBarHidden:YES animated:YES];
         currentNavBarHidden = YES;
+        
+
+    
     }else{
+        NSLog(@"bbbb");
+        [initialViewController.mContentBottomToolBar setHidden:NO];
+        [contentViewController.mContentBottomToolBar setHidden:NO];
+        [GlobalDataManager sharedGlobalDataManager].albumBottomToolBarHidden = NO;
+        
         [self.rootNaviController setNavigationBarHidden:NO animated:YES];
         currentNavBarHidden = NO;
     }

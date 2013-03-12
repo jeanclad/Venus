@@ -16,6 +16,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GlobalDataManager);
 {
 	if(self = [super init]){
 		self.selectedAssets = nil;
+        self.albumBottomToolBarHidden = NO;
+        
 	}
 	return self;
 }

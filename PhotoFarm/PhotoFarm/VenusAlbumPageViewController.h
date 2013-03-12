@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ContentViewController.h"
 
 @interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource>{
     UIPageViewController* _mPageViewController;
@@ -14,6 +15,8 @@
     int _mMaxPage;
     UINavigationController *rootNaviController;
     BOOL    currentNavBarHidden;
+    ContentViewController *initialViewController;
+    ContentViewController *contentViewController;
 }
 
 @property (strong, nonatomic) UIPageViewController* mPageViewController;
