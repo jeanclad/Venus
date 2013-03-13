@@ -10,7 +10,6 @@
 #import "ContentViewController.h"
 #import "VenusMainViewController.h"
 #import "VenusAlbumDetailViewController.h"
-#import "VenusPersistList.h"
 
 @interface VenusAlbumPageViewController ()
 // 굳이 외부로 노출 시킬 필요가 없는 함수 (Private 함수) 선언
