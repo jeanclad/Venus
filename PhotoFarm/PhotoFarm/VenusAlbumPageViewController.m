@@ -145,6 +145,15 @@
     
     VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController pushViewController:venusAlbumDetailView animated:YES];
+    [self.navigationController pushViewController:venusAlbumDetailView animated:NO];
+
+    // 네비게이션 스택 Push에 transition animation
+    [UIView beginAnimations:@"anotheranimation" context:nil];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                           forView:self.navigationController.view
+                             cache:NO];
+    [UIView setAnimationDuration:0.5];
+    [UIView commitAnimations];
+
 }
 @end

@@ -68,12 +68,50 @@
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
         firstSelect = YES;
+        
+        /*/ test by jenaclad
+        ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+        
+        UIImage *fullScreenImage = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString * cachesDirectory = [paths objectAtIndex:0];
+        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"screenshot4.png"];
+        UIImage * image = fullScreenImage;
+        NSData * saveImageData = UIImagePNGRepresentation(image);
+        [saveImageData writeToFile:filePath atomically:NO];
+
+        NSString * documentsDirectory = [paths objectAtIndex:0];
+        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
+        NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+        
+        UIImage *testImage = [UIImage imageWithData:loadImageData];
+        UIImageView *testImageView = [[UIImageView alloc] init];
+        [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
+        [testImageView setImage:testImage];
+        [self.view addSubview:testImageView];
+         */
+         
+
     } else {
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         selectedButton.frame = CGRectMake(w/2-100, h/2-38, 200, 76);
         [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
+        
+        /* test by jeanclad
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString * documentsDirectory = [paths objectAtIndex:0];
+        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
+        NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+        
+        UIImage *testImage = [UIImage imageWithData:loadImageData];
+        UIImageView *testImageView = [[UIImageView alloc] init];
+        [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
+        [testImageView setImage:testImage];
+        [self.view addSubview:testImageView];
+         */
         
     }
     
