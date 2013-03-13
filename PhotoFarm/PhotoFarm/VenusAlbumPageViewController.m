@@ -10,6 +10,7 @@
 #import "ContentViewController.h"
 #import "VenusMainViewController.h"
 #import "VenusAlbumDetailViewController.h"
+#import "VenusPersistList.h"
 
 @interface VenusAlbumPageViewController ()
 // 굳이 외부로 노출 시킬 필요가 없는 함수 (Private 함수) 선언
@@ -36,8 +37,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.mCurrentPage = 0;
-    self.mMaxPage = 10;
+    if (self.loadPlistFile == YES){
+        self.mCurrentPage = 0;
+        self.mMaxPage = venusloadPlist.persistList.count + 1;
+    } else{
+        self.mCurrentPage = 0;
+        self.mMaxPage = 10;
+    }
     
     // Page Option 설정.
     NSDictionary *options =
@@ -155,5 +161,30 @@
     [UIView setAnimationDuration:0.5];
     [UIView commitAnimations];
 
+}
+
+- (BOOL)loadPlistFile
+{
+    NSString *filePath = [self dataFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSData *data = [[NSMutableData alloc]
+                        initWithContentsOfFile:[self dataFilePath]];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
+                                         initForReadingWithData:data];
+        venusloadPlist = [unarchiver decodeObjectForKey:kDataKey];
+        [unarchiver finishDecoding];
+        
+        NSLog(@"loadPlist = %@ count = %d", venusloadPlist.persistList, venusloadPlist.persistList.count);
+        
+        return YES;
+    }
+    return NO;
+}
+
+- (NSString *)dataFilePath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
 @end

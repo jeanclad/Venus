@@ -20,7 +20,6 @@
         NSLog(@"photoItem is nil, so alloc with memory");
         self.photoItem = [[NSMutableArray alloc] init];
     }
-     
     
     [self.photoItem addObject:self.photoItemName];
     [self.photoItem addObject:self.paperPhotoFileName];
@@ -33,11 +32,17 @@
         NSLog(@"persistList is nil, so alloc with memory");
         self.persistList = [[NSMutableDictionary alloc] init];
     }
-     
     
-    [self.persistList setObject:self.photoItem forKey:KEY_PHOTO_ITEM_NAME];
+    [self.persistList setObject:self.photoItem forKey:self.photoItemName];
+   
+    self.photoItem = nil;
+    self.photoItemName = nil;
+    self.paperPhotoFileName = nil;
+    self.paperlessPhotoFileName = nil;
+    self.paperType = nil;
+    self.chemicalType = nil;
     
-    NSLog(@"persistList = %@", self.persistList);
+    //NSLog(@"persistList = %@", self.persistList);
 }
 
 #pragma mark NSCoding

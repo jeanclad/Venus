@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define kFilename         @"persist_photo_list.plist"
+#define kDataKey          @"Data"
+
 @interface VenusPersistList : NSObject
 
 #define KEY_PHOTO_ITEM_NAME             @"photoItemName"

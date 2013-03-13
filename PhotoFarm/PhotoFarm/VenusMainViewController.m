@@ -10,11 +10,9 @@
 #import "GlobalDataManager.h"
 #import "VenusFilmGroupViewController.h"
 #import "VenusAlbumPageViewController.h"
+/* persist test by jeanclad
 #import "VenusPersistList.h"
-
-// persist test by jeanclad
-#define kFilename         @"persist_photo_list"
-#define kDataKey          @"Data"
+*/
 
 @interface VenusMainViewController ()
 
@@ -117,22 +115,46 @@
         [self.view addSubview:testImageView];
          */
         
-        // persist test by jeanclad
+        /* persist test by jeanclad
         VenusPersistList *persistList = [[VenusPersistList alloc] init];
         
-        [persistList setPhotoItemName:@"Venus01"];
+        [persistList setPhotoItemName:@"Venus1"];
         [persistList setPaperPhotoFileName:@"Screenshot1.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_01.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_1.png"];
         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
         
         [persistList fillPlistData];
         
-        [persistList setPhotoItemName:@"Venus02"];
+        [persistList setPhotoItemName:@"Venus2"];
         [persistList setPaperPhotoFileName:@"Screenshot2.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_02.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_2.png"];
         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_NORMAL]];
         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_PINK]];
+        
+        [persistList fillPlistData];
+        
+        [persistList setPhotoItemName:@"Venus3"];
+        [persistList setPaperPhotoFileName:@"Screenshot3.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_3.png"];
+        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_POLAROID]];
+        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_GREEN]];
+        
+        [persistList fillPlistData];
+        
+        [persistList setPhotoItemName:@"Venus4"];
+        [persistList setPaperPhotoFileName:@"Screenshot4.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_4.png"];
+        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_ROLLED_UP]];
+        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_GLOOM]];
+        
+        [persistList fillPlistData];
+        
+        [persistList setPhotoItemName:@"Venus5"];
+        [persistList setPaperPhotoFileName:@"Screenshot5.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_5.png"];
+        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_SPRING]];
+        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_SUNNY]];
         
         [persistList fillPlistData];
         
@@ -142,16 +164,9 @@
         [archiver encodeObject:persistList forKey:kDataKey];
         [archiver finishEncoding];
         [data writeToFile:[self dataFilePath] atomically:YES];
-        
-        NSData *load_data = [[NSMutableData alloc]
-                        initWithContentsOfFile:[self dataFilePath]];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
-                                         initForReadingWithData:load_data];
-        VenusPersistList *persistList_load = [[VenusPersistList alloc] init];
-        persistList_load= [unarchiver decodeObjectForKey:kDataKey];
-        [unarchiver finishDecoding];
-        
-        NSLog(@"persistList_load = %@", persistList_load.persistList);
+
+        //NSLog(@"persistList_load = %@", persistList.persistList);
+        */
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -287,11 +302,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
-// persist test by jeanclad
+/* persist test by jeanclad
 - (NSString *)dataFilePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(
                                                          NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
+ */
 @end

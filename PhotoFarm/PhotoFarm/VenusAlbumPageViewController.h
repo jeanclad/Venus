@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ContentViewController.h"
+#import "VenusPersistList.h"
 
 @interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource>{
     UIPageViewController* _mPageViewController;
@@ -17,6 +18,7 @@
     BOOL    currentNavBarHidden;
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
+    VenusPersistList *venusloadPlist;
 }
 
 @property (strong, nonatomic) UIPageViewController* mPageViewController;
