@@ -37,6 +37,23 @@
     }else{
         self.mContentLabel.text = self.mContentString;
         self.albumTitleImage.hidden = YES;
+        
+        //test by jeanclad
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString * cachesDirectory = [paths objectAtIndex:0];
+        
+        NSMutableString *fileName = [NSMutableString stringWithFormat:@"screenshot"];
+        NSMutableString *fileIndex = [NSMutableString stringWithString:self.mContentString];
+        
+        [fileName appendString:[fileIndex substringWithRange:NSMakeRange(5, 1)]];
+        [fileName appendString:@".png"];
+        NSLog(@"fileNane = %@", fileName);
+        NSString * path = [cachesDirectory stringByAppendingPathComponent:fileName];
+        NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+        
+        UIImage *loadImage = [UIImage imageWithData:loadImageData];
+        [self.albumtPhotoImage setImage:loadImage];
+        [self.view addSubview:self.albumtPhotoImage];
     }
     
     // Navigation Bar 설정
@@ -51,6 +68,7 @@
 {
     [self setAlbumTitleImage:nil];
     [self setAlbumSubImage:nil];
+    [self setAlbumtPhotoImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

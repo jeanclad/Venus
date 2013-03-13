@@ -10,6 +10,11 @@
 #import "GlobalDataManager.h"
 #import "VenusFilmGroupViewController.h"
 #import "VenusAlbumPageViewController.h"
+#import "VenusPersistList.h"
+
+// persist test by jeanclad
+#define kFilename         @"persist_photo_list"
+#define kDataKey          @"Data"
 
 @interface VenusMainViewController ()
 
@@ -69,20 +74,20 @@
         [self.view addSubview:selectedButton];
         firstSelect = YES;
         
-        /*/ test by jenaclad
+        /*/ Photo Save to caches test by jenaclad
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
         
         UIImage *fullScreenImage = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"screenshot4.png"];
+        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"screenshot5.png"];
         UIImage * image = fullScreenImage;
         NSData * saveImageData = UIImagePNGRepresentation(image);
         [saveImageData writeToFile:filePath atomically:NO];
 
         NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
+        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot1.png"];
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
         UIImage *testImage = [UIImage imageWithData:loadImageData];
@@ -91,7 +96,6 @@
         [testImageView setImage:testImage];
         [self.view addSubview:testImageView];
          */
-         
 
     } else {
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -100,7 +104,7 @@
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
         
-        /* test by jeanclad
+        /* Photo load to caches test by jeanclad
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * documentsDirectory = [paths objectAtIndex:0];
         NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
@@ -113,6 +117,41 @@
         [self.view addSubview:testImageView];
          */
         
+        // persist test by jeanclad
+        VenusPersistList *persistList = [[VenusPersistList alloc] init];
+        
+        [persistList setPhotoItemName:@"Venus01"];
+        [persistList setPaperPhotoFileName:@"Screenshot1.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_01.png"];
+        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
+        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+        
+        [persistList fillPlistData];
+        
+        [persistList setPhotoItemName:@"Venus02"];
+        [persistList setPaperPhotoFileName:@"Screenshot2.png"];
+        [persistList setPaperlessPhotoFileName:@"Venus_paperless_02.png"];
+        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_NORMAL]];
+        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_PINK]];
+        
+        [persistList fillPlistData];
+        
+        NSMutableData *data = [[NSMutableData alloc] init];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                     initForWritingWithMutableData:data];
+        [archiver encodeObject:persistList forKey:kDataKey];
+        [archiver finishEncoding];
+        [data writeToFile:[self dataFilePath] atomically:YES];
+        
+        NSData *load_data = [[NSMutableData alloc]
+                        initWithContentsOfFile:[self dataFilePath]];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
+                                         initForReadingWithData:load_data];
+        VenusPersistList *persistList_load = [[VenusPersistList alloc] init];
+        persistList_load= [unarchiver decodeObjectForKey:kDataKey];
+        [unarchiver finishDecoding];
+        
+        NSLog(@"persistList_load = %@", persistList_load.persistList);
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -214,11 +253,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:string3, nil];
     
     [actionsheet showInView:self.view];
-    
-    /*
-     VenusFilmGroupViewController *VenusFilmGroupView = [[VenusFilmGroupViewController alloc] initWithNibName:@"VenusFilmGroupViewController" bundle:nil];
-     [self.navigationController pushViewController:VenusFilmGroupView animated:YES];
-     */
 }
 
 
@@ -240,27 +274,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return final;
 }
 
-
-/*
-static CGImageRef shrinkImage(UIImage *original, CGSize size) {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef context = CGBitmapContextCreate(NULL, size.width * scale,
-                                                 size.height * scale, 8, 0, colorSpace, kCGImageAlphaPremultipliedFirst);
-    CGContextDrawImage(context,
-                       CGRectMake(0, 0, size.width * scale, size.height * scale),
-                       original.CGImage);
-    CGImageRef shrunken = CGBitmapContextCreateImage(context);
-//    UIImage *final = [UIImage imageWithCGImage:shrunken];
-    
-    CGContextRelease(context);
-    CGImageRelease(shrunken);
-    
-    return shrunken;
-}
- */
-
 - (IBAction)UnderButtonPressed:(UIButton *)sender
 {
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
@@ -272,5 +285,13 @@ static CGImageRef shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:VenusAlbumPageView animated:YES];
     }
+}
+
+// persist test by jeanclad
+- (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(
+                                                         NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
 @end

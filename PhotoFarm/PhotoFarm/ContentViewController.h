@@ -19,5 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *albumTitleImage;
 @property (weak, nonatomic) IBOutlet UIImageView *albumSubImage;
+@property (weak, nonatomic) IBOutlet UIImageView *albumtPhotoImage;
 
 @end
