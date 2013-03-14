@@ -45,6 +45,16 @@
     //NSLog(@"persistList = %@", self.persistList);
 }
 
+-(void)clearPlistData
+{
+    self.photoItem = nil;
+    self.photoItemName = nil;
+    self.paperPhotoFileName = nil;
+    self.paperlessPhotoFileName = nil;
+    self.paperType = nil;
+    self.chemicalType = nil;
+}
+
 #pragma mark NSCoding
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:self.persistList forKey:kPersistList];

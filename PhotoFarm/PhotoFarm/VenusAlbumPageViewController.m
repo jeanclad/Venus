@@ -145,9 +145,7 @@
 }
 
 - (void) rightBarButtonPressed:(id)sender
-{
-    NSLog(@"ddddd");
-    
+{    
     VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController pushViewController:venusAlbumDetailView animated:NO];
@@ -166,14 +164,41 @@
 {
     NSString *filePath = [self dataFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        //---   아카이빙 으로 plist을 읽어온다.
         NSData *data = [[NSMutableData alloc]
                         initWithContentsOfFile:[self dataFilePath]];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
                                          initForReadingWithData:data];
         venusloadPlist = [unarchiver decodeObjectForKey:kDataKey];
         [unarchiver finishDecoding];
+        //NSLog(@"loadPlist = %@ count = %d", venusloadPlist.persistList, venusloadPlist.persistList.count);
+        //--------------------------------------------------------------------------------------------------
+
         
-        NSLog(@"loadPlist = %@ count = %d", venusloadPlist.persistList, venusloadPlist.persistList.count);
+        //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
+        NSArray *allKeys = [[NSArray alloc] initWithArray:[venusloadPlist.persistList allKeys]];
+        NSLog(@"Allkeys = %@", allKeys);
+
+        NSArray *tmpArray = [[NSArray alloc] initWithArray:allKeys];
+        
+        tmpArray = [allKeys sortedArrayUsingSelector:@selector(compare:)];
+        //NSLog(@"sort = %@", tmpArray);
+        
+        NSEnumerator *enumReverse = [tmpArray reverseObjectEnumerator];
+        NSString *tmpString;
+
+        NSMutableArray *tmpDictArray = [[NSMutableArray alloc] init];
+        while(tmpString = [enumReverse nextObject]){
+            //NSLog(@"tmpString = %@", tmpString);
+            [tmpDictArray addObject:tmpString];
+        }
+
+        NSLog(@"tmpDictArray = %@", tmpDictArray);
+        
+        for (int i = 0; i < allKeys.count; i++){
+            NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:3]);
+        }
+        //---------------------------------------------------------------------------------------------------------------------------
         
         return YES;
     }
