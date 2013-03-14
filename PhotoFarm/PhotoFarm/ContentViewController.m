@@ -37,18 +37,21 @@
     }else{
         self.mContentLabel.text = self.mContentString;
         self.albumTitleImage.hidden = YES;
+    
+        /* file name test by jeanclad
+         NSMutableString *fileName = [NSMutableString stringWithFormat:@"screenshot"];
+         NSMutableString *fileIndex = [NSMutableString stringWithString:self.mContentString];
+         
+         [fileName appendString:[fileIndex substringWithRange:NSMakeRange(5, 1)]];
+         [fileName appendString:@".png"];
+         NSLog(@"fileNane = %@", fileName);
+         */
+
+        NSLog(@"plist = %@", self.currentPagePlistData);
         
-        //test by jeanclad
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * cachesDirectory = [paths objectAtIndex:0];
-        
-        NSMutableString *fileName = [NSMutableString stringWithFormat:@"screenshot"];
-        NSMutableString *fileIndex = [NSMutableString stringWithString:self.mContentString];
-        
-        [fileName appendString:[fileIndex substringWithRange:NSMakeRange(5, 1)]];
-        [fileName appendString:@".png"];
-        NSLog(@"fileNane = %@", fileName);
-        NSString * path = [cachesDirectory stringByAppendingPathComponent:fileName];
+        NSString * path = [cachesDirectory stringByAppendingPathComponent:[self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOT_FILE_NAME]];
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
         UIImage *loadImage = [UIImage imageWithData:loadImageData];
@@ -58,8 +61,6 @@
     
     // Navigation Bar 설정
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
-    NSLog(@"plist = %@", self.currentPagePlistData);
     
     //[self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }

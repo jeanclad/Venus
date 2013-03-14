@@ -41,7 +41,7 @@
         self.mMaxPage = venusloadPlist.persistList.count + 1;
     } else{
         self.mCurrentPage = 0;
-        self.mMaxPage = 10;
+        self.mMaxPage = venusloadPlist.persistList.count + 1;
     }
     
     // Page Option 설정.

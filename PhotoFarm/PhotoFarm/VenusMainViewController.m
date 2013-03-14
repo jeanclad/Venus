@@ -56,10 +56,11 @@
     }
     
     // Will Edit to button position
-
     [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
 
+    NSLog(@"aaa");
     if ((asset != nil) || (firstSelect == YES)){
+        NSLog(@"bbb");
         if (asset != nil){
             thumbnailImageRef = [asset thumbnail];
             thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
@@ -96,6 +97,7 @@
          */
 
     } else {
+        NSLog(@"ccc");
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         selectedButton.frame = CGRectMake(w/2-100, h/2-38, 200, 76);
         [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
@@ -234,7 +236,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
     UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
     thumbnail = shrunkenImage;
-    
+    firstSelect = YES;
     [picker dismissModalViewControllerAnimated:YES];
 
 }
