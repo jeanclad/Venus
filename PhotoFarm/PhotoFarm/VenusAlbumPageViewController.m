@@ -103,8 +103,17 @@
 
 - (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
+    NSLog(@"index = %d", index);
     contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
     contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
+    
+    //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
+    if (index != 0){
+        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[venusloadPlist.persistList objectForKey:[reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+        //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
+    }
+    //---------------------------------------------------------------------------------------------
+    
     return contentViewController;
 }
 
@@ -113,11 +122,12 @@
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
+
     if (self.mCurrentPage == 0) {
         return nil;
     }
  
-    self.mCurrentPage--;
+    self.mCurrentPage--;     
     return [self viewControllerAtIndex:self.mCurrentPage];
 }
 
@@ -128,7 +138,7 @@
         return nil;
     }
 
-    self.mCurrentPage++;
+    self.mCurrentPage++;  
     return [self viewControllerAtIndex:self.mCurrentPage];
 }
 
@@ -187,17 +197,20 @@
         NSEnumerator *enumReverse = [tmpArray reverseObjectEnumerator];
         NSString *tmpString;
 
-        NSMutableArray *tmpDictArray = [[NSMutableArray alloc] init];
+        reversePlistKeys = [[NSMutableArray alloc] init];
+        
         while(tmpString = [enumReverse nextObject]){
             //NSLog(@"tmpString = %@", tmpString);
-            [tmpDictArray addObject:tmpString];
+            [reversePlistKeys addObject:tmpString];
         }
 
-        NSLog(@"tmpDictArray = %@", tmpDictArray);
+        NSLog(@"dictAllKeys = %@", reversePlistKeys);
         
+        /* Debug Code
         for (int i = 0; i < allKeys.count; i++){
-            NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:3]);
+            NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:INDEX_PAPER_TYPE]);
         }
+         */
         //---------------------------------------------------------------------------------------------------------------------------
         
         return YES;

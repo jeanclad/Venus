@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VenusPersistList.h"
 
 @interface ContentViewController : UIViewController
 {
@@ -22,6 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *albumSubImage;
 @property (weak, nonatomic) IBOutlet UIImageView *albumtPhotoImage;
 
-@property (weak, nonatomic) VenusPersistList *loadPlist;
+@property (strong, nonatomic) NSMutableArray *currentPagePlistData;
 
 @end

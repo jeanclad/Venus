@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VenusPersistList.h"
 
 
 @interface GlobalDataManager : NSObject 

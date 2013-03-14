@@ -59,6 +59,8 @@
     // Navigation Bar 설정
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
+    NSLog(@"plist = %@", self.currentPagePlistData);
+    
     //[self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }
 

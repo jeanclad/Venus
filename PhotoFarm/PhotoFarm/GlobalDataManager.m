@@ -11,11 +11,12 @@
 
 @implementation GlobalDataManager
 @synthesize selectedAssets;
+
 SYNTHESIZE_SINGLETON_FOR_CLASS(GlobalDataManager);
 - (id) init
 {
 	if(self = [super init]){
-		self.selectedAssets = nil;        
+		self.selectedAssets = nil;
 	}
 	return self;
 }

@@ -13,13 +13,22 @@
 @implementation VenusPersistList
 
 #pragma mark    jeanclad
-- (void)fillPlistData
+- (void) initPlistData
 {
-    
     if (self.photoItem == nil){
         NSLog(@"photoItem is nil, so alloc with memory");
         self.photoItem = [[NSMutableArray alloc] init];
     }
+    
+    if (self.persistList == nil){
+        NSLog(@"persistList is nil, so alloc with memory");
+        self.persistList = [[NSMutableDictionary alloc] init];
+    }
+}
+
+- (void)fillPlistData
+{
+    [self initPlistData];
     
     [self.photoItem addObject:self.photoItemName];
     [self.photoItem addObject:self.paperPhotoFileName];
@@ -28,10 +37,7 @@
     [self.photoItem addObject:self.chemicalType];
     
     
-    if (self.persistList == nil){
-        NSLog(@"persistList is nil, so alloc with memory");
-        self.persistList = [[NSMutableDictionary alloc] init];
-    }
+
     
     [self.persistList setObject:self.photoItem forKey:self.photoItemName];
    

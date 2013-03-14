@@ -19,6 +19,7 @@
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
     VenusPersistList *venusloadPlist;
+    NSMutableArray *reversePlistKeys;
 }
 
 @property (strong, nonatomic) UIPageViewController* mPageViewController;

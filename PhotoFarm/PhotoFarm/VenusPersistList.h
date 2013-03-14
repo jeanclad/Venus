@@ -19,6 +19,12 @@
 #define KEY_PAPER_TYPE                  @"paperType";
 #define KEY_CHEMICAL_TYPE               @"chemicalType"
 
+#define INDEX_PHOTO_ITEM_NAME               0
+#define INDEX_PAPER_PHOT_FILE_NAME          1
+#define INDEX_PAPERLESS_PHOTO_FILE_NAME     2
+#define INDEX_PAPER_TYPE                    3
+#define INDEX_CHEMICAL_TYPE                 4
+
 typedef enum{
     PAPER_TYPE_NORMAL,
     PAPER_TYPE_POLAROID,
@@ -41,13 +47,13 @@ typedef enum{
     CHEMICAL_TYPE_SPECIAL
 }_chemicalType;
 
-@property (nonatomic, retain)     NSMutableDictionary     *persistList;
-@property (nonatomic, retain)     NSMutableArray          *photoItem;
-@property (nonatomic, retain)     NSString                *photoItemName;
-@property (nonatomic, retain)     NSString                *paperPhotoFileName;
-@property (nonatomic, retain)     NSString                *paperlessPhotoFileName;
-@property (nonatomic, retain)     NSNumber                *paperType;
-@property (nonatomic, retain)     NSNumber                *chemicalType;
+@property (nonatomic, retain) NSMutableDictionary   *persistList;
+@property (nonatomic, retain) NSMutableArray        *photoItem;
+@property (nonatomic, retain) NSString              *photoItemName;
+@property (nonatomic, retain) NSString              *paperPhotoFileName;
+@property (nonatomic, retain) NSString              *paperlessPhotoFileName;
+@property (nonatomic, retain) NSNumber              *paperType;
+@property (nonatomic, retain) NSNumber              *chemicalType;
 
 - (void)fillPlistData;
 @end
