@@ -73,20 +73,24 @@
         [self.view addSubview:selectedButton];
         firstSelect = YES;
         
-        /*/ Photo Save to caches test by jenaclad
+        ///*/ Photo Save to caches test by jenaclad
+        NSLog(@"asset = %@", asset);
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
         
         UIImage *fullScreenImage = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"screenshot5.png"];
+        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paper_1.png"];
         UIImage * image = fullScreenImage;
         NSData * saveImageData = UIImagePNGRepresentation(image);
         [saveImageData writeToFile:filePath atomically:NO];
+        NSLog(@"save path = %@", filePath);
+        //*/
 
+        ///*/ Photo Load to caches test by jenaclad
         NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot1.png"];
+        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"Venus_Paper_1.png"];
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
         UIImage *testImage = [UIImage imageWithData:loadImageData];
@@ -94,7 +98,29 @@
         [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
         [testImageView setImage:testImage];
         [self.view addSubview:testImageView];
-         */
+        //*/
+        
+        ///* persist test by jeanclad
+         VenusPersistList *persistList = [[VenusPersistList alloc] init];
+         
+         [persistList setPhotoItemName:@"Venus1"];
+         [persistList setPaperPhotoFileName:@"Venus_paper_1.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_paperless_1.png"];
+         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
+         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+         
+         [persistList fillPlistData];
+         
+         NSMutableData *data = [[NSMutableData alloc] init];
+         NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+         initForWritingWithMutableData:data];
+         [archiver encodeObject:persistList forKey:kDataKey];
+         [archiver finishEncoding];
+         [data writeToFile:[self dataFilePath] atomically:YES];
+         
+         //NSLog(@"persistList_load = %@", persistList.persistList);
+         //*/
+
 
     } else {
         NSLog(@"ccc");
@@ -237,6 +263,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
     thumbnail = shrunkenImage;
     firstSelect = YES;
+    
     [picker dismissModalViewControllerAnimated:YES];
 
 }
@@ -304,12 +331,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
-/* persist test by jeanclad
+///* persist test by jeanclad
 - (NSString *)dataFilePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(
                                                          NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
- */
+ //*/
 @end
