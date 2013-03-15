@@ -44,13 +44,14 @@
         NSString *path = [cachesDirectory stringByAppendingPathComponent:paperFile];
     
         NSLog(@"load path = %@", path);
+        NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
-        ///* FIle Read Error test by jeanclad
+        /* FIle Read Error test by jeanclad
         NSError *error = nil;
         NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
         NSLog(@"error = %@", error.localizedDescription);
-        //*-----------------------------------------------------------------------------------------------------------/
-        
+        -----------------------------------------------------------------------------------------------------------*/
+
         UIImage *loadImage = [UIImage imageWithData:loadImageData];
         [self.albumtPhotoImage setImage:loadImage];
         [self.view addSubview:self.albumtPhotoImage];

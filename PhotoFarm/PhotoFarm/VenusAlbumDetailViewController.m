@@ -36,6 +36,7 @@
     NSString * path = [cachesDirectory stringByAppendingPathComponent:[self.currentPagePlistData objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME]];
     NSLog(@"load path = %@", path);
     NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+    
     /* File Read test by jeanclad
     NSError *error = nil;
     NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
@@ -61,6 +62,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)viewDidUnload {
+    [self setDetailPagePhotoVIew:nil];
+    [self setDetailPageLabelView:nil];
+    [self setDetailContentView:nil];
+    [super viewDidUnload];
+}
+
 
 #pragma mark jeanclad
 - (IBAction)buttonPressed:(UIButton *)sender
@@ -96,11 +105,13 @@
 - (void) onSingleTap:(UIGestureRecognizer *)gestureRecognizer
 {
     NSLog(@"gestureRecognizer: %d",gestureRecognizer.view.tag);
+    
+    if (self.navigationController.isNavigationBarHidden){
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+    else{
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
 }
-                       - (void)viewDidUnload {
-                           [self setDetailPagePhotoVIew:nil];
-                           [self setDetailPageLabelView:nil];
-                           [self setDetailContentView:nil];
-                           [super viewDidUnload];
-                       }
+
 @end
