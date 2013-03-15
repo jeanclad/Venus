@@ -7,6 +7,7 @@
 //
 
 #import "VenusAlbumDetailViewController.h"
+#import "VenusPersistList.h"
 
 @interface VenusAlbumDetailViewController ()
 
@@ -27,6 +28,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSLog(@"plist = %@", self.currentPagePlistData);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString * cachesDirectory = [paths objectAtIndex:0];
+    NSString * path = [cachesDirectory stringByAppendingPathComponent:[self.currentPagePlistData objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME]];
+    NSLog(@"load path = %@", path);
+    // NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+    NSError *error = nil;
+    NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
+    NSLog(@"error = %@", error.localizedDescription);
+    
+    UIImage *loadImage = [UIImage imageWithData:loadImageData];
+    [self.detailPagePhotoVIew setImage:loadImage];
+    [self.view addSubview:self.detailPagePhotoVIew];
     
     //  제스쳐 설정 (페이지뷰 컨틀로러가 좌/우측 탭만 하여도 넘어가기 때문에 텝 이벤트를 오버라이딩하여
     //  네비게이션 바를 숨기고 보이는 용도로 사용함
@@ -63,4 +78,8 @@
 {
     NSLog(@"gestureRecognizer: %d",gestureRecognizer.view.tag);
 }
+                       - (void)viewDidUnload {
+                           [self setDetailPagePhotoVIew:nil];
+                           [super viewDidUnload];
+                       }
 @end

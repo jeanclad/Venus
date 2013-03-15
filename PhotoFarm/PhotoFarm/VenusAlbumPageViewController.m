@@ -157,6 +157,10 @@
 - (void) rightBarButtonPressed:(id)sender
 {    
     VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
+    
+    venusAlbumDetailView.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[venusloadPlist.persistList objectForKey:[reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+    //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
+    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController pushViewController:venusAlbumDetailView animated:NO];
 

@@ -38,14 +38,14 @@
         self.mContentLabel.text = self.mContentString;
         self.albumTitleImage.hidden = YES;
         
-        //* file name test by jeanclad
+        /* file name test by jeanclad
          NSMutableString *fileName = [NSMutableString stringWithFormat:@"Venus_Paper_1"];
          NSMutableString *fileIndex = [NSMutableString stringWithString:self.mContentString];
          
          [fileName appendString:[fileIndex substringWithRange:NSMakeRange(5, 1)]];
          [fileName appendString:@".png"];
          NSLog(@"fileNane = %@", fileName);
-        //*/
+        /*/
 
         NSLog(@"plist = %@", self.currentPagePlistData);
         
