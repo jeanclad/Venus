@@ -38,25 +38,18 @@
         self.mContentLabel.text = self.mContentString;
         self.albumTitleImage.hidden = YES;
         
-        /* file name test by jeanclad
-         NSMutableString *fileName = [NSMutableString stringWithFormat:@"Venus_Paper_1"];
-         NSMutableString *fileIndex = [NSMutableString stringWithString:self.mContentString];
-         
-         [fileName appendString:[fileIndex substringWithRange:NSMakeRange(5, 1)]];
-         [fileName appendString:@".png"];
-         NSLog(@"fileNane = %@", fileName);
-        /*/
-
-        NSLog(@"plist = %@", self.currentPagePlistData);
-        
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * path = [cachesDirectory stringByAppendingPathComponent:[self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOT_FILE_NAME]];
+        NSString *cachesDirectory = [paths objectAtIndex:0];
+        NSString *paperFile = [self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOT_FILE_NAME];
+        NSString *path = [cachesDirectory stringByAppendingPathComponent:paperFile];
+    
         NSLog(@"load path = %@", path);
-       // NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+        
+        ///* FIle Read Error test by jeanclad
         NSError *error = nil;
         NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
         NSLog(@"error = %@", error.localizedDescription);
+        //*-----------------------------------------------------------------------------------------------------------/
         
         UIImage *loadImage = [UIImage imageWithData:loadImageData];
         [self.albumtPhotoImage setImage:loadImage];

@@ -81,7 +81,7 @@
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paper_1.png"];
+        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paperless_1.png"];
         UIImage * image = fullScreenImage;
         NSData * saveImageData = UIImagePNGRepresentation(image);
         [saveImageData writeToFile:filePath atomically:NO];
@@ -90,7 +90,7 @@
 
         ///*/ Photo Load to caches test by jenaclad
         NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"Venus_Paper_1.png"];
+        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"Venus_Paperless_1.png"];
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
         UIImage *testImage = [UIImage imageWithData:loadImageData];
@@ -104,8 +104,8 @@
          VenusPersistList *persistList = [[VenusPersistList alloc] init];
          
          [persistList setPhotoItemName:@"Venus1"];
-         [persistList setPaperPhotoFileName:@"Venus_paper_1.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_paperless_1.png"];
+         [persistList setPaperPhotoFileName:@"Venus_Paper_1.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
          [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
          [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
          
