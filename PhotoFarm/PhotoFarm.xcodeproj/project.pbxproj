@@ -40,6 +40,7 @@
 		21B3B54F16E46B97008A1D15 /* VenusFilmGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */; };
 		E69B165A16EC43D10075365E /* GlobalDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E69B165916EC43D10075365E /* GlobalDataManager.m */; };
 		E6C8FC6D16F096DB00D86CC1 /* VenusPersistList.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */; };
+		E6C8FC6F16F3074D00D86CC1 /* lable_table_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C8FC6E16F3074D00D86CC1 /* lable_table_ip4.png */; };
 		E6DA5AB616E4EC3D008A989A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6DA5AB816E4EC3D008A989A /* Localizable.strings */; };
 		E6F9BDC816EDF193002241FA /* VenusAlbumPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9BDC616EDF192002241FA /* VenusAlbumPageViewController.m */; };
 		E6F9BDC916EDF193002241FA /* VenusAlbumPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDC716EDF192002241FA /* VenusAlbumPageViewController.xib */; };
@@ -95,6 +96,7 @@
 		E69B165916EC43D10075365E /* GlobalDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataManager.m; sourceTree = "<group>"; };
 		E6C8FC6B16F096DB00D86CC1 /* VenusPersistList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusPersistList.h; sourceTree = "<group>"; };
 		E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusPersistList.m; sourceTree = "<group>"; };
+		E6C8FC6E16F3074D00D86CC1 /* lable_table_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lable_table_ip4.png; sourceTree = "<group>"; };
 		E6DA5AB316E4E563008A989A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6DA5AB716E4EC3D008A989A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E6DA5AB916E4EC44008A989A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		2142086116F0005C0097FCE3 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				E6C8FC6E16F3074D00D86CC1 /* lable_table_ip4.png */,
 				21541A0216F2C1BB005F06B6 /* album_main_ip4.png */,
 				21541A0316F2C1BB005F06B6 /* album_sub_ip4.png */,
 				2142086216F000990097FCE3 /* navi_album01_off.png */,
@@ -350,6 +353,7 @@
 				2142087116F000990097FCE3 /* navi_album04_on.png in Resources */,
 				21541A0416F2C1BB005F06B6 /* album_main_ip4.png in Resources */,
 				21541A0516F2C1BB005F06B6 /* album_sub_ip4.png in Resources */,
+				E6C8FC6F16F3074D00D86CC1 /* lable_table_ip4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

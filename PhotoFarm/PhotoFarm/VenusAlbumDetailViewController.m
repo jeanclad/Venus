@@ -30,18 +30,23 @@
     // Do any additional setup after loading the view from its nib.
     NSLog(@"plist = %@", self.currentPagePlistData);
     
+    //---   저장된 파일을 로딩한다.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString * cachesDirectory = [paths objectAtIndex:0];
     NSString * path = [cachesDirectory stringByAppendingPathComponent:[self.currentPagePlistData objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME]];
     NSLog(@"load path = %@", path);
-    // NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+    NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+    /* File Read test by jeanclad
     NSError *error = nil;
     NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
     NSLog(@"error = %@", error.localizedDescription);
+    */
     
+    //----- 넘어온 이미지를 화면에 표시하고 라벨 뷰는 숨긴다.
     UIImage *loadImage = [UIImage imageWithData:loadImageData];
     [self.detailPagePhotoVIew setImage:loadImage];
-    [self.view addSubview:self.detailPagePhotoVIew];
+    [self.detailPageLabelView setHidden:YES];
+    //----------------------------------------
     
     //  제스쳐 설정 (페이지뷰 컨틀로러가 좌/우측 탭만 하여도 넘어가기 때문에 텝 이벤트를 오버라이딩하여
     //  네비게이션 바를 숨기고 보이는 용도로 사용함
@@ -68,7 +73,21 @@
     } else if ([buttonName isEqualToString:@"Delete"]){
         
     } else if ([buttonName isEqualToString:@"Info"]){
+        if ([self.detailPagePhotoVIew isHidden]){
+            [self.detailPagePhotoVIew setHidden:NO];
+            [self.detailPageLabelView setHidden:YES];
+        } else {
+            [self.detailPagePhotoVIew setHidden:YES];
+            [self.detailPageLabelView setHidden:NO];
+        }
         
+        // 네비게이션 스택 Push에 transition animation
+        [UIView beginAnimations:@"anotheranimation" context:nil];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                               forView:self.DetailContentView
+                                 cache:NO];
+        [UIView setAnimationDuration:0.5];
+        [UIView commitAnimations];
     } else if ([buttonName isEqualToString:@"Sns"]){
      
     }
@@ -80,6 +99,8 @@
 }
                        - (void)viewDidUnload {
                            [self setDetailPagePhotoVIew:nil];
+                           [self setDetailPageLabelView:nil];
+                           [self setDetailContentView:nil];
                            [super viewDidUnload];
                        }
 @end

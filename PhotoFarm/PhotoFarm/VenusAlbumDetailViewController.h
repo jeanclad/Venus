@@ -12,5 +12,7 @@
 - (IBAction)buttonPressed:(UIButton *)sender;
 
 @property (strong, nonatomic) NSMutableArray *currentPagePlistData;
+@property (weak, nonatomic) IBOutlet UIView *DetailContentView;
 @property (weak, nonatomic) IBOutlet UIImageView *detailPagePhotoVIew;
+@property (weak, nonatomic) IBOutlet UIImageView *detailPageLabelView;
 @end
