@@ -40,7 +40,7 @@
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString *cachesDirectory = [paths objectAtIndex:0];
-        NSString *paperFile = [self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOT_FILE_NAME];
+        NSString *paperFile = [self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOTO_FILE_NAME];
         NSString *path = [cachesDirectory stringByAppendingPathComponent:paperFile];
     
         NSLog(@"load path = %@", path);

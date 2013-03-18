@@ -81,11 +81,18 @@
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paperless_1.png"];
+        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paper_1.png"];
         UIImage * image = fullScreenImage;
         NSData * saveImageData = UIImagePNGRepresentation(image);
         [saveImageData writeToFile:filePath atomically:NO];
-        NSLog(@"save path = %@", filePath);
+        NSLog(@"1 save path = %@", filePath);
+        
+        
+        filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paperless_1.png"];
+        UIImage * image2 = fullScreenImage;
+        NSData * saveImageData2 = UIImagePNGRepresentation(image2);
+        [saveImageData2 writeToFile:filePath atomically:NO];
+        NSLog(@"2 save path = %@", filePath);
         //*/
 
         ///*/ Photo Load to caches test by jenaclad

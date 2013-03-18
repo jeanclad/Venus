@@ -8,12 +8,14 @@
 
 #import "VenusAlbumDetailViewController.h"
 #import "VenusPersistList.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface VenusAlbumDetailViewController ()
 
 @end
 
 @implementation VenusAlbumDetailViewController
+@synthesize loadImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,9 +46,11 @@
     */
     
     //----- 넘어온 이미지를 화면에 표시하고 라벨 뷰는 숨긴다.
-    UIImage *loadImage = [UIImage imageWithData:loadImageData];
-    [self.detailPagePhotoVIew setImage:loadImage];
+    loadImage = [[UIImage alloc] initWithData:loadImageData];
+//    loadImage = [UIImage imageWithData:loadImageData];
+
     [self.detailPageLabelView setHidden:YES];
+    [self.detailPagePhotoVIew setImage:loadImage];
     //----------------------------------------
     
     //  제스쳐 설정 (페이지뷰 컨틀로러가 좌/우측 탭만 하여도 넘어가기 때문에 텝 이벤트를 오버라이딩하여
@@ -78,7 +82,16 @@
     NSLog(@"buttonName = %@", buttonName);
     
     if ([buttonName isEqualToString:@"Save"]){
+        // 이미지에 메타 정보를 기록하고, 저장
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         
+        [library writeImageToSavedPhotosAlbum:[loadImage CGImage] orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error) {
+            if (error){
+                NSLog(@"%@", [error localizedDescription]);
+            } else {
+                NSLog(@"Saved Photo");
+            }
+        }];
     } else if ([buttonName isEqualToString:@"Delete"]){
         
     } else if ([buttonName isEqualToString:@"Info"]){

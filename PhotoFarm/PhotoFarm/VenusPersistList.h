@@ -20,7 +20,7 @@
 #define KEY_CHEMICAL_TYPE               @"chemicalType"
 
 #define INDEX_PHOTO_ITEM_NAME               0
-#define INDEX_PAPER_PHOT_FILE_NAME          1
+#define INDEX_PAPER_PHOTO_FILE_NAME          1
 #define INDEX_PAPERLESS_PHOTO_FILE_NAME     2
 #define INDEX_PAPER_TYPE                    3
 #define INDEX_CHEMICAL_TYPE                 4

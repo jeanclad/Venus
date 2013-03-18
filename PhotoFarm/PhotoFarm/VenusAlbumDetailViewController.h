@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIView *DetailContentView;
 @property (weak, nonatomic) IBOutlet UIImageView *detailPagePhotoVIew;
 @property (weak, nonatomic) IBOutlet UIImageView *detailPageLabelView;
+@property (strong, nonatomic) UIImage *loadImage;
 
 @end
