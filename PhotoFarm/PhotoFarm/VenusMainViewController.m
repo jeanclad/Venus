@@ -56,8 +56,6 @@
     }
     
     ///* persist test by jeanclad
-    photoInfoFileList = [[VenusPersistList alloc] init];
-    [photoInfoFileList initPlistData];
     [self loadPlistFile];
     
     // Will Edit to button position
@@ -110,23 +108,33 @@
         [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
         [testImageView setImage:testImage];
         [self.view addSubview:testImageView];
+ 
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus1"];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper1.png"];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
         
-        [photoInfoFileList setPhotoItemName:@"Venus2"];
-        [photoInfoFileList setPaperPhotoFileName:@"Venus_Paper_2.png"];
-        [photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_2.png"];
-        [photoInfoFileList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
-        [photoInfoFileList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
         
-        [photoInfoFileList fillPlistData];
+        
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus2"];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper_2.png"];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_2.png"];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+        
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
         
         NSMutableData *data = [[NSMutableData alloc] init];
         NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
                                      initForWritingWithMutableData:data];
-        [archiver encodeObject:photoInfoFileList forKey:kDataKey];
+        [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
         [archiver finishEncoding];
         [data writeToFile:[self dataFilePath] atomically:YES];
         
-        NSLog(@"persistList_load = %@", photoInfoFileList.persistList);
+        NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+        
     } else {
         NSLog(@"ccc");
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -330,10 +338,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     if ([buttonName isEqualToString:@"Album"]){
         VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
-        venusAlbumPageView.photoInfoList = [[VenusPersistList alloc] init];
-        venusAlbumPageView.photoInfoList = photoInfoFileList;
-        venusAlbumPageView.reversePlistKeys = reversePlistKeys;
-        
         venusAlbumPageView.rootNaviController = self.navigationController;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:venusAlbumPageView animated:YES];
@@ -350,14 +354,14 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                         initWithContentsOfFile:[self dataFilePath]];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
                                          initForReadingWithData:data];
-        photoInfoFileList = [unarchiver decodeObjectForKey:kDataKey];
+        [GlobalDataManager sharedGlobalDataManager].photoInfoFileList = [unarchiver decodeObjectForKey:kDataKey];
         [unarchiver finishDecoding];
         //NSLog(@"loadPlist = %@ count = %d", loadPersistList.persistList, loadPersistList.persistList.count);
         //--------------------------------------------------------------------------------------------------
         
         
         //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
-        NSArray *allKeys = [[NSArray alloc] initWithArray:[photoInfoFileList.persistList allKeys]];
+        NSArray *allKeys = [[NSArray alloc] initWithArray:[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList allKeys]];
         NSLog(@"Allkeys = %@", allKeys);
         
         NSArray *tmpArray = [[NSArray alloc] initWithArray:allKeys];
@@ -368,14 +372,14 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         NSEnumerator *enumReverse = [tmpArray reverseObjectEnumerator];
         NSString *tmpString;
         
-        reversePlistKeys = [[NSMutableArray alloc] init];
+        [GlobalDataManager sharedGlobalDataManager].reversePlistKeys = [[NSMutableArray alloc] init];
         
         while(tmpString = [enumReverse nextObject]){
             //NSLog(@"tmpString = %@", tmpString);
-            [reversePlistKeys addObject:tmpString];
+            [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys addObject:tmpString];
         }
         
-        NSLog(@"dictAllKeys = %@", reversePlistKeys);
+        NSLog(@"dictAllKeys = %@", [GlobalDataManager sharedGlobalDataManager].reversePlistKeys);
         
         /* Debug Code
          for (int i = 0; i < allKeys.count; i++){

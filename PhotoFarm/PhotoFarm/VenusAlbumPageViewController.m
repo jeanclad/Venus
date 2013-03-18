@@ -10,6 +10,7 @@
 #import "ContentViewController.h"
 #import "VenusMainViewController.h"
 #import "VenusAlbumDetailViewController.h"
+#import "GlobalDataManager.h"
 
 @interface VenusAlbumPageViewController ()
 // 굳이 외부로 노출 시킬 필요가 없는 함수 (Private 함수) 선언
@@ -45,9 +46,12 @@
         self.mMaxPage = photoInfoList.persistList.count + 1;
     }
      */
-    NSLog(@"plist = %@", [self.photoInfoList persistList]);
+    NSLog(@"plist = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
     self.mCurrentPage = 0;
-    self.mMaxPage = self.photoInfoList.persistList.count + 1;
+    self.mMaxPage = [GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList.count + 1;
+    
+    // Detail View에서 Page View 로 돌아왔을때 key 값이 다르면 사진이 삭제되었다고 판단한다.
+    mReverseKey = [[NSMutableArray alloc] initWithArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
 
     // Page Option 설정.
     NSDictionary *options =
@@ -90,6 +94,21 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"[%s] persist = %@", __FUNCTION__, [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+    
+    if (![mReverseKey isEqualToArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys]){
+        NSLog(@"key is not equal");
+        self.mMaxPage = [GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList.count + 1;
+        //[self performSelector:@selector(pageViewxController:viewControllerBeforeViewController:) withObject:self];
+        mReverseKey = [[NSMutableArray alloc] initWithArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
+        [mReverseKey removeAllObjects];
+        [mReverseKey setArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
+    }
+
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -115,7 +134,7 @@
     
     //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
     if (index != 0){
-        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[self.photoInfoList persistList] objectForKey:[self.reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
         
         NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     }
@@ -129,7 +148,6 @@
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
-
     if (self.mCurrentPage == 0) {
         return nil;
     }
@@ -165,7 +183,8 @@
 {    
     VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
     
-    venusAlbumDetailView.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[self.photoInfoList.persistList objectForKey:[self.reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+    NSString *selectedKey = [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1];
+    [venusAlbumDetailView setSelectedKey:selectedKey];
     //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];

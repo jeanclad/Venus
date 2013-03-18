@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ContentViewController.h"
-#import "VenusPersistList.h"
 
 @interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource>{
     UIPageViewController* _mPageViewController;
@@ -18,13 +17,12 @@
     BOOL    currentNavBarHidden;
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
+    NSMutableArray *mReverseKey;
 }
 
 @property (nonatomic, strong) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;
 @property (nonatomic) int mMaxPage;
 @property (nonatomic, strong) UINavigationController *rootNaviController;
-@property (nonatomic, strong) VenusPersistList *photoInfoList;
-@property (nonatomic, strong) NSMutableArray *reversePlistKeys;
 
 @end

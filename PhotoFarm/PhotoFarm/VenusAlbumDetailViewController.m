@@ -6,8 +6,8 @@
 //  Copyright (c) 2013년 Max. All rights reserved.
 //
 
+#import "GlobalDataManager.h"
 #import "VenusAlbumDetailViewController.h"
-#import "VenusPersistList.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface VenusAlbumDetailViewController ()
@@ -30,12 +30,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"plist = %@", self.currentPagePlistData);
     
     //---   저장된 파일을 로딩한다.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString * cachesDirectory = [paths objectAtIndex:0];
-    NSString * path = [cachesDirectory stringByAppendingPathComponent:[self.currentPagePlistData objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME]];
+    NSString *fileName = [[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList objectForKey:self.selectedKey] objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME];
+    NSString * path = [cachesDirectory stringByAppendingPathComponent:fileName];
     NSLog(@"load path = %@", path);
     NSData * loadImageData = [NSData dataWithContentsOfFile:path];
     
@@ -106,6 +106,21 @@
             }
         }];
     } else if ([buttonName isEqualToString:@"Delete"]){
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList removeObjectForKey:self.selectedKey];
+
+        NSMutableData *data = [[NSMutableData alloc] init];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                     initForWritingWithMutableData:data];
+        [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
+        [archiver finishEncoding];
+        [data writeToFile:[self dataFilePath] atomically:YES];
+        
+        [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys removeObject:self.selectedKey];
+        // Will Edited by jeanclad
+        // 이 부분에서 차후 사진 파일도 삭제해야 한다.
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        NSLog(@"%@ : persist", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
         
     } else if ([buttonName isEqualToString:@"Info"]){
         if ([self.detailPagePhotoVIew isHidden]){
@@ -138,6 +153,13 @@
     else{
         [self.navigationController setNavigationBarHidden:YES animated:YES];
     }
+}
+
+- (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(
+                                                         NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
 
 @end

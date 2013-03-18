@@ -11,12 +11,19 @@
 
 @implementation GlobalDataManager
 @synthesize selectedAssets;
+@synthesize photoInfoFileList;
+@synthesize reversePlistKeys;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(GlobalDataManager);
 - (id) init
 {
 	if(self = [super init]){
 		self.selectedAssets = nil;
+       
+        photoInfoFileList = [[VenusPersistList alloc] init];
+        [photoInfoFileList allocPlistData];
+        
+        reversePlistKeys = [[NSMutableArray alloc] init];
 	}
 	return self;
 }

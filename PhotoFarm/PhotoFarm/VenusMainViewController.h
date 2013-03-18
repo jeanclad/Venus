@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "VenusPersistList.h"
 
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>{
@@ -17,8 +16,6 @@
     CGImageRef thumbnailImageRef;
     UIImage     *thumbnail;
     BOOL        firstSelect;
-    VenusPersistList *photoInfoFileList;
-    NSMutableArray *reversePlistKeys;
 }
 @property (nonatomic, strong) ALAsset *asset;
 - (IBAction)UnderButtonPressed:(UIButton *)sender;

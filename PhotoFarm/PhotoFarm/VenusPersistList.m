@@ -13,7 +13,7 @@
 @implementation VenusPersistList
 
 #pragma mark    jeanclad
-- (void) initPlistData
+- (void) allocPlistData
 {
     if (self.photoItem == nil){
         NSLog(@"photoItem is nil, so alloc with memory");
@@ -28,7 +28,7 @@
 
 - (void)fillPlistData
 {
-    [self initPlistData];
+    [self allocPlistData];
     
     [self.photoItem addObject:self.photoItemName];
     [self.photoItem addObject:self.paperPhotoFileName];

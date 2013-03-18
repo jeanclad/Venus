@@ -56,5 +56,5 @@ typedef enum{
 @property (nonatomic, retain) NSNumber              *chemicalType;
 
 - (void)fillPlistData;
-- (void)initPlistData;
+- (void)allocPlistData;
 @end

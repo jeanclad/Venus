@@ -13,7 +13,11 @@
 @interface GlobalDataManager : NSObject 
 {
     NSMutableArray  *selectedAssets;
+    VenusPersistList *photoInfoFileList;
+    NSMutableArray *reversePlistKeys;
 }
 + (GlobalDataManager *) sharedGlobalDataManager;
 @property (nonatomic, strong) NSMutableArray *selectedAssets;
+@property (nonatomic, strong) VenusPersistList *photoInfoFileList;
+@property (nonatomic, strong)NSMutableArray *reversePlistKeys;
 @end
