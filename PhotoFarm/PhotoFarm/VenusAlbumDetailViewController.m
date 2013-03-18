@@ -86,10 +86,23 @@
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         
         [library writeImageToSavedPhotosAlbum:[loadImage CGImage] orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error) {
+            NSString *string1;
+            NSString *string2;
+            NSString *string3;
             if (error){
                 NSLog(@"%@", [error localizedDescription]);
+                string1 = NSLocalizedString(@"PhotoSavedErrTitle", @"사진 저장 완료 타이틀");
+                string2 = NSLocalizedString(@"PhotoSavedErrMessage", @"사진 저장 완료 메세지 ");
+                string3 = NSLocalizedString(@"Cancle", @"취소");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+                [alert show];
             } else {
                 NSLog(@"Saved Photo");
+                string1 = NSLocalizedString(@"PhotoSavedDoneTitle", @"사진 저장 완료 타이틀");
+                string2 = NSLocalizedString(@"PhotoSavedDoneMessage", @"사진 저장 완료 메세지 ");
+                string3 = NSLocalizedString(@"Done", @"완료");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+                [alert show];
             }
         }];
     } else if ([buttonName isEqualToString:@"Delete"]){

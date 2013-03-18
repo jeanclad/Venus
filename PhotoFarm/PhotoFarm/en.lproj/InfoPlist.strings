@@ -3,6 +3,9 @@
 /* 취소   */
 "Cancel" = "Cancel";
 
+/* 완료   */
+"Done"  = "Done";
+
 /* 사진첩  */
 "SelectFromLibrary" = "Select From Library";
 
@@ -17,3 +20,9 @@
 
 /* 사진 선택    */
 "SelectImageButton" = "Touch to Select Your Image";
+
+/* 사진 저장 완료 타이틀 */
+"PhotoSavedErrTitle" = "Save Photo";
+
+/* 사진 저장 완료 메세지 */
+"PhotoSavedDErrMessage" = "Photo Save is Error";
