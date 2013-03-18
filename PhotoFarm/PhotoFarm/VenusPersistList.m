@@ -35,8 +35,6 @@
     [self.photoItem addObject:self.paperlessPhotoFileName];
     [self.photoItem addObject:self.paperType];
     [self.photoItem addObject:self.chemicalType];
-    
-    
 
     
     [self.persistList setObject:self.photoItem forKey:self.photoItemName];

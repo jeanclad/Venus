@@ -55,6 +55,11 @@
         h = 320;
     }
     
+    ///* persist test by jeanclad
+    photoInfoFileList = [[VenusPersistList alloc] init];
+    [photoInfoFileList initPlistData];
+    [self loadPlistFile];
+    
     // Will Edit to button position
     [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
 
@@ -81,14 +86,14 @@
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paper_1.png"];
+        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paper_2.png"];
         UIImage * image = fullScreenImage;
         NSData * saveImageData = UIImagePNGRepresentation(image);
         [saveImageData writeToFile:filePath atomically:NO];
         NSLog(@"1 save path = %@", filePath);
         
         
-        filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paperless_1.png"];
+        filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paperless_2.png"];
         UIImage * image2 = fullScreenImage;
         NSData * saveImageData2 = UIImagePNGRepresentation(image2);
         [saveImageData2 writeToFile:filePath atomically:NO];
@@ -97,7 +102,7 @@
 
         ///*/ Photo Load to caches test by jenaclad
         NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"Venus_Paperless_1.png"];
+        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"Venus_Paperless_2.png"];
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
         UIImage *testImage = [UIImage imageWithData:loadImageData];
@@ -105,30 +110,23 @@
         [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
         [testImageView setImage:testImage];
         [self.view addSubview:testImageView];
-        //*/
         
-        ///* persist test by jeanclad
-         VenusPersistList *persistList = [[VenusPersistList alloc] init];
-         
-         [persistList setPhotoItemName:@"Venus1"];
-         [persistList setPaperPhotoFileName:@"Venus_Paper_1.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
-         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
-         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
-         
-         [persistList fillPlistData];
-         
-         NSMutableData *data = [[NSMutableData alloc] init];
-         NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-         initForWritingWithMutableData:data];
-         [archiver encodeObject:persistList forKey:kDataKey];
-         [archiver finishEncoding];
-         [data writeToFile:[self dataFilePath] atomically:YES];
-         
-         //NSLog(@"persistList_load = %@", persistList.persistList);
-         //*/
-
-
+        [photoInfoFileList setPhotoItemName:@"Venus2"];
+        [photoInfoFileList setPaperPhotoFileName:@"Venus_Paper_2.png"];
+        [photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_2.png"];
+        [photoInfoFileList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
+        [photoInfoFileList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+        
+        [photoInfoFileList fillPlistData];
+        
+        NSMutableData *data = [[NSMutableData alloc] init];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                     initForWritingWithMutableData:data];
+        [archiver encodeObject:photoInfoFileList forKey:kDataKey];
+        [archiver finishEncoding];
+        [data writeToFile:[self dataFilePath] atomically:YES];
+        
+        NSLog(@"persistList_load = %@", photoInfoFileList.persistList);
     } else {
         NSLog(@"ccc");
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -331,14 +329,66 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSLog(@"buttonName = %@", buttonName);
     
     if ([buttonName isEqualToString:@"Album"]){
-        VenusAlbumPageViewController *VenusAlbumPageView= [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
-        VenusAlbumPageView.rootNaviController = self.navigationController;
+        VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
+        venusAlbumPageView.photoInfoList = [[VenusPersistList alloc] init];
+        venusAlbumPageView.photoInfoList = photoInfoFileList;
+        venusAlbumPageView.reversePlistKeys = reversePlistKeys;
+        
+        venusAlbumPageView.rootNaviController = self.navigationController;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
-        [self.navigationController pushViewController:VenusAlbumPageView animated:YES];
+        [self.navigationController pushViewController:venusAlbumPageView animated:YES];
     }
 }
 
 ///* persist test by jeanclad
+- (BOOL)loadPlistFile
+{
+    NSString *filePath = [self dataFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        //---   아카이빙 으로 plist을 읽어온다.
+        NSData *data = [[NSMutableData alloc]
+                        initWithContentsOfFile:[self dataFilePath]];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
+                                         initForReadingWithData:data];
+        photoInfoFileList = [unarchiver decodeObjectForKey:kDataKey];
+        [unarchiver finishDecoding];
+        //NSLog(@"loadPlist = %@ count = %d", loadPersistList.persistList, loadPersistList.persistList.count);
+        //--------------------------------------------------------------------------------------------------
+        
+        
+        //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
+        NSArray *allKeys = [[NSArray alloc] initWithArray:[photoInfoFileList.persistList allKeys]];
+        NSLog(@"Allkeys = %@", allKeys);
+        
+        NSArray *tmpArray = [[NSArray alloc] initWithArray:allKeys];
+        
+        tmpArray = [allKeys sortedArrayUsingSelector:@selector(compare:)];
+        //NSLog(@"sort = %@", tmpArray);
+        
+        NSEnumerator *enumReverse = [tmpArray reverseObjectEnumerator];
+        NSString *tmpString;
+        
+        reversePlistKeys = [[NSMutableArray alloc] init];
+        
+        while(tmpString = [enumReverse nextObject]){
+            //NSLog(@"tmpString = %@", tmpString);
+            [reversePlistKeys addObject:tmpString];
+        }
+        
+        NSLog(@"dictAllKeys = %@", reversePlistKeys);
+        
+        /* Debug Code
+         for (int i = 0; i < allKeys.count; i++){
+         NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:INDEX_PAPER_TYPE]);
+         }
+         */
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        return YES;
+    }
+    return NO;
+}
+
 - (NSString *)dataFilePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(
                                                          NSDocumentDirectory, NSUserDomainMask, YES);

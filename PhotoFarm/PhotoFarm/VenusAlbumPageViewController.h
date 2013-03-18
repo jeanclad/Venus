@@ -18,12 +18,13 @@
     BOOL    currentNavBarHidden;
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
-    VenusPersistList *venusloadPlist;
-    NSMutableArray *reversePlistKeys;
 }
 
-@property (strong, nonatomic) UIPageViewController* mPageViewController;
+@property (nonatomic, strong) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;
 @property (nonatomic) int mMaxPage;
-@property (strong, nonatomic) UINavigationController *rootNaviController;
+@property (nonatomic, strong) UINavigationController *rootNaviController;
+@property (nonatomic, strong) VenusPersistList *photoInfoList;
+@property (nonatomic, strong) NSMutableArray *reversePlistKeys;
+
 @end

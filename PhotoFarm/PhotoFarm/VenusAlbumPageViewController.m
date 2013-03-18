@@ -36,14 +36,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    /*
     if (self.loadPlistFile == YES){
         self.mCurrentPage = 0;
-        self.mMaxPage = venusloadPlist.persistList.count + 1;
+        self.mMaxPage = photoInfoList.persistList.count + 1;
     } else{
         self.mCurrentPage = 0;
-        self.mMaxPage = venusloadPlist.persistList.count + 1;
+        self.mMaxPage = photoInfoList.persistList.count + 1;
     }
-    
+     */
+    NSLog(@"plist = %@", [self.photoInfoList persistList]);
+    self.mCurrentPage = 0;
+    self.mMaxPage = self.photoInfoList.persistList.count + 1;
+
     // Page Option 설정.
     NSDictionary *options =
     [NSDictionary dictionaryWithObject:
@@ -106,11 +111,13 @@
     NSLog(@"index = %d", index);
     contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
     contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
+    //NSLog(@"content = %@", [[self.photoInfoList persistList] objectForKey:@"Venus1"]);
     
     //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
     if (index != 0){
-        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[venusloadPlist.persistList objectForKey:[reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
-        //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
+        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[self.photoInfoList persistList] objectForKey:[self.reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+        
+        NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     }
     //---------------------------------------------------------------------------------------------
     
@@ -158,7 +165,7 @@
 {    
     VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
     
-    venusAlbumDetailView.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[venusloadPlist.persistList objectForKey:[reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+    venusAlbumDetailView.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[self.photoInfoList.persistList objectForKey:[self.reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
     //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -174,58 +181,4 @@
 
 }
 
-- (BOOL)loadPlistFile
-{
-    NSString *filePath = [self dataFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        //---   아카이빙 으로 plist을 읽어온다.
-        NSData *data = [[NSMutableData alloc]
-                        initWithContentsOfFile:[self dataFilePath]];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
-                                         initForReadingWithData:data];
-        venusloadPlist = [unarchiver decodeObjectForKey:kDataKey];
-        [unarchiver finishDecoding];
-        //NSLog(@"loadPlist = %@ count = %d", venusloadPlist.persistList, venusloadPlist.persistList.count);
-        //--------------------------------------------------------------------------------------------------
-
-        
-        //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
-        NSArray *allKeys = [[NSArray alloc] initWithArray:[venusloadPlist.persistList allKeys]];
-        NSLog(@"Allkeys = %@", allKeys);
-
-        NSArray *tmpArray = [[NSArray alloc] initWithArray:allKeys];
-        
-        tmpArray = [allKeys sortedArrayUsingSelector:@selector(compare:)];
-        //NSLog(@"sort = %@", tmpArray);
-        
-        NSEnumerator *enumReverse = [tmpArray reverseObjectEnumerator];
-        NSString *tmpString;
-
-        reversePlistKeys = [[NSMutableArray alloc] init];
-        
-        while(tmpString = [enumReverse nextObject]){
-            //NSLog(@"tmpString = %@", tmpString);
-            [reversePlistKeys addObject:tmpString];
-        }
-
-        NSLog(@"dictAllKeys = %@", reversePlistKeys);
-        
-        /* Debug Code
-        for (int i = 0; i < allKeys.count; i++){
-            NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:INDEX_PAPER_TYPE]);
-        }
-         */
-        //---------------------------------------------------------------------------------------------------------------------------
-        
-        return YES;
-    }
-    return NO;
-}
-
-- (NSString *)dataFilePath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kFilename];
-}
 @end
