@@ -55,7 +55,6 @@
         h = 320;
     }
     
-    ///* persist test by jeanclad
     [self loadPlistFile];
     
     // Will Edit to button position
@@ -134,6 +133,9 @@
         [data writeToFile:[self dataFilePath] atomically:YES];
         
         NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+        
+        ///* persist test by jeanclad
+        [self loadPlistFile];
         
     } else {
         NSLog(@"ccc");

@@ -68,10 +68,8 @@
     self.mPageViewController.dataSource = self;
     self.mPageViewController.view.frame = self.view.bounds;
     
-    initialViewController =
-    [self viewControllerAtIndex:self.mCurrentPage];
-    NSArray *viewControllers =
-    [NSArray arrayWithObject:initialViewController];
+    initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
+    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     
     
     //  제스쳐 설정 (페이지뷰 컨틀로러가 좌/우측 탭만 하여도 넘어가기 때문에 텝 이벤트를 오버라이딩하여
@@ -101,10 +99,11 @@
     if (![mReverseKey isEqualToArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys]){
         NSLog(@"key is not equal");
         self.mMaxPage = [GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList.count + 1;
-        //[self performSelector:@selector(pageViewxController:viewControllerBeforeViewController:) withObject:self];
         mReverseKey = [[NSMutableArray alloc] initWithArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
-        [mReverseKey removeAllObjects];
         [mReverseKey setArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
+        NSLog(@"mReverseKey = %@", mReverseKey);
+    
+        [self performSelector:@selector(viewUpdateAfterDelete) withObject:self afterDelay:0.3];
     }
 
 }
@@ -127,7 +126,7 @@
 
 - (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
-    NSLog(@"index = %d", index);
+    NSLog(@"index = %d, reversePlistKeys = %@, mCurrentPage = %d", index, [GlobalDataManager sharedGlobalDataManager].reversePlistKeys, self.mCurrentPage);
     contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
     contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
     //NSLog(@"content = %@", [[self.photoInfoList persistList] objectForKey:@"Venus1"]);
@@ -198,6 +197,15 @@
     [UIView setAnimationDuration:0.5];
     [UIView commitAnimations];
 
+}
+
+-(void) viewUpdateAfterDelete
+{
+    self.mCurrentPage = self.mCurrentPage - 1;
+    initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
+    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
+    [self.mPageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    NSLog(@"mcurrenpage = %d", self.mCurrentPage);
 }
 
 @end

@@ -81,10 +81,11 @@
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
     NSLog(@"buttonName = %@", buttonName);
     
+    NSProg
     if ([buttonName isEqualToString:@"Save"]){
         // 이미지에 메타 정보를 기록하고, 저장
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
+
         [library writeImageToSavedPhotosAlbum:[loadImage CGImage] orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error) {
             NSString *string1;
             NSString *string2;
