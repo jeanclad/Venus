@@ -31,6 +31,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    indicatorView = nil;
+    
     //---   저장된 파일을 로딩한다.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString * cachesDirectory = [paths objectAtIndex:0];
@@ -80,13 +82,21 @@
 {
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
     NSLog(@"buttonName = %@", buttonName);
-    
-    NSProg
+
     if ([buttonName isEqualToString:@"Save"]){
+        // 파일 저장용 인디케이터 설정
+        [self performSelector:@selector(showIndicatorView) onThread:[NSThread mainThread] withObject:nil waitUntilDone:YES];
+        
         // 이미지에 메타 정보를 기록하고, 저장
+        //---   이미지를 SEL 형식으로 저장 test by jeanclad
+        //UIImageWriteToSavedPhotosAlbum(loadImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        //-----------------------------------------------
+       
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 
         [library writeImageToSavedPhotosAlbum:[loadImage CGImage] orientation:ALAssetOrientationUp completionBlock:^(NSURL *assetURL, NSError *error) {
+            [indicatorView stopAnimating];
+            
             NSString *string1;
             NSString *string2;
             NSString *string3;
@@ -162,5 +172,40 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
+
+- (void) showIndicatorView
+{
+    if (indicatorView == nil) {
+        indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        [indicatorView setFrame:CGRectMake(20.0f, 20.0f, 200.0f, 200.0f)];
+        [indicatorView setHidesWhenStopped:YES];
+        //[indicatorView setBackgroundColor:[UIColor grayColor]];
+
+        [self.view addSubview:indicatorView];
+    }
+    [self.view bringSubviewToFront:indicatorView];
+    [indicatorView startAnimating];
+}
+
+/*
+//---   이미지를 SEL 형식으로 저장 test by jeanclad
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    UIAlertView *alert;
+    
+    // Unable to save the image
+    if (error)
+        alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                           message:@"Unable to save image to Photo Album."
+                                          delegate:self cancelButtonTitle:@"Ok"
+                                 otherButtonTitles:nil];
+    else // All is well
+        alert = [[UIAlertView alloc] initWithTitle:@"Success"
+                                           message:@"Image saved to Photo Album."
+                                          delegate:self cancelButtonTitle:@"Ok"
+                                 otherButtonTitles:nil];
+    [alert show];
+}
+*/
 
 @end

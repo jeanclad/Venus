@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VenusAlbumDetailViewController : UIViewController
+@interface VenusAlbumDetailViewController : UIViewController{
+    UIActivityIndicatorView *indicatorView;
+}
 - (IBAction)buttonPressed:(UIButton *)sender;
 
 @property (weak, nonatomic) NSString *selectedKey;
