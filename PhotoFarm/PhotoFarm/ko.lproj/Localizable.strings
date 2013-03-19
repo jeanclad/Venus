@@ -9,6 +9,12 @@
 /* 취소   */
 "Cancel" = "취소";
 
+/* 완료   */
+"Done"  = "완료";
+
+/* 삭제   */
+"Delete" = "삭제";
+
 /* 사진첩  */
 "SelectFromLibrary" = "앨범에서 가져오기";
 
@@ -32,3 +38,15 @@
 
 /*  사진접근에러 메세지 2"  */
 "ReasonUnknown" = "알수 없는 원인 입니다.";
+
+/* 사진 저장 타이틀 */
+"PhotoSavedTitle" = "사진 저장";
+
+/* 사진 저장 완료 메세지 */
+"PhotoSavedDoneMessage" = "사진 저장이 완료 되었습니다.";
+
+/* 사진 저장 실패 메세지 */
+"PhotoSavedErrMessage" = "사진 저장이 실패하였습니다.";
+
+/* 사진 삭제 메세지 타이틀    */
+"PhotoDeleteTitle"  = "사진을 삭제 하시겠습니까?";
