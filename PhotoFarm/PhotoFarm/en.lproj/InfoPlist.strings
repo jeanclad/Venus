@@ -6,6 +6,9 @@
 /* 완료   */
 "Done"  = "Done";
 
+/* 삭제   */
+"Delete" = "Delete";
+
 /* 사진첩  */
 "SelectFromLibrary" = "Select From Library";
 
@@ -21,8 +24,14 @@
 /* 사진 선택    */
 "SelectImageButton" = "Touch to Select Your Image";
 
-/* 사진 저장 완료 타이틀 */
-"PhotoSavedErrTitle" = "Save Photo";
+/* 사진 저장 타이틀 */
+"PhotoSavedTitle" = "Save Photo";
 
 /* 사진 저장 완료 메세지 */
-"PhotoSavedDErrMessage" = "Photo Save is Error";
+"PhotoSavedDoneMessage" = "Photo Save is Done";
+
+/* 사진 저장 실패 메세지 */
+"PhotoSavedErrMessage" = "Photo Save is Error";
+
+/* 사진 삭제 메세지 타이틀    */
+"PhotoDeleteTitle"  = "Are you sure want to delete this photo?";

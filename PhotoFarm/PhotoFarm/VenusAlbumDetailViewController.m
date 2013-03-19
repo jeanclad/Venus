@@ -77,6 +77,29 @@
 }
 
 
+#pragma mark UIActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 0){
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList removeObjectForKey:self.selectedKey];
+        
+        NSMutableData *data = [[NSMutableData alloc] init];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                     initForWritingWithMutableData:data];
+        [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
+        [archiver finishEncoding];
+        [data writeToFile:[self dataFilePath] atomically:YES];
+        
+        [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys removeObject:self.selectedKey];
+        // Will Edited by jeanclad
+        // 이 부분에서 차후 사진 파일도 삭제해야 한다.
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        NSLog(@"%@ : persist", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+    }
+}
+
+
 #pragma mark jeanclad
 - (IBAction)buttonPressed:(UIButton *)sender
 {
@@ -102,14 +125,14 @@
             NSString *string3;
             if (error){
                 NSLog(@"%@", [error localizedDescription]);
-                string1 = NSLocalizedString(@"PhotoSavedErrTitle", @"사진 저장 완료 타이틀");
-                string2 = NSLocalizedString(@"PhotoSavedErrMessage", @"사진 저장 완료 메세지 ");
+                string1 = NSLocalizedString(@"PhotoSavedTitle", @"사진 저장 타이틀");
+                string2 = NSLocalizedString(@"PhotoSavedErrMessage", @"사진 저장 실패 메세지 ");
                 string3 = NSLocalizedString(@"Cancle", @"취소");
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
                 [alert show];
             } else {
                 NSLog(@"Saved Photo");
-                string1 = NSLocalizedString(@"PhotoSavedDoneTitle", @"사진 저장 완료 타이틀");
+                string1 = NSLocalizedString(@"PhotoSavedTitle", @"사진 저장 타이틀");
                 string2 = NSLocalizedString(@"PhotoSavedDoneMessage", @"사진 저장 완료 메세지 ");
                 string3 = NSLocalizedString(@"Done", @"완료");
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
@@ -117,21 +140,13 @@
             }
         }];
     } else if ([buttonName isEqualToString:@"Delete"]){
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList removeObjectForKey:self.selectedKey];
-
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                     initForWritingWithMutableData:data];
-        [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
-        [archiver finishEncoding];
-        [data writeToFile:[self dataFilePath] atomically:YES];
+        NSString *title = NSLocalizedString(@"PhotoDeleteTitle", @"사진 삭제 메세지 타이틀");
+        NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
+        NSString *string2 = NSLocalizedString(@"Delete", @"삭제");
         
-        [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys removeObject:self.selectedKey];
-        // Will Edited by jeanclad
-        // 이 부분에서 차후 사진 파일도 삭제해야 한다.
+        UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:nil, nil];
         
-        [self.navigationController popViewControllerAnimated:YES];
-        NSLog(@"%@ : persist", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+        [actionsheet showInView:self.view];
         
     } else if ([buttonName isEqualToString:@"Info"]){
         if ([self.detailPagePhotoVIew isHidden]){
@@ -174,7 +189,8 @@
 }
 
 - (void) showIndicatorView
-{
+{   	
+    // Will Edit 좌표
     if (indicatorView == nil) {
         indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         [indicatorView setFrame:CGRectMake(20.0f, 20.0f, 200.0f, 200.0f)];

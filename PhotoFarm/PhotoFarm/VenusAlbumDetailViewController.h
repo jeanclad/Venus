@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VenusAlbumDetailViewController : UIViewController{
+@interface VenusAlbumDetailViewController : UIViewController <UIActionSheetDelegate> {
     UIActivityIndicatorView *indicatorView;
 }
 - (IBAction)buttonPressed:(UIButton *)sender;
