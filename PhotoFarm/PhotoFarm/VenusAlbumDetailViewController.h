@@ -10,6 +10,8 @@
 
 @interface VenusAlbumDetailViewController : UIViewController <UIActionSheetDelegate> {
     UIActivityIndicatorView *indicatorView;
+    UIActionSheet *deleteActionSheet;
+    UIActionSheet *SnsActionSheet;
 }
 - (IBAction)buttonPressed:(UIButton *)sender;
 

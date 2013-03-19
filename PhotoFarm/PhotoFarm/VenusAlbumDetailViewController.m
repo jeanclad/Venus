@@ -110,22 +110,27 @@
 #pragma mark UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    if (buttonIndex == 0){
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList removeObjectForKey:self.selectedKey];
-        
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                     initForWritingWithMutableData:data];
-        [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
-        [archiver finishEncoding];
-        [data writeToFile:[self dataFilePath] atomically:YES];
-        
-        [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys removeObject:self.selectedKey];
-        // Will Edited by jeanclad
-        // 이 부분에서 차후 사진 파일도 삭제해야 한다.
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        NSLog(@"%@ : persist", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+    if (actionSheet == deleteActionSheet){
+        if (buttonIndex == 0){
+            [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList removeObjectForKey:self.selectedKey];
+            
+            NSMutableData *data = [[NSMutableData alloc] init];
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                         initForWritingWithMutableData:data];
+            [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
+            [archiver finishEncoding];
+            [data writeToFile:[self dataFilePath] atomically:YES];
+            
+            [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys removeObject:self.selectedKey];
+            // Will Edited by jeanclad
+            // 이 부분에서 차후 사진 파일도 삭제해야 한다.
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            NSLog(@"%@ : persist", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+        }
+    }
+    else if (actionSheet == SnsActionSheet){
+        // Wiil Edited Code about Sns
     }
 }
 
@@ -174,9 +179,9 @@
         NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
         NSString *string2 = NSLocalizedString(@"Delete", @"삭제");
         
-        UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:nil, nil];
+        deleteActionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:string1 destructiveButtonTitle:string2 otherButtonTitles:nil, nil];
         
-        [actionsheet showInView:self.view];
+        [deleteActionSheet showInView:self.view];
         
     } else if ([buttonName isEqualToString:@"Info"]){
         if ([self.detailPagePhotoVIew isHidden]){
@@ -199,7 +204,12 @@
         [UIView setAnimationDuration:0.5];
         [UIView commitAnimations];
     } else if ([buttonName isEqualToString:@"Sns"]){
-     
+        NSString *title = NSLocalizedString(@"SnsTitle", @"Sns 메세지 타이틀");
+        NSString *string1 = NSLocalizedString(@"Cancel", @"취소");
+        
+        SnsActionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:string1 destructiveButtonTitle:@"Facebook" otherButtonTitles:@"E-MAIL", nil];
+        
+        [SnsActionSheet showInView:self.view];
     }
 }
 

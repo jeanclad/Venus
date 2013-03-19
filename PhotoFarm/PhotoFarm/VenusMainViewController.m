@@ -69,7 +69,7 @@
         }  
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
-        selectedButton.frame = CGRectMake(w/2-43, h/2-86, 134, 134);
+        selectedButton.frame = CGRectMake(w/2-100, h/2-86, 134, 134);
         [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
@@ -96,17 +96,6 @@
         [saveImageData2 writeToFile:filePath atomically:NO];
         NSLog(@"2 save path = %@", filePath);
         //*/
-
-        ///*/ Photo Load to caches test by jenaclad
-        NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"Venus_Paperless_2.png"];
-        NSData * loadImageData = [NSData dataWithContentsOfFile:path];
-        
-        UIImage *testImage = [UIImage imageWithData:loadImageData];
-        UIImageView *testImageView = [[UIImageView alloc] init];
-        [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
-        [testImageView setImage:testImage];
-        [self.view addSubview:testImageView];
  
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus1"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper1.png"];
