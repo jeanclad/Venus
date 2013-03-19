@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *detailPagePhotoVIew;
 @property (weak, nonatomic) IBOutlet UIImageView *detailPageLabelView;
 @property (strong, nonatomic) UIImage *loadImage;
+
+@property (weak, nonatomic) IBOutlet UILabel *paperLable;
 @property (weak, nonatomic) IBOutlet UILabel *chemicalLabel;
 
 @end
