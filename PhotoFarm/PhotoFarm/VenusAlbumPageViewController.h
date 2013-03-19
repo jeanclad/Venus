@@ -18,8 +18,8 @@
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
     NSMutableArray *mReverseKey;
+    UIBarButtonItem *barButtonItem;
 }
-
 @property (nonatomic, strong) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;
 @property (nonatomic) int mMaxPage;

@@ -86,10 +86,8 @@
     [self addChildViewController:self.mPageViewController];
     [self.view addSubview:self.mPageViewController.view];
     
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Detail" style:UIBarButtonItemStyleBordered target:self action:@selector(rightBarButtonPressed:)];
-
-    self.navigationItem.rightBarButtonItem = barButtonItem;
-
+    barButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Detail" style:UIBarButtonItemStyleBordered target:self action:@selector(rightBarButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -138,6 +136,11 @@
         NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     }
     //---------------------------------------------------------------------------------------------
+    
+    if (self.mCurrentPage != 0)
+        self.navigationItem.rightBarButtonItem = barButtonItem;
+    else
+        self.navigationItem.rightBarButtonItem = nil;
     
     return contentViewController;
 }
