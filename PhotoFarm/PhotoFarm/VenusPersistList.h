@@ -19,8 +19,18 @@
 #define KEY_PAPER_TYPE                  @"paperType";
 #define KEY_CHEMICAL_TYPE               @"chemicalType"
 
+#define CHEMICAL_TYPE_DEVELOP_PINK      @"PINK DEVELOP"
+#define CHEMICAL_TYPE_DEVELOP_GREEN     @"GREEN DEVELOP"
+#define CHEMICAL_TYPE_1620              @"1620"
+#define CHEMICAL_TYPE_YELLO             @"YELLO"
+#define CHEMICAL_TYPE_VALENTINE         @"VALENTINE"
+#define CHEMICAL_TYPE_CYAN              @"CYAN"
+#define CHEMICAL_TYPE_SUNNY             @"SUNNY"
+#define CHEMICAL_TYPE_GLOOM             @"GLOOM"
+#define CHEMICAL_TYPE_SPECIAL           @"SPECIAL"
+
 #define INDEX_PHOTO_ITEM_NAME               0
-#define INDEX_PAPER_PHOTO_FILE_NAME          1
+#define INDEX_PAPER_PHOTO_FILE_NAME         1
 #define INDEX_PAPERLESS_PHOTO_FILE_NAME     2
 #define INDEX_PAPER_TYPE                    3
 #define INDEX_CHEMICAL_TYPE                 4
@@ -35,17 +45,6 @@ typedef enum{
     PAPERT_TYPE_FOLDED
 }_paperType;
 
-typedef enum{
-    CHEMICAL_TYPE_DEVELOP_PINK,
-    CHEMICAL_TYPE_DEVELOP_GREEN,
-    CHEMICAL_TYPE_1620,
-    CHEMICAL_TYPE_YELLO,
-    CHEMICAL_TYPE_VALENTINE,
-    CHEMICAL_TYPE_CYAN,
-    CHEMICAL_TYPE_SUNNY,
-    CHEMICAL_TYPE_GLOOM,
-    CHEMICAL_TYPE_SPECIAL
-}_chemicalType;
 
 @property (nonatomic, retain) NSMutableDictionary   *persistList;
 @property (nonatomic, retain) NSMutableArray        *photoItem;
@@ -53,7 +52,7 @@ typedef enum{
 @property (nonatomic, retain) NSString              *paperPhotoFileName;
 @property (nonatomic, retain) NSString              *paperlessPhotoFileName;
 @property (nonatomic, retain) NSNumber              *paperType;
-@property (nonatomic, retain) NSNumber              *chemicalType;
+@property (nonatomic, retain) NSMutableArray        *chemicalType;
 
 - (void)fillPlistData;
 - (void)allocPlistData;

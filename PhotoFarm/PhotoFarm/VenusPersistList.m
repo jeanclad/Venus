@@ -24,6 +24,11 @@
         NSLog(@"persistList is nil, so alloc with memory");
         self.persistList = [[NSMutableDictionary alloc] init];
     }
+    
+    if (self.chemicalType == nil) {
+        NSLog(@"chemicalType is nil, so alloc with memeory");
+        self.chemicalType = [[NSMutableArray alloc] init];
+    }
 }
 
 - (void)fillPlistData

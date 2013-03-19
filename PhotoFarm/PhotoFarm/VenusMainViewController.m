@@ -112,7 +112,7 @@
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper1.png"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSMutableArray arrayWithObjects:CHEMICAL_TYPE_1620, @"\n", CHEMICAL_TYPE_CYAN, @"\n", CHEMICAL_TYPE_DEVELOP_PINK, @"\n", CHEMICAL_TYPE_SPECIAL, nil]];
         
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
         
@@ -121,7 +121,7 @@
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper_2.png"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_2.png"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSMutableArray arrayWithObjects:CHEMICAL_TYPE_DEVELOP_GREEN, @"\n", CHEMICAL_TYPE_VALENTINE, @"\n", CHEMICAL_TYPE_YELLO, @"\n", CHEMICAL_TYPE_GLOOM,  @"\n",CHEMICAL_TYPE_DEVELOP_GREEN, nil]];
         
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
         

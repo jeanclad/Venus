@@ -31,7 +31,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    //=== 사진 저장에서 사용되는 인디케이터 초기화
     indicatorView = nil;
+    
+    //--- 사진 라벨의 용액 표시에서 UILABEL의 자동 개행문자 추가
+    [self.chemicalLabel setNumberOfLines:0];
+    [self.chemicalLabel setLineBreakMode:UILineBreakModeWordWrap];
+    
+    //--- 사진 라벨의 용액 리스트 텍스트 추가
+    NSMutableArray *item = [[NSMutableArray alloc] initWithArray:[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList objectForKey:self.selectedKey]];
+    //NSLog(@"item = %@", item);
+    
+    NSMutableArray *loadChemicalList = [[NSMutableArray alloc] initWithArray:[item objectAtIndex:INDEX_CHEMICAL_TYPE]];
+    //NSLog(@"loadChemicalList = %@", loadChemicalList);
+    
+    NSMutableString *labelChemicalList = [[NSMutableString alloc] init];
+    for (int i = 0; i < loadChemicalList.count; i++) {
+        [labelChemicalList appendString:[loadChemicalList objectAtIndex:i]];
+    }
+    NSLog(@"labelChemicalList = %@", labelChemicalList);
+    [self.chemicalLabel setText:labelChemicalList];
+    [self.chemicalLabel setHidden:YES];
     
     //---   저장된 파일을 로딩한다.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -73,6 +93,7 @@
     [self setDetailPagePhotoVIew:nil];
     [self setDetailPageLabelView:nil];
     [self setDetailContentView:nil];
+    [self setChemicalLabel:nil];
     [super viewDidUnload];
 }
 
@@ -152,9 +173,11 @@
         if ([self.detailPagePhotoVIew isHidden]){
             [self.detailPagePhotoVIew setHidden:NO];
             [self.detailPageLabelView setHidden:YES];
+            [self.chemicalLabel setHidden:YES];
         } else {
             [self.detailPagePhotoVIew setHidden:YES];
             [self.detailPageLabelView setHidden:NO];
+            [self.chemicalLabel setHidden:NO];
         }
         
         // 네비게이션 스택 Push에 transition animation
