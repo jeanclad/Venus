@@ -222,6 +222,13 @@
     [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
 }
 
+- (void)viewDidUnload {
+    [self setMainView:nil];
+    [self setSelectView:nil];
+    [self setUnderBarItemView:nil];
+    [super viewDidUnload];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -333,6 +340,26 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:venusAlbumPageView animated:YES];
     }
+    else if ([buttonName isEqualToString:@"Papers"]){
+        [self moveAnimationRootView:YES];
+        [self setHiddenRootItem:YES];
+    }
+    else if ([buttonName isEqualToString:@"Chemicals"]){
+        
+    }
+    else if ([buttonName isEqualToString:@"Album"]){
+        
+    }
+    else if ([buttonName isEqualToString:@"Info"]){
+        
+    }
+    else if ([buttonName isEqualToString:@"Reset"]){
+        
+    }
+    else if ([buttonName isEqualToString:@"Select"]){
+        [self moveAnimationRootView:NO];
+        [self setHiddenRootItem:NO];
+    }
 }
 
 ///* persist test by jeanclad
@@ -391,4 +418,56 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
  //*/
+
+- (void)moveAnimationRootView:(BOOL)move
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height== 568)
+        moveXpos = 284;
+    else
+        moveXpos = 240;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5f];
+    
+    if (move == YES){
+        self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x + moveXpos, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    }
+    else{
+        self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    }
+    
+    [UIView commitAnimations];
+}
+
+- (void)setHiddenRootItem:(BOOL)isHidden
+{
+    if (isHidden == YES){
+        [self.underBarItemView setHidden:YES];
+  
+        [UIView beginAnimations:@"anotheranimation" context:nil];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                               forView:self.underBarItemView
+                                 cache:NO];
+        [UIView setAnimationDuration:0.5];
+        [UIView commitAnimations];
+    } else {
+        [self.underBarItemView setHidden:NO];
+
+        [UIView beginAnimations:@"anotheranimation" context:nil];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
+                               forView:self.underBarItemView
+                                 cache:NO];
+        [UIView setAnimationDuration:0.5];
+        [UIView commitAnimations];
+    }
+    
+
+}
 @end

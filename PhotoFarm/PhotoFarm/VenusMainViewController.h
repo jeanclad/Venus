@@ -19,4 +19,8 @@
 }
 @property (nonatomic, strong) ALAsset *asset;
 - (IBAction)UnderButtonPressed:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIView *MainView;
+@property (weak, nonatomic) IBOutlet UIView *selectView;
+@property (weak, nonatomic) IBOutlet UIView *underBarItemView;
+
 @end

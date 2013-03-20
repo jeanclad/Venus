@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "385384912.655219"
+         timestampString = "385464019.579897"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "251"
-         endingLineNumber = "251"
+         startingLineNumber = "258"
+         endingLineNumber = "258"
          landmarkName = "-actionSheet:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -273,6 +273,19 @@
          endingLineNumber = "33"
          landmarkName = "@interface VenusPersistList"
          landmarkType = "2">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PhotoFarm/VenusMainViewController.m"
+         timestampString = "385464453.955683"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "452"
+         endingLineNumber = "452"
+         landmarkName = "-setHiddenRootItem:"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
