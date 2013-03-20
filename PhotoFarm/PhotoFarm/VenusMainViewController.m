@@ -100,6 +100,9 @@
 	[self.selectView addSubview:chemicalPageControl];
 	chemicalScrollView.delegate = self;
     
+    
+    //---   큰 사짓 밧드 이미지 숨기기
+    [self.bigSteelImage setHidden:YES];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
@@ -291,6 +294,8 @@
     [self setSelectView:nil];
     [self setUnderBarItemView:nil];
     [self setBeakerImage:nil];
+    [self setBigSteelImage:nil];
+    [self setSmallSteelImage:nil];
     [super viewDidUnload];
 }
 
@@ -505,21 +510,31 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     else
         moveXpos = 240;
     
+    [self.bigSteelImage setHidden:NO];
+    [self.smallSteelImage setHidden:NO];
+    
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:0.5f];
     
     if (move == YES){
         self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x + moveXpos, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x + moveXpos, selectedButton.frame.origin.y + 30, selectedButton.frame.size.width, selectedButton.frame.size.height);
+        
+        self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x + 200, self.smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+        self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x - 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
     }
-    else{
+    else{		
         self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos, selectedButton.frame.origin.y - 30, selectedButton.frame.size.width, selectedButton.frame.size.height);
+        
+        self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x + 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
+        self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x  - 200, self                                 .smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
     }
     
     [UIView commitAnimations];
 }
+
 
 - (void)setHiddenRootItem:(BOOL)isHidden
 {
@@ -542,8 +557,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [UIView setAnimationDuration:0.5];
         [UIView commitAnimations];
     }
-    
-
 }
 
 -(void) paperPageChangeValue:(id)sender

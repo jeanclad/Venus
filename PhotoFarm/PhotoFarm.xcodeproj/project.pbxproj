@@ -67,6 +67,7 @@
 		E62341A016F9E7430003FB52 /* select_solution08.png in Resources */ = {isa = PBXBuildFile; fileRef = E623418B16F9E7430003FB52 /* select_solution08.png */; };
 		E62341A116F9E7430003FB52 /* select_solution09.png in Resources */ = {isa = PBXBuildFile; fileRef = E623418C16F9E7430003FB52 /* select_solution09.png */; };
 		E62341A316FA0B890003FB52 /* beaker_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A216FA0B890003FB52 /* beaker_off_ip4.png */; };
+		E62341A516FA151F0003FB52 /* stee_big_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A416FA151F0003FB52 /* stee_big_off_ip4.png */; };
 		E69B165A16EC43D10075365E /* GlobalDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E69B165916EC43D10075365E /* GlobalDataManager.m */; };
 		E6ADEFFC16F8808200160B9D /* lamp_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6ADEFF016F8808200160B9D /* lamp_off_ip4.png */; };
 		E6ADEFFD16F8808200160B9D /* lamp_on_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6ADEFF116F8808200160B9D /* lamp_on_ip4.png */; };
@@ -163,6 +164,7 @@
 		E623418B16F9E7430003FB52 /* select_solution08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_solution08.png; sourceTree = "<group>"; };
 		E623418C16F9E7430003FB52 /* select_solution09.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_solution09.png; sourceTree = "<group>"; };
 		E62341A216FA0B890003FB52 /* beaker_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beaker_off_ip4.png; sourceTree = "<group>"; };
+		E62341A416FA151F0003FB52 /* stee_big_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stee_big_off_ip4.png; sourceTree = "<group>"; };
 		E69B165716EC43D10075365E /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		E69B165816EC43D10075365E /* GlobalDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataManager.h; sourceTree = "<group>"; };
 		E69B165916EC43D10075365E /* GlobalDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataManager.m; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				E623416C16F9873B0003FB52 /* select_steel_ip4.png */,
 				E623415916F965BE0003FB52 /* select_bg_left_ip4.png */,
 				E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */,
+				E62341A416FA151F0003FB52 /* stee_big_off_ip4.png */,
 			);
 			name = select;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				E62341A016F9E7430003FB52 /* select_solution08.png in Resources */,
 				E62341A116F9E7430003FB52 /* select_solution09.png in Resources */,
 				E62341A316FA0B890003FB52 /* beaker_off_ip4.png in Resources */,
+				E62341A516FA151F0003FB52 /* stee_big_off_ip4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

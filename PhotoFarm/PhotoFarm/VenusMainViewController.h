@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+typedef enum {
+    BIG_STEEL_IMAGE,
+    SMALL_STEEL_IMAGE
+}steelSize;
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
     UIButton    *selectedButton;
@@ -32,5 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (weak, nonatomic) IBOutlet UIView *underBarItemView;
 @property (weak, nonatomic) IBOutlet UIImageView *beakerImage;
+@property (weak, nonatomic) IBOutlet UIImageView *bigSteelImage;
+@property (weak, nonatomic) IBOutlet UIImageView *smallSteelImage;
 
 @end
