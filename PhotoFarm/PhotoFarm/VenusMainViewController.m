@@ -35,8 +35,72 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    //--- Will Edtt position
+    paperScrollView = [[UIScrollView alloc]
+				  initWithFrame:CGRectMake(0, 0, 240, 290)];
+	
+	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(75, 90, 240, 1740)];
+    int paperTotal = 0;
+    
+    for (int i = 0; i < 6; i++) {
+		CGRect imageViewFrame;
+		imageViewFrame = CGRectMake(0, paperTotal, 90, 100);
+		paperTotal = paperTotal + 290;
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+		UIImage *image = [UIImage imageNamed:
+						  [NSString stringWithFormat:@"select_box%d.png", (i+1)]];
+        imageView.image = image;
+		[paperContentView addSubview:imageView];
+	}
+	
+	[paperScrollView addSubview:paperContentView];
+	paperScrollView.contentSize = paperContentView.frame.size;
+	[self.selectView addSubview:paperScrollView];
+	paperScrollView.pagingEnabled = YES;;
+    paperScrollView.showsHorizontalScrollIndicator = NO;
+    paperScrollView.showsVerticalScrollIndicator = NO;
+	
+	paperPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(1000, 1000, 80, 36)];
+	paperPageControl.currentPage = 0;
+	paperPageControl.numberOfPages = 6;
+	[paperPageControl addTarget:self action:@selector(paperPageChangeValue:) forControlEvents:UIControlEventValueChanged];
+	[self.selectView addSubview:paperPageControl];
+	paperScrollView.delegate = self;
+    
+    
+    chemicalScrollView = [[UIScrollView alloc]
+                       initWithFrame:CGRectMake(0, 0, 240, 290)];
+	
+	chemicalContentView = [[UIView alloc] initWithFrame:CGRectMake(65, 90, 240, 2610)];
+    int chemicalTotal = 0;
+    
+    for (int i = 0; i < 9; i++) {
+		CGRect imageViewFrame;
+		imageViewFrame = CGRectMake(0, chemicalTotal, 50, 100);
+		chemicalTotal = chemicalTotal + 290;
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+		UIImage *image = [UIImage imageNamed:
+						  [NSString stringWithFormat:@"select_solution0%d.png", (i+1)]];
+        imageView.image = image;
+		[chemicalContentView addSubview:imageView];
+	}
+    
+    [chemicalScrollView addSubview:chemicalContentView];
+	chemicalScrollView.contentSize = chemicalContentView.frame.size;
+	[self.selectView addSubview:chemicalScrollView];
+	chemicalScrollView.pagingEnabled = YES;;
+    chemicalScrollView.showsHorizontalScrollIndicator = NO;
+    chemicalScrollView.showsVerticalScrollIndicator = NO;
+	
+	chemicalPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(1000, 1000, 80, 36)];
+	chemicalPageControl.currentPage = 0;
+	chemicalPageControl.numberOfPages = 9;
+	[chemicalPageControl addTarget:self action:@selector(chemicalPageChangeValue:) forControlEvents:UIControlEventValueChanged];
+	[self.selectView addSubview:chemicalPageControl];
+	chemicalScrollView.delegate = self;
+    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -226,6 +290,7 @@
     [self setMainView:nil];
     [self setSelectView:nil];
     [self setUnderBarItemView:nil];
+    [self setBeakerImage:nil];
     [super viewDidUnload];
 }
 
@@ -343,12 +408,22 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     else if ([buttonName isEqualToString:@"Papers"]){
         [self moveAnimationRootView:YES];
         [self setHiddenRootItem:YES];
+ 
+        [paperScrollView setHidden:NO];
+        [paperPageControl setHidden:NO];
+        [chemicalScrollView setHidden:YES];
+        [chemicalPageControl setHidden:YES];
+        [self.beakerImage setHidden:YES];
     }
     else if ([buttonName isEqualToString:@"Chemicals"]){
+        [self moveAnimationRootView:YES];
+        [self setHiddenRootItem:YES];
         
-    }
-    else if ([buttonName isEqualToString:@"Album"]){
-        
+        [paperScrollView setHidden:YES];
+        [paperPageControl setHidden:YES];
+        [chemicalScrollView setHidden:NO];
+        [chemicalPageControl setHidden:NO];
+        [self.beakerImage setHidden:NO];
     }
     else if ([buttonName isEqualToString:@"Info"]){
         
@@ -468,6 +543,33 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [UIView commitAnimations];
     }
     
+
+}
+
+-(void) paperPageChangeValue:(id)sender
+{
+    NSLog(@"%s : sender = %@", __FUNCTION__, sender);
+	UIPageControl *pControl = (UIPageControl *) sender;
+	[paperScrollView setContentOffset:CGPointMake(0, pControl.currentPage * 290) animated:YES];
+}
+
+-(void) chemicalPageChangeValue:(id)sender
+{
+    NSLog(@"%s : sender = %@", __FUNCTION__, sender);
+	UIPageControl *pControl = (UIPageControl *) sender;
+	[chemicalScrollView setContentOffset:CGPointMake(0, pControl.currentPage * 290) animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    if (sender == paperScrollView){
+        CGFloat pageHeight = paperScrollView.frame.size.height;
+        paperPageControl.currentPage = floor((paperScrollView.contentOffset.y - pageHeight / 6) / pageHeight) + 1;
+    }
+    else if (sender == chemicalScrollView){
+        CGFloat pageHeight = paperScrollView.frame.size.height;
+        chemicalPageControl.currentPage = floor((chemicalScrollView.contentOffset.y - pageHeight / 9) / pageHeight) + 1;
+    }
 
 }
 @end
