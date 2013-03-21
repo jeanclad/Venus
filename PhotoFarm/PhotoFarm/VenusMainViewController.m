@@ -136,7 +136,7 @@
         }  
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
-        selectedButton.frame = CGRectMake(w/2-100, h/2-86, 134, 134);
+        selectedButton.frame = CGRectMake(w/2-80, h/2-86, 134, 134);
         [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
@@ -296,6 +296,7 @@
     [self setBeakerImage:nil];
     [self setBigSteelImage:nil];
     [self setSmallSteelImage:nil];
+    [self setPincetteImage:nil];
     [super viewDidUnload];
 }
 
@@ -513,28 +514,79 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [self.bigSteelImage setHidden:NO];
     [self.smallSteelImage setHidden:NO];
     
+    if (move == YES){
+        [UIView beginAnimations:@"pincetteUp" context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.5f];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(moveAnimationRootViewRight:finished:context:)];
+        self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + 50, self.pincetteImage.frame.origin.y - 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+        [UIView commitAnimations];
+    }
+    else{
+        [UIView beginAnimations:@"pincetteUp" context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.5f];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(moveAnimationRootViewLeft:finished:context:)];
+        self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y - 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y - 45, selectedButton.frame.size.width, selectedButton.frame.size.height);
+        [UIView commitAnimations];
+    }
+}
+
+- (void)moveAnimationRootViewRight:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height== 568)
+        moveXpos = 284;
+    else
+        moveXpos = 240;
+    
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:0.5f];
     
-    if (move == YES){
-        self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x + moveXpos, selectedButton.frame.origin.y + 30, selectedButton.frame.size.width, selectedButton.frame.size.height);
-        
-        self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x + 200, self.smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
-        self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x - 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
-    }
-    else{		
-        self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos, selectedButton.frame.origin.y - 30, selectedButton.frame.size.width, selectedButton.frame.size.height);
-        
-        self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x + 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
-        self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x  - 200, self                                 .smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
-    }
+    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x + moveXpos - 50, selectedButton.frame.origin.y + 45, selectedButton.frame.size.width, selectedButton.frame.size.height);
     
+    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x + 200, self.smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x - 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
+    
+    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x - 50, self.pincetteImage.frame.origin.y + 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+
     [UIView commitAnimations];
+
 }
 
+- (void)moveAnimationRootViewLeft:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height== 568)
+        moveXpos = 284;
+    else
+        moveXpos = 240;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5f];
+
+    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos + 50, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    
+    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x + 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
+    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x  - 200, self                                 .smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+    
+    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y + 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+
+    [UIView commitAnimations];
+}
 
 - (void)setHiddenRootItem:(BOOL)isHidden
 {
