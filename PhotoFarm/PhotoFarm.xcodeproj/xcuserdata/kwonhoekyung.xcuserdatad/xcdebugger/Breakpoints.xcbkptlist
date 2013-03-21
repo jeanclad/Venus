@@ -279,12 +279,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "385530683.1005"
+         timestampString = "385531528.395659"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "607"
-         endingLineNumber = "607"
-         landmarkName = "-setHiddenRootItem:"
+         startingLineNumber = "611"
+         endingLineNumber = "611"
+         landmarkName = "-UnderButtonPressed:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -305,12 +305,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "385530683.1005"
+         timestampString = "385531528.395659"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "531"
-         endingLineNumber = "531"
-         landmarkName = "-moveAnimationRootView:"
+         startingLineNumber = "532"
+         endingLineNumber = "532"
+         landmarkName = "-UnderButtonPressed:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

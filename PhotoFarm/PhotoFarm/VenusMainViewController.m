@@ -529,6 +529,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [self.smallSteelImage setHidden:NO];
     
     if (move == YES){
+        [selectedButton setUserInteractionEnabled:NO];
+        
         [UIView beginAnimations:@"pincetteUp" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.5f];
@@ -538,6 +540,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [UIView commitAnimations];
     }
     else{
+        [selectedButton setUserInteractionEnabled:YES];
+        
         [UIView beginAnimations:@"pincetteUp" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.5f];
