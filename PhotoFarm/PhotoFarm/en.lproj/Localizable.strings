@@ -15,6 +15,9 @@
 /* 삭제   */
 "Delete" = "Delete";
 
+/* 확인   */
+"OK" = "확인";
+
 /* 사진첩  */
 "SelectFromLibrary" = "Select From Library";
 
@@ -53,3 +56,9 @@
 
 /* Sns 메세지 타이틀  */
 "SnsTitle" = "Photo Upload";
+
+/* 사진 없음 메세지 타이틀    */
+"NoPhotoTitle" = "No Photo Selected";
+
+/* 사진 없음 메세지  */
+"NoPhotoMessage" = "You must select a photo to develop before you select to papers and chemicals";

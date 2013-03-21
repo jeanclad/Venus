@@ -405,6 +405,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
     NSLog(@"buttonName = %@", buttonName);
     
+    NSString *string1 = NSLocalizedString(@"NoPhotoTitle", @"사진 없음 메세지 타이틀");
+    NSString *string2 = NSLocalizedString(@"NoPhotoMessage", @"사진 없음 메세지");
+    NSString *string3 = NSLocalizedString(@"OK", "확인");
+    
     if ([buttonName isEqualToString:@"Album"]){
         VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
         venusAlbumPageView.rootNaviController = self.navigationController;
@@ -412,24 +416,34 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusAlbumPageView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Papers"]){
-        [self moveAnimationRootView:YES];
-        [self setHiddenRootItem:YES];
- 
-        [paperScrollView setHidden:NO];
-        [paperPageControl setHidden:NO];
-        [chemicalScrollView setHidden:YES];
-        [chemicalPageControl setHidden:YES];
-        [self.beakerImage setHidden:YES];
+        if (firstSelect == YES){
+            [self moveAnimationRootView:YES];
+            [self setHiddenRootItem:YES];
+            
+            [paperScrollView setHidden:NO];
+            [paperPageControl setHidden:NO];
+            [chemicalScrollView setHidden:YES];
+            [chemicalPageControl setHidden:YES];
+            [self.beakerImage setHidden:YES];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            [alert show];
+        }
     }
     else if ([buttonName isEqualToString:@"Chemicals"]){
-        [self moveAnimationRootView:YES];
-        [self setHiddenRootItem:YES];
-        
-        [paperScrollView setHidden:YES];
-        [paperPageControl setHidden:YES];
-        [chemicalScrollView setHidden:NO];
-        [chemicalPageControl setHidden:NO];
-        [self.beakerImage setHidden:NO];
+        if (firstSelect == YES){
+            [self moveAnimationRootView:YES];
+            [self setHiddenRootItem:YES];
+            
+            [paperScrollView setHidden:YES];
+            [paperPageControl setHidden:YES];
+            [chemicalScrollView setHidden:NO];
+            [chemicalPageControl setHidden:NO];
+            [self.beakerImage setHidden:NO];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            [alert show];
+        }
     }
     else if ([buttonName isEqualToString:@"Info"]){
         
