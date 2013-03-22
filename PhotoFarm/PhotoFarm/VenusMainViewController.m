@@ -106,6 +106,7 @@
     [self.bigSteelImage setHidden:YES];
     
     [self.navigationController.navigationBar setHidden:YES];
+    MainVIewMoved = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -124,6 +125,14 @@
         h = 320;
     }
     
+    float moveXpos;
+    
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+
+    
     [self loadPlistFile];
     
     // Will Edit to button position
@@ -138,7 +147,10 @@
         }  
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
-        selectedButton.frame = CGRectMake(w/2-80, h/2-86, 134, 134);
+        if (MainVIewMoved == NO)
+            selectedButton.frame = CGRectMake(w/2-80, h/2-86, 134, 134);
+        else
+            selectedButton.frame = CGRectMake((w/2-80) + moveXpos - 50, (h/2-86) + SELECT_RIGHT_MOVE_Y, 134, 134);
         [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
@@ -198,7 +210,11 @@
     } else {
         NSLog(@"ccc");
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        selectedButton.frame = CGRectMake(w/2-100, h/2-38, 200, 76);
+        if (MainVIewMoved == NO) {
+            selectedButton.frame = CGRectMake(w/2-100, h/2-38, 200, 76);
+        }else{
+            selectedButton.frame = CGRectMake((w/2-100) + moveXpos, (h/2-38) - SELECT_RIGHT_MOVE_Y, 200, 76);
+        }
         [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
@@ -435,6 +451,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [chemicalScrollView setHidden:YES];
             [chemicalPageControl setHidden:YES];
             [self.beakerImage setHidden:YES];
+            MainVIewMoved = YES;
         //}else{
            // UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
             //[alert show];
@@ -450,6 +467,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [chemicalScrollView setHidden:NO];
             [chemicalPageControl setHidden:NO];
             [self.beakerImage setHidden:NO];
+            MainVIewMoved = YES;        
         //} else {
             //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
             //[alert show];
@@ -480,6 +498,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     else if ([buttonName isEqualToString:@"Select"]){
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
+         MainVIewMoved = NO;
     }
 }
 
@@ -585,10 +604,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     UIScreen *screen = [UIScreen mainScreen];
     float moveXpos;
     
-    if (screen.bounds.size.height== 568)
-        moveXpos = 284;
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
     else
-        moveXpos = 240;
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];

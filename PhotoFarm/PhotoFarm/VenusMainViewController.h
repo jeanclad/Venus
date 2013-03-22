@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#define SELECT_RIGHT_MOVE_X_IP5   284
+#define SELECT_RIGHT_MOVE_X_IP4   240
+#define SELECT_RIGHT_MOVE_Y        50
+
 typedef enum {
     BIG_STEEL_IMAGE,
     SMALL_STEEL_IMAGE
@@ -20,6 +24,7 @@ typedef enum {
     CGImageRef thumbnailImageRef;
     UIImage     *thumbnail;
     BOOL        firstSelect;
+    BOOL        MainVIewMoved;
     
     //---   Scroll View
     UIScrollView * paperScrollView;
