@@ -43,6 +43,9 @@
 #define INDEX_PAPER_TYPE                    3
 #define INDEX_CHEMICAL_TYPE                 4
 
+#define ITEM_VALUE_PAPER                    1
+#define ITEM_VALUE_CHEMICAL                 2
+
 @property (nonatomic, retain) NSMutableDictionary   *persistList;
 @property (nonatomic, retain) NSMutableArray        *photoItem;
 @property (nonatomic, retain) NSString              *photoItemName;

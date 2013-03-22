@@ -10,6 +10,7 @@
 #import "GlobalDataManager.h"
 #import "VenusFilmGroupViewController.h"
 #import "VenusAlbumPageViewController.h"
+#import "VenusSelectDetailViewController.h"
 /* persist test by jeanclad
 #import "VenusPersistList.h"
 */
@@ -103,7 +104,8 @@
     
     //---   큰 사짓 밧드 이미지 숨기기
     [self.bigSteelImage setHidden:YES];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -329,6 +331,9 @@
         }
     } else if (buttonIndex == 1){
         VenusFilmGroupViewController *VenusFilmGroupView = [[VenusFilmGroupViewController alloc] initWithNibName:@"VenusFilmGroupViewController" bundle:nil];
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+        self.navigationController.navigationBar.translucent = YES;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:VenusFilmGroupView animated:YES];
 //        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
@@ -412,11 +417,16 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     if ([buttonName isEqualToString:@"Album"]){
         VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
         venusAlbumPageView.rootNaviController = self.navigationController;
+        
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+        self.navigationController.navigationBar.translucent = YES;
+        
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:venusAlbumPageView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Papers"]){
-        if (firstSelect == YES){
+        //if (firstSelect == YES){
             [self moveAnimationRootView:YES];
             [self setHiddenRootItem:YES];
             
@@ -425,13 +435,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [chemicalScrollView setHidden:YES];
             [chemicalPageControl setHidden:YES];
             [self.beakerImage setHidden:YES];
-        }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
-            [alert show];
-        }
+        //}else{
+           // UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            //[alert show];
+        //}
     }
     else if ([buttonName isEqualToString:@"Chemicals"]){
-        if (firstSelect == YES){
+        //if (firstSelect == YES){
             [self moveAnimationRootView:YES];
             [self setHiddenRootItem:YES];
             
@@ -440,13 +450,29 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [chemicalScrollView setHidden:NO];
             [chemicalPageControl setHidden:NO];
             [self.beakerImage setHidden:NO];
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
-            [alert show];
-        }
+        //} else {
+            //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            //[alert show];
+        ///}
     }
     else if ([buttonName isEqualToString:@"Info"]){
+        VenusSelectDetailViewController *venusSelectDetailView = [[VenusSelectDetailViewController alloc] initWithNibName:@"VenusSelectDetailViewController" bundle:nil];
+
+        if (paperScrollView.isHidden == YES){
+            [venusSelectDetailView setItemValue:ITEM_VALUE_CHEMICAL];
+            [venusSelectDetailView setCurrentItem:[chemicalPageControl currentPage]];
+        }
+        else{
+            [venusSelectDetailView setItemValue:ITEM_VALUE_PAPER];
+            [venusSelectDetailView setCurrentItem:[paperPageControl currentPage]];
+        }
         
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
+        self.navigationController.navigationBar.translucent = NO;
+        
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Reset"]){
         
