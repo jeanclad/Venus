@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211B2F8A16FEDF03002F5FD7 /* paper_preview_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8916FEDF03002F5FD7 /* paper_preview_7.png */; };
+		211B2F9116FEDFDD002F5FD7 /* paper_preview_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8B16FEDFDB002F5FD7 /* paper_preview_1.png */; };
+		211B2F9216FEDFDD002F5FD7 /* paper_preview_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8C16FEDFDB002F5FD7 /* paper_preview_2.png */; };
+		211B2F9316FEDFDD002F5FD7 /* paper_preview_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8D16FEDFDC002F5FD7 /* paper_preview_3.png */; };
+		211B2F9416FEDFDD002F5FD7 /* paper_preview_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8E16FEDFDC002F5FD7 /* paper_preview_4.png */; };
+		211B2F9516FEDFDD002F5FD7 /* paper_preview_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8F16FEDFDC002F5FD7 /* paper_preview_5.png */; };
+		211B2F9616FEDFDD002F5FD7 /* paper_preview_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F9016FEDFDC002F5FD7 /* paper_preview_6.png */; };
 		2142086A16F000990097FCE3 /* navi_album01_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2142086216F000990097FCE3 /* navi_album01_off.png */; };
 		2142086C16F000990097FCE3 /* navi_album02_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2142086416F000990097FCE3 /* navi_album02_off.png */; };
 		2142086E16F000990097FCE3 /* navi_album03_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2142086616F000990097FCE3 /* navi_album03_off.png */; };
@@ -98,6 +105,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211B2F8916FEDF03002F5FD7 /* paper_preview_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_7.png; sourceTree = "<group>"; };
+		211B2F8B16FEDFDB002F5FD7 /* paper_preview_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_1.png; sourceTree = "<group>"; };
+		211B2F8C16FEDFDB002F5FD7 /* paper_preview_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_2.png; sourceTree = "<group>"; };
+		211B2F8D16FEDFDC002F5FD7 /* paper_preview_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_3.png; sourceTree = "<group>"; };
+		211B2F8E16FEDFDC002F5FD7 /* paper_preview_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_4.png; sourceTree = "<group>"; };
+		211B2F8F16FEDFDC002F5FD7 /* paper_preview_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_5.png; sourceTree = "<group>"; };
+		211B2F9016FEDFDC002F5FD7 /* paper_preview_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_6.png; sourceTree = "<group>"; };
 		2142086216F000990097FCE3 /* navi_album01_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navi_album01_off.png; sourceTree = "<group>"; };
 		2142086416F000990097FCE3 /* navi_album02_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navi_album02_off.png; sourceTree = "<group>"; };
 		2142086616F000990097FCE3 /* navi_album03_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navi_album03_off.png; sourceTree = "<group>"; };
@@ -355,6 +369,13 @@
 				E623418016F9E7430003FB52 /* paper4.png */,
 				E623418116F9E7430003FB52 /* paper5.png */,
 				E623418216F9E7430003FB52 /* paper6.png */,
+				211B2F8B16FEDFDB002F5FD7 /* paper_preview_1.png */,
+				211B2F8C16FEDFDB002F5FD7 /* paper_preview_2.png */,
+				211B2F8D16FEDFDC002F5FD7 /* paper_preview_3.png */,
+				211B2F8E16FEDFDC002F5FD7 /* paper_preview_4.png */,
+				211B2F8F16FEDFDC002F5FD7 /* paper_preview_5.png */,
+				211B2F9016FEDFDC002F5FD7 /* paper_preview_6.png */,
+				211B2F8916FEDF03002F5FD7 /* paper_preview_7.png */,
 			);
 			name = paper;
 			path = "paper(공통)";
@@ -380,17 +401,17 @@
 		E69B165616EC43A30075365E /* Additional Views and Cells */ = {
 			isa = PBXGroup;
 			children = (
-				E6C8FC6B16F096DB00D86CC1 /* VenusPersistList.h */,
-				E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */,
-				E6F9BDCE16EDFCF7002241FA /* ContentViewController.h */,
-				E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */,
-				E69B165716EC43D10075365E /* SynthesizeSingleton.h */,
-				E69B165816EC43D10075365E /* GlobalDataManager.h */,
-				E69B165916EC43D10075365E /* GlobalDataManager.m */,
-				215EF5E816E48F6D0043C029 /* ThumbnailImageView.h */,
-				215EF5E916E48F6D0043C029 /* ThumbnailImageView.m */,
 				215EF5F616E4968C0043C029 /* AlbumContentsTableViewCell.h */,
 				215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */,
+				E6F9BDCE16EDFCF7002241FA /* ContentViewController.h */,
+				E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */,
+				E69B165816EC43D10075365E /* GlobalDataManager.h */,
+				E69B165916EC43D10075365E /* GlobalDataManager.m */,
+				E69B165716EC43D10075365E /* SynthesizeSingleton.h */,
+				215EF5E816E48F6D0043C029 /* ThumbnailImageView.h */,
+				215EF5E916E48F6D0043C029 /* ThumbnailImageView.m */,
+				E6C8FC6B16F096DB00D86CC1 /* VenusPersistList.h */,
+				E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */,
 			);
 			name = "Additional Views and Cells";
 			sourceTree = "<group>";
@@ -594,6 +615,13 @@
 				E62341A516FA151F0003FB52 /* stee_big_off_ip4.png in Resources */,
 				E62341A716FA99640003FB52 /* pincette_off_ip4.png in Resources */,
 				E62341AF16FAD3290003FB52 /* VenusSelectDetailViewController.xib in Resources */,
+				211B2F8A16FEDF03002F5FD7 /* paper_preview_7.png in Resources */,
+				211B2F9116FEDFDD002F5FD7 /* paper_preview_1.png in Resources */,
+				211B2F9216FEDFDD002F5FD7 /* paper_preview_2.png in Resources */,
+				211B2F9316FEDFDD002F5FD7 /* paper_preview_3.png in Resources */,
+				211B2F9416FEDFDD002F5FD7 /* paper_preview_4.png in Resources */,
+				211B2F9516FEDFDD002F5FD7 /* paper_preview_5.png in Resources */,
+				211B2F9616FEDFDD002F5FD7 /* paper_preview_6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

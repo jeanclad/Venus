@@ -144,14 +144,24 @@
         if (asset != nil){
             thumbnailImageRef = [asset thumbnail];
             thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
-        }  
+        }
+        
+        UIImage * result_img;
+        if (_bg != nil) {
+            result_img = preview_img;
+        }
+        else{
+            result_img = thumbnail;
+        }
+        [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
+        
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
         if (MainVIewMoved == NO)
-            selectedButton.frame = CGRectMake(w/2-80, h/2-86, 134, 134);
+            selectedButton.frame = CGRectMake(w/2-80, h/2-86, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         else
-            selectedButton.frame = CGRectMake((w/2-80) + moveXpos - 50, (h/2-86) + SELECT_RIGHT_MOVE_Y, 134, 134);
-        [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
+            selectedButton.frame = CGRectMake((w/2-80) + moveXpos - 50, (h/2-86) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+        
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
         firstSelect = YES;
@@ -699,5 +709,26 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         chemicalPageControl.currentPage = floor((chemicalScrollView.contentOffset.y - pageHeight / 9) / pageHeight) + 1;
     }
 
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView == paperScrollView){
+        //get character image
+        UIImage *_character = thumbnail;
+        _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+        //NSLog(@"bg_size : %f, %f", _bg.size.width, _bg.size.height);
+        if (_bg != nil) {
+            UIGraphicsBeginImageContext(_bg.size);
+            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
+            NSLog(@"_character = %f, %f", _character.size.width, _character.size.height);
+            [_character drawInRect:CGRectMake(5, 5, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
+            preview_img = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        }
+    } else{
+        
+    }
+    
 }
 @end

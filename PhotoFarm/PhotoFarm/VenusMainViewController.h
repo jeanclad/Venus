@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#define PREVIEW_FRAME_SIZE_WIDTH    130
+#define PREVIEW_FRAME_SIZE_HEIGHT    130
+#define PREVIEW_PHOTO_SIZE_WIDTH    120
+#define PREVIEW_PHOTO_SIZE_HEIGHT   120
+
 #define SELECT_RIGHT_MOVE_X_IP5   284
 #define SELECT_RIGHT_MOVE_X_IP4   240
 #define SELECT_RIGHT_MOVE_Y        50
@@ -25,6 +30,8 @@ typedef enum {
     UIImage     *thumbnail;
     BOOL        firstSelect;
     BOOL        MainVIewMoved;
+    UIImage     *_bg;
+    UIImage     *preview_img;
     
     //---   Scroll View
     UIScrollView * paperScrollView;
