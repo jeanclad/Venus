@@ -146,16 +146,16 @@
             thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
         }
         
-        UIImage * result_img;
+        UIImage *result_img = nil;
         if (_bg != nil) {
             result_img = preview_img;
         }
         else{
             result_img = thumbnail;
         }
-        [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
-        
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
+
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
         if (MainVIewMoved == NO)
             selectedButton.frame = CGRectMake(w/2-80, h/2-86, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
@@ -725,6 +725,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [_character drawInRect:CGRectMake(5, 5, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
+            [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
         }
     } else{
         
