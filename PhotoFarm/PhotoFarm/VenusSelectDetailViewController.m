@@ -90,7 +90,7 @@
 
     NSLog(@"currenPage = %d",  [self currentItem]);
     if (self.itemValue == ITEM_VALUE_PAPER) {
-        NSString *paperImageName = [NSString stringWithFormat:@"paper%d.png", self.currentItem+1];
+        NSString *paperImageName = [NSString stringWithFormat:@"paper_preview_%d.png", self.currentItem];
         UIImage *paperImage = [UIImage imageNamed:paperImageName];
         UIImageView *paperImageView = [[UIImageView alloc] initWithImage:paperImage];
         
@@ -103,7 +103,7 @@
         paperImageView.frame = paperrect;
         [viewLine2 addSubview:paperImageView];
         
-        NSString *paperBoxImageName = [NSString stringWithFormat:@"select_box%d.png", self.currentItem+1];
+        NSString *paperBoxImageName = [NSString stringWithFormat:@"select_box%d.png", self.currentItem];
         UIImage *paperBoxImage = [UIImage imageNamed:paperBoxImageName];
         UIImageView *paperBoxImageView = [[UIImageView alloc] initWithImage:paperBoxImage];
         
@@ -115,6 +115,7 @@
         paperBoxrect.origin.y = 10;
         paperBoxImageView.frame = paperBoxrect;
         [viewLine2 addSubview:paperBoxImageView];
+
     }
     else{
         NSString *chemicalImageName = [NSString stringWithFormat:@"select_solution0%d.png", self.currentItem+1];

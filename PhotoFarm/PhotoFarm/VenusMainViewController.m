@@ -41,16 +41,16 @@
     paperScrollView = [[UIScrollView alloc]
 				  initWithFrame:CGRectMake(0, 0, 240, 290)];
 	
-	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(75, 90, 240, 1740)];
+	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(75, 90, 240, 2030)];
     int paperTotal = 0;
     
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
 		CGRect imageViewFrame;
 		imageViewFrame = CGRectMake(0, paperTotal, 90, 100);
 		paperTotal = paperTotal + 290;
 		UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
 		UIImage *image = [UIImage imageNamed:
-						  [NSString stringWithFormat:@"select_box%d.png", (i+1)]];
+						  [NSString stringWithFormat:@"select_box%d.png", i]];
         imageView.image = image;
 		[paperContentView addSubview:imageView];
 	}
@@ -64,7 +64,7 @@
 	
 	paperPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(1000, 1000, 80, 36)];
 	paperPageControl.currentPage = 0;
-	paperPageControl.numberOfPages = 6;
+	paperPageControl.numberOfPages = 7;
 	[paperPageControl addTarget:self action:@selector(paperPageChangeValue:) forControlEvents:UIControlEventValueChanged];
 	[self.selectView addSubview:paperPageControl];
 	paperScrollView.delegate = self;
@@ -702,7 +702,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     if (sender == paperScrollView){
         CGFloat pageHeight = paperScrollView.frame.size.height;
-        paperPageControl.currentPage = floor((paperScrollView.contentOffset.y - pageHeight / 6) / pageHeight) + 1;
+        paperPageControl.currentPage = floor((paperScrollView.contentOffset.y - pageHeight / 7) / pageHeight) + 1;
     }
     else if (sender == chemicalScrollView){
         CGFloat pageHeight = paperScrollView.frame.size.height;
@@ -711,21 +711,26 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (scrollView == paperScrollView){
-        //get character image
-        UIImage *_character = thumbnail;
-        _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-        //NSLog(@"bg_size : %f, %f", _bg.size.width, _bg.size.height);
-        if (_bg != nil) {
-            UIGraphicsBeginImageContext(_bg.size);
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
-            NSLog(@"_character = %f, %f", _character.size.width, _character.size.height);
-            [_character drawInRect:CGRectMake(5, 5, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+        NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);                    
+        // currentPage가 0일때는 no page 일때 이므로 이때는 Paper와 합성을 하지 않고 원본 사진 이미지만 표시하게 한다.        
+        if (paperPageControl.currentPage != 0){
+            //get character image
+            UIImage *_character = thumbnail;
+            _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+            if (_bg != nil) {
+                UIGraphicsBeginImageContext(_bg.size);
+                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
+                [_character drawInRect:CGRectMake(5, 5, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
+                preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+            }
+        } else{
+            _bg = nil;
+            [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
         }
     } else{
         
