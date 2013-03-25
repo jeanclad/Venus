@@ -15,6 +15,7 @@
 		211B2F9616FEDFDD002F5FD7 /* paper_preview_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F9016FEDFDC002F5FD7 /* paper_preview_6.png */; };
 		211B2F9A16FFDCEF002F5FD7 /* select_box0.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F9916FFDCEF002F5FD7 /* select_box0.png */; };
 		211B2F9C16FFE761002F5FD7 /* paper_preview_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F9B16FFE760002F5FD7 /* paper_preview_0.png */; };
+		211B2F9F17004868002F5FD7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211B2F9D17004789002F5FD7 /* QuartzCore.framework */; };
 		2142086A16F000990097FCE3 /* navi_album01_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2142086216F000990097FCE3 /* navi_album01_off.png */; };
 		2142086C16F000990097FCE3 /* navi_album02_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2142086416F000990097FCE3 /* navi_album02_off.png */; };
 		2142086E16F000990097FCE3 /* navi_album03_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2142086616F000990097FCE3 /* navi_album03_off.png */; };
@@ -114,6 +115,7 @@
 		211B2F9016FEDFDC002F5FD7 /* paper_preview_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_6.png; sourceTree = "<group>"; };
 		211B2F9916FFDCEF002F5FD7 /* select_box0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_box0.png; sourceTree = "<group>"; };
 		211B2F9B16FFE760002F5FD7 /* paper_preview_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_0.png; sourceTree = "<group>"; };
+		211B2F9D17004789002F5FD7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2142086216F000990097FCE3 /* navi_album01_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navi_album01_off.png; sourceTree = "<group>"; };
 		2142086416F000990097FCE3 /* navi_album02_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navi_album02_off.png; sourceTree = "<group>"; };
 		2142086616F000990097FCE3 /* navi_album03_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navi_album03_off.png; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211B2F9F17004868002F5FD7 /* QuartzCore.framework in Frameworks */,
 				215EF5DC16E487EB0043C029 /* AssetsLibrary.framework in Frameworks */,
 				21B3B51716E43C76008A1D15 /* UIKit.framework in Frameworks */,
 				21B3B51916E43C76008A1D15 /* Foundation.framework in Frameworks */,
@@ -250,6 +253,7 @@
 		21B3B50A16E43C76008A1D15 = {
 			isa = PBXGroup;
 			children = (
+				211B2F9D17004789002F5FD7 /* QuartzCore.framework */,
 				215EF5DB16E487EB0043C029 /* AssetsLibrary.framework */,
 				21B3B51C16E43C76008A1D15 /* PhotoFarm */,
 				21B3B51516E43C76008A1D15 /* Frameworks */,

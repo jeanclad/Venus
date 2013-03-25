@@ -6,6 +6,7 @@
 //  Copyright (c) 2013년 Max. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "VenusMainViewController.h"
 #import "GlobalDataManager.h"
 #import "VenusFilmGroupViewController.h"
@@ -85,6 +86,7 @@
 						  [NSString stringWithFormat:@"select_solution0%d.png", (i+1)]];
         imageView.image = image;
 		[chemicalContentView addSubview:imageView];
+        [self fillChemicalAnimation:image];
 	}
     
     [chemicalScrollView addSubview:chemicalContentView];
@@ -116,6 +118,7 @@
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
     float w,h;
+    static ALAsset *oldAsset;
     
     if (screen.bounds.size.height== 568) {
         w = 568;
@@ -147,12 +150,16 @@
             thumbnailImageRef = [asset thumbnail];
             thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
              */
-            
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
             UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
             
             mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
+            
+            if (asset != oldAsset){
+                _bg = nil;
+                oldAsset = asset;
+            }
         }
         
         if (_bg != nil) {
@@ -163,15 +170,15 @@
             //result_img = thumbnail;
             result_img = mainPhotoView;
         }
-        
+            
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
 
         //        selectButton.frame = CGRectMake(200, 200, 67, 67);
         if (MainVIewMoved == NO)
-            selectedButton.frame = CGRectMake(w/2-80, h/2-86, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+            selectedButton.frame = CGRectMake(w/2-90, h/2-90, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         else
-            selectedButton.frame = CGRectMake((w/2-80) + moveXpos - 50, (h/2-86) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+            selectedButton.frame = CGRectMake((w/2-90) + moveXpos - 50, (h/2-90) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:selectedButton];
@@ -489,7 +496,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [chemicalScrollView setHidden:NO];
             [chemicalPageControl setHidden:NO];
             [self.beakerImage setHidden:NO];
-            MainVIewMoved = YES;        
+            MainVIewMoved = YES;
+        
+        //  test by hkkwon
+        UIImage *image = [UIImage imageNamed:
+						  [NSString stringWithFormat:@"select_solution01.png"]];
+        [self fillChemicalAnimation:image];
         //} else {
             //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
             //[alert show];
@@ -782,6 +794,40 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     UIGraphicsEndImageContext();
     
     return imgThumb;
+}
+
+- (void) fillChemicalAnimation:(UIImage *)chemicalImage
+{
+    int x1 = 200;
+    int y1 = 300;
+    
+    int cx1 = x1;
+    int cy1 = y1-20;
+    int cx2 = cx1;
+    int cy2 = cy1-20;
+    int cx3 = cx2;
+    int cy3 = cy2-20;
+    
+    CAKeyframeAnimation * ani3 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CGMutablePathRef thePath = CGPathCreateMutable();
+    CGPathMoveToPoint(thePath, NULL, x1, y1);
+    CGPathAddLineToPoint(thePath, NULL, cx1, cy1);
+    CGPathAddLineToPoint(thePath, NULL, cx2, cy2);
+    CGPathAddLineToPoint(thePath, NULL, cx3, cy3);
+    
+    ani3.path = thePath;
+    ani3.calculationMode = kCAAnimationPaced;
+    ani3.delegate = self;
+    ani3.duration = 3.0;
+    [chemicalContentView.layer addAnimation:ani3 forKey:nil];
+    CFRelease(thePath); //만든건 릴리즈
+    
+    CABasicAnimation *rotation =
+    [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotation.fromValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)]; //15도에서 시작
+    rotation.toValue = [NSNumber numberWithFloat:(90 * M_PI / 180.0)];
+    rotation.duration = 3.0;
+    [chemicalContentView.layer addAnimation:rotation forKey:nil];
 }
 
 @end
