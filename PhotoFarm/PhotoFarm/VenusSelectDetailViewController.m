@@ -88,7 +88,6 @@
     [labelLine2 setTextColor:[UIColor brownColor]];
     [viewLine2 addSubview:labelLine2];
 
-    NSLog(@"currenPage = %d",  [self currentItem]);
     if (self.itemValue == ITEM_VALUE_PAPER) {
         NSString *paperImageName = [NSString stringWithFormat:@"paper_preview_%d.png", self.currentItem];
         UIImage *paperImage = [UIImage imageNamed:paperImageName];
@@ -131,7 +130,6 @@
         chemicalImageView.frame = chemicalrect;
         [viewLine2 addSubview:chemicalImageView];
     }
-
     
     
     //---   view3 display

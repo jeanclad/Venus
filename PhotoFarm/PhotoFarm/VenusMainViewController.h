@@ -27,7 +27,8 @@ typedef enum {
     UIButton    *selectedButton;
     ALAsset     *asset;
     CGImageRef thumbnailImageRef;
-    UIImage     *thumbnail;
+    //UIImage     *thumbnail;
+    UIImage *mainPhotoView;
     BOOL        firstSelect;
     BOOL        MainVIewMoved;
     UIImage     *_bg;
@@ -43,7 +44,6 @@ typedef enum {
 	UIPageControl * chemicalPageControl;
 }
 @property (nonatomic, strong) ALAsset *asset;
-- (IBAction)UnderButtonPressed:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (weak, nonatomic) IBOutlet UIView *underBarItemView;
@@ -51,5 +51,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *bigSteelImage;
 @property (weak, nonatomic) IBOutlet UIImageView *smallSteelImage;
 @property (weak, nonatomic) IBOutlet UIImageView *pincetteImage;
+
+- (IBAction)UnderButtonPressed:(UIButton *)sender;
+- (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size;
 
 @end

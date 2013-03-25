@@ -141,18 +141,29 @@
     NSLog(@"aaa");
     if ((asset != nil) || (firstSelect == YES)){
         NSLog(@"bbb");
+        UIImage *result_img = nil;
         if (asset != nil){
+            /*
             thumbnailImageRef = [asset thumbnail];
             thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
+             */
+            
+            ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
+            
+            UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            
+            mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
         }
         
-        UIImage *result_img = nil;
         if (_bg != nil) {
             result_img = preview_img;
         }
+        
         else{
-            result_img = thumbnail;
+            //result_img = thumbnail;
+            result_img = mainPhotoView;
         }
+        
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
 
@@ -374,7 +385,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
     UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
-    thumbnail = shrunkenImage;
+    //thumbnail = shrunkenImage;
+    mainPhotoView = shrunkenImage;
     firstSelect = YES;
     
     [picker dismissModalViewControllerAnimated:YES];
@@ -718,7 +730,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         // currentPage가 0일때는 no page 일때 이므로 이때는 Paper와 합성을 하지 않고 원본 사진 이미지만 표시하게 한다.        
         if (paperPageControl.currentPage != 0){
             //get character image
-            UIImage *_character = thumbnail;
+            //UIImage *_character = thumbnail;
+            UIImage *_character = mainPhotoView;
             _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
             if (_bg != nil) {
                 UIGraphicsBeginImageContext(_bg.size);
@@ -730,11 +743,45 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             }
         } else{
             _bg = nil;
-            [selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
+            //[selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
+            [selectedButton setBackgroundImage:mainPhotoView forState:UIControlStateNormal];
         }
     } else{
         
     }
     
 }
+
+- (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size
+{
+    CGRect rcCrop;
+    if (image.size.width == image.size.height) {
+        rcCrop = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    }
+    else if (image.size.width > image.size.height) {
+        int xGap = (image.size.width - image.size.height)/2;
+        rcCrop = CGRectMake(xGap, 0.0, image.size.height, image.size.height);
+    }
+    else {
+        int yGap = (image.size.height - image.size.width)/2;
+        rcCrop = CGRectMake(0.0, yGap, image.size.width, image.size.width);
+    }
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], rcCrop);
+    UIImage* cropImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    if (bOnlyCrop)
+        return cropImage;
+    
+    NSData* dataCrop = UIImagePNGRepresentation(cropImage);
+    UIImage* imgResize = [[UIImage alloc] initWithData:dataCrop];
+    
+    UIGraphicsBeginImageContext(CGSizeMake(size,size));
+    [imgResize drawInRect:CGRectMake(0.0f, 0.0f, size, size)];
+    UIImage* imgThumb = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return imgThumb;
+}
+
 @end
