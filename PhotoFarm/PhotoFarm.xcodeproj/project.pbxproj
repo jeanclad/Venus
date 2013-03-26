@@ -43,6 +43,7 @@
 		21B3B54A16E44C95008A1D15 /* VenusMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B54816E44C95008A1D15 /* VenusMainViewController.xib */; };
 		21B3B54E16E46B97008A1D15 /* VenusFilmGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B3B54C16E46B96008A1D15 /* VenusFilmGroupViewController.m */; };
 		21B3B54F16E46B97008A1D15 /* VenusFilmGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */; };
+		E61A832E1701B4490062071F /* VenusScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = E61A832D1701B4490062071F /* VenusScroll.m */; };
 		E623415B16F965BE0003FB52 /* select_bg_left_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415916F965BE0003FB52 /* select_bg_left_ip4.png */; };
 		E623415C16F965BE0003FB52 /* select_bg_right_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */; };
 		E623415F16F969130003FB52 /* 01_1main_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415D16F969130003FB52 /* 01_1main_off_ip4.png */; };
@@ -152,6 +153,8 @@
 		21B3B54B16E46B96008A1D15 /* VenusFilmGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusFilmGroupViewController.h; sourceTree = "<group>"; };
 		21B3B54C16E46B96008A1D15 /* VenusFilmGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusFilmGroupViewController.m; sourceTree = "<group>"; };
 		21B3B54D16E46B97008A1D15 /* VenusFilmGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusFilmGroupViewController.xib; sourceTree = "<group>"; };
+		E61A832C1701B4490062071F /* VenusScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusScroll.h; sourceTree = "<group>"; };
+		E61A832D1701B4490062071F /* VenusScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusScroll.m; sourceTree = "<group>"; };
 		E623415916F965BE0003FB52 /* select_bg_left_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_bg_left_ip4.png; sourceTree = "<group>"; };
 		E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_bg_right_ip4.png; sourceTree = "<group>"; };
 		E623415D16F969130003FB52 /* 01_1main_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01_1main_off_ip4.png; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 				21B3B54716E44C95008A1D15 /* VenusMainViewController.m */,
 				E62341AB16FAD3290003FB52 /* VenusSelectDetailViewController.h */,
 				E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */,
+				E61A832C1701B4490062071F /* VenusScroll.h */,
+				E61A832D1701B4490062071F /* VenusScroll.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -653,6 +658,7 @@
 				E6F9BDDB16EF742B002241FA /* VenusAlbumDetailViewController.m in Sources */,
 				E6C8FC6D16F096DB00D86CC1 /* VenusPersistList.m in Sources */,
 				E62341AE16FAD3290003FB52 /* VenusSelectDetailViewController.m in Sources */,
+				E61A832E1701B4490062071F /* VenusScroll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

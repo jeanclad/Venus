@@ -249,7 +249,7 @@
 								<string key="NSFrame">{{480, 60}, {240, 240}}</string>
 								<reference key="NSSuperview" ref="800804720"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1001467755"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -276,10 +276,10 @@
 							<object class="IBUIImageView" id="629105957">
 								<reference key="NSNextResponder" ref="800804720"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{87, 212}, {307, 63}}</string>
+								<string key="NSFrame">{{87, 214}, {307, 63}}</string>
 								<reference key="NSSuperview" ref="800804720"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="335187262"/>
+								<reference key="NSNextKeyView" ref="1001467755"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -439,7 +439,7 @@
 										<string key="NSFrame">{{423, 0}, {27, 20}}</string>
 										<reference key="NSSuperview" ref="1001467755"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
+										<reference key="NSNextKeyView" ref="335187262"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="IBUIRestorationIdentifier">Store</string>
@@ -706,11 +706,11 @@
 							<reference ref="1001467755"/>
 							<reference ref="437962085"/>
 							<reference ref="312372525"/>
-							<reference ref="629105957"/>
 							<reference ref="610819868"/>
 							<reference ref="874413234"/>
 							<reference ref="335187262"/>
 							<reference ref="439578587"/>
+							<reference ref="629105957"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -878,7 +878,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">105</int>
+			<int key="maxID">107</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -901,6 +901,7 @@
 						<string key="beakerImage">UIImageView</string>
 						<string key="bigSteelImage">UIImageView</string>
 						<string key="pincetteImage">UIImageView</string>
+						<string key="selectSteelImage">UIImageView</string>
 						<string key="selectView">UIView</string>
 						<string key="smallSteelImage">UIImageView</string>
 						<string key="underBarItemView">UIView</string>
@@ -920,6 +921,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="pincetteImage">
 							<string key="name">pincetteImage</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="selectSteelImage">
+							<string key="name">selectSteelImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="selectView">

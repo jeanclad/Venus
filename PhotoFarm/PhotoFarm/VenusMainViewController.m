@@ -12,6 +12,7 @@
 #import "VenusFilmGroupViewController.h"
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
+#import "VenusScroll.h"
 /* persist test by jeanclad
 #import "VenusPersistList.h"
 */
@@ -71,8 +72,8 @@
 	paperScrollView.delegate = self;
     
     
-    chemicalScrollView = [[UIScrollView alloc]
-                       initWithFrame:CGRectMake(0, 0, 240, 290)];
+    //chemicalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
+    chemicalScrollView = [[VenusScroll alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
 	
 	chemicalContentView = [[UIView alloc] initWithFrame:CGRectMake(65, 90, 240, 2610)];
     int chemicalTotal = 0;
@@ -111,6 +112,7 @@
     
     [self.navigationController.navigationBar setHidden:YES];
     MainVIewMoved = NO;
+    chemicalAnimatiing = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -525,10 +527,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Reset"]){
-        //  test by hkkwon
-        UIImage *image = [UIImage imageNamed:
-						  [NSString stringWithFormat:@"select_solution01.png"]];
-        [self fillChemicalAnimation:image];
+        ;
     }
     else if ([buttonName isEqualToString:@"Select"]){
         [self moveAnimationRootView:NO];
@@ -805,11 +804,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     float waterDropAniDuration = 3.0f;
     float totalAniDuration = firstAniDuration + waterDropAniDuration + secondAniDuration;
 
-    float secondAniBeginTime = 2.0f;
+    float secondAniBeginTime = 4.0f;
     
     //---   Will edit position
     chemicalStartX = 20;
-    chemicalStartY = 50;
+    //chemicalStartY = 50;
+    chemicalStartY = [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] frame].origin.y + 50;
+    NSLog(@"y = %f", [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage]frame].origin.y);
     
     int chemicalOffsetX = 10;
     int chemicalOffsetY = 30;
@@ -865,7 +866,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     AnimationChemicalPathDown.path = thePathDown;
     AnimationChemicalPathDown.calculationMode = kCAAnimationPaced;
     AnimationChemicalPathDown.duration = secondAniDuration;
-    AnimationChemicalPathDown.beginTime = 2.0f;
+    AnimationChemicalPathDown.beginTime = secondAniBeginTime;
     AnimationChemicalPathDown.fillMode = kCAFillModeForwards;
     CFRelease(thePathDown);
     
@@ -877,22 +878,58 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     rotation2.duration = secondAniDuration;
     rotation2.beginTime  = secondAniBeginTime;
     rotation2.fillMode = kCAFillModeForwards;
-    rotation2.delegate = self;
     
     //---   5. 애니메이션 그룹
     CAAnimationGroup *group = [CAAnimationGroup animation];
     // 아래와 같이 배열로 애니메이션을 초기화해서 셋하게되면 애니메이션 그룹으로 사용가능.
     group.animations = [NSArray arrayWithObjects:AnimationChemicalPathUp, rotation, AnimationChemicalPathDown, rotation2, nil];
     group.duration = totalAniDuration;
+    group.delegate = self;
     
     [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:group forKey:nil];
+
+    //--- 현상액 애니메이션 중일때는 터치 이벤트를 받지 않도록 함
+    chemicalAnimatiing = YES;
+    //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하지 않도록 함
+    [chemicalScrollView setUserInteractionEnabled:NO];
 }
 
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
     NSLog(@"%s", __FUNCTION__);
+    //--- 현상액 애니메이션 중일때는 터치 이벤트를 받도록 함
+    chemicalAnimatiing = NO;
+    //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하도록 함    
+    [chemicalScrollView setUserInteractionEnabled:YES];
 }
 
+
+#pragma mark -
+#pragma mark Touch handling
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	// We only support single touches, so anyObject retrieves just that touch from touches
+	UITouch *touch = [touches anyObject];
+    //NSLog(@"touch = %@", touch);
+    
+    CGPoint point = [touch locationInView:self.view];
+    NSLog(@"point %f, %f", point.x, point.y);
+    
+	// Only move the placard view if the touch was in the placard view
+    if (chemicalAnimatiing == NO){
+        //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
+        if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
+            //  test by hkkwon
+            UIImageView *imageView = [[UIImageView alloc]init];
+            imageView = [chemicalImageView objectAtIndex:chemicalPageControl.currentPage];
+            UIImage *image = imageView.image;
+            
+            [self fillChemicalAnimation:image];
+        }
+        else if (point.y > 200){
+            NSLog(@"select steel touched!");
+        }
+    }
+}
 
 @end

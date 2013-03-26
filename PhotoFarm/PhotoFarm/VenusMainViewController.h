@@ -49,6 +49,7 @@ typedef enum {
     
     int chemicalStartX;
     int chemicalStartY;
+    BOOL  chemicalAnimatiing;
 }
 @property (nonatomic, strong) ALAsset *asset;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
