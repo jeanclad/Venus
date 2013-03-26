@@ -42,6 +42,11 @@ typedef enum {
     UIScrollView *chemicalScrollView;
 	UIView * chemicalContentView;
 	UIPageControl * chemicalPageControl;
+    
+    NSMutableArray *chemicalImageView;
+    
+    int x1;
+    int y1;
 }
 @property (nonatomic, strong) ALAsset *asset;
 @property (weak, nonatomic) IBOutlet UIView *MainView;

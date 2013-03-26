@@ -49,11 +49,11 @@
 		CGRect imageViewFrame;
 		imageViewFrame = CGRectMake(0, paperTotal, 90, 100);
 		paperTotal = paperTotal + 290;
-		UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+		UIImageView *paperImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
 		UIImage *image = [UIImage imageNamed:
 						  [NSString stringWithFormat:@"select_box%d.png", i]];
-        imageView.image = image;
-		[paperContentView addSubview:imageView];
+        paperImageView.image = image;
+		[paperContentView addSubview:paperImageView];
 	}
 	
 	[paperScrollView addSubview:paperContentView];
@@ -77,6 +77,8 @@
 	chemicalContentView = [[UIView alloc] initWithFrame:CGRectMake(65, 90, 240, 2610)];
     int chemicalTotal = 0;
     
+    chemicalImageView = [[NSMutableArray alloc] init];
+    
     for (int i = 0; i < 9; i++) {
 		CGRect imageViewFrame;
 		imageViewFrame = CGRectMake(0, chemicalTotal, 50, 100);
@@ -85,8 +87,8 @@
 		UIImage *image = [UIImage imageNamed:
 						  [NSString stringWithFormat:@"select_solution0%d.png", (i+1)]];
         imageView.image = image;
-		[chemicalContentView addSubview:imageView];
-        [self fillChemicalAnimation:image];
+        [chemicalImageView addObject:imageView];
+		[chemicalContentView addSubview:[chemicalImageView objectAtIndex:i]];
 	}
     
     [chemicalScrollView addSubview:chemicalContentView];
@@ -498,10 +500,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [self.beakerImage setHidden:NO];
             MainVIewMoved = YES;
         
-        //  test by hkkwon
-        UIImage *image = [UIImage imageNamed:
-						  [NSString stringWithFormat:@"select_solution01.png"]];
-        [self fillChemicalAnimation:image];
         //} else {
             //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
             //[alert show];
@@ -527,7 +525,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Reset"]){
-        
+        //  test by hkkwon
+        UIImage *image = [UIImage imageNamed:
+						  [NSString stringWithFormat:@"select_solution01.png"]];
+        [self fillChemicalAnimation:image];
     }
     else if ([buttonName isEqualToString:@"Select"]){
         [self moveAnimationRootView:NO];
@@ -798,15 +799,15 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void) fillChemicalAnimation:(UIImage *)chemicalImage
 {
-    int x1 = 200;
-    int y1 = 300;
+    x1 = 20;
+    y1 = 50;
     
-    int cx1 = x1;
-    int cy1 = y1-20;
-    int cx2 = cx1;
-    int cy2 = cy1-20;
-    int cx3 = cx2;
-    int cy3 = cy2-20;
+    int cx1 = x1+10;
+    int cy1 = y1-30;
+    int cx2 = cx1+10;
+    int cy2 = cy1-30;
+    int cx3 = cx2+10;
+    int cy3 = cy2-30;
     
     CAKeyframeAnimation * ani3 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     CGMutablePathRef thePath = CGPathCreateMutable();
@@ -818,16 +819,71 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     ani3.path = thePath;
     ani3.calculationMode = kCAAnimationPaced;
     ani3.delegate = self;
-    ani3.duration = 3.0;
-    [chemicalContentView.layer addAnimation:ani3 forKey:nil];
+    ani3.duration = 1.0;
+    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:ani3 forKey:nil];
     CFRelease(thePath); //만든건 릴리즈
     
     CABasicAnimation *rotation =
     [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotation.fromValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)]; //15도에서 시작
-    rotation.toValue = [NSNumber numberWithFloat:(90 * M_PI / 180.0)];
-    rotation.duration = 3.0;
-    [chemicalContentView.layer addAnimation:rotation forKey:nil];
+    rotation.fromValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)]; //0도에서 시작
+    rotation.toValue = [NSNumber numberWithFloat:(150 * M_PI / 180.0)];
+    rotation.duration = 1.0;
+    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:rotation forKey:nil];
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    CGRect imageViewFrame;
+    imageViewFrame = CGRectMake(0, 0, 10, 20);
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    UIImage *image = [UIImage imageNamed:
+                      [NSString stringWithFormat:@"water_drop.png"]];
+    imageView.image = image;
+    [self.selectView addSubview:imageView];
+    
+    for (int i=0; i<30; i++) {
+        [UIView beginAnimations:@"waterDrop" context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.1f];
+        //[UIView setAnimationDelegate:self];
+        //[UIView setAnimationDidStopSelector:@selector(moveAnimationRootViewLeft:finished:context:)];
+        
+        imageView.frame = CGRectMake(0, i, 10, 20);
+        [UIView commitAnimations];
+    }
+
+    /*
+    int rev_x1 = 50;
+    int rev_y1 = -40;
+    
+    int rev_cx1 = rev_x1-10;
+    int rev_cy1 = rev_y1+30;
+    int rev_cx2 = rev_cx1-10;
+    int rev_cy2 = rev_cy1+30;
+    int rev_cx3 = rev_cx2-10;
+    int rev_cy3 = rev_cy2+30;
+    
+    CAKeyframeAnimation * ani4 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CGMutablePathRef thePath = CGPathCreateMutable();
+    CGPathMoveToPoint(thePath, NULL, rev_x1, rev_y1);
+    CGPathAddLineToPoint(thePath, NULL, rev_cx1, rev_cy1);
+    CGPathAddLineToPoint(thePath, NULL, rev_cx2, rev_cy2);
+    CGPathAddLineToPoint(thePath, NULL, rev_cx3, rev_cy3);
+    
+    ani4.path = thePath;
+    ani4.calculationMode = kCAAnimationPaced;
+    //ani4.delegate = self;
+    ani4.duration = 1.0;
+    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:ani4 forKey:nil];
+    CFRelease(thePath); //만든건 릴리즈
+    
+    CABasicAnimation *rotation2 =
+    [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotation2.fromValue = [NSNumber numberWithFloat:(150 * M_PI / 180.0)]; //0도에서 시작
+    rotation2.toValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)];
+    rotation2.duration = 1.0;
+    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:rotation2 forKey:nil];
+     */
 }
 
 @end
