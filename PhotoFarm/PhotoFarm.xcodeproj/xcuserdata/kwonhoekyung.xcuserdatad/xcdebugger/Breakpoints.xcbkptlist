@@ -26,7 +26,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "347"
          endingLineNumber = "347"
-         landmarkName = "-actionSheet:clickedButtonAtIndex:"
+         landmarkName = "-viewDidUnload"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -284,7 +284,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "656"
          endingLineNumber = "656"
-         landmarkName = "-moveAnimationRootViewLeft:finished:context:"
+         landmarkName = "-moveAnimationRootViewRight:finished:context:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -310,7 +310,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "577"
          endingLineNumber = "577"
-         landmarkName = "-moveAnimationRootView:"
+         landmarkName = "-loadPlistFile"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -336,8 +336,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "115"
          endingLineNumber = "115"
-         landmarkName = "-viewWillAppear:"
-         landmarkType = "5">
+         landmarkName = "@implementation VenusMainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -401,7 +401,20 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "717"
          endingLineNumber = "717"
-         landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
+         landmarkName = "-paperPageChangeValue:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PhotoFarm/VenusMainViewController.m"
+         timestampString = "385984983.308569"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "908"
+         endingLineNumber = "908"
+         landmarkName = "-animationDidStop:finished:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

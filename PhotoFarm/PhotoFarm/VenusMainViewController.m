@@ -799,91 +799,100 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void) fillChemicalAnimation:(UIImage *)chemicalImage
 {
-    x1 = 20;
-    y1 = 50;
+    int chemicalRotationAngle = CHEMICAL_ROTATION_ANGLE;
+    float firstAniDuration = 1.0f;
+    float secondAniDuration = 1.0f;
+    float waterDropAniDuration = 3.0f;
+    float totalAniDuration = firstAniDuration + waterDropAniDuration + secondAniDuration;
+
+    float secondAniBeginTime = 2.0f;
     
-    int cx1 = x1+10;
-    int cy1 = y1-30;
-    int cx2 = cx1+10;
-    int cy2 = cy1-30;
-    int cx3 = cx2+10;
-    int cy3 = cy2-30;
+    //---   Will edit position
+    chemicalStartX = 20;
+    chemicalStartY = 50;
     
-    CAKeyframeAnimation * ani3 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    CGMutablePathRef thePath = CGPathCreateMutable();
-    CGPathMoveToPoint(thePath, NULL, x1, y1);
-    CGPathAddLineToPoint(thePath, NULL, cx1, cy1);
-    CGPathAddLineToPoint(thePath, NULL, cx2, cy2);
-    CGPathAddLineToPoint(thePath, NULL, cx3, cy3);
+    int chemicalOffsetX = 10;
+    int chemicalOffsetY = 30;
     
-    ani3.path = thePath;
-    ani3.calculationMode = kCAAnimationPaced;
-    ani3.delegate = self;
-    ani3.duration = 1.0;
-    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:ani3 forKey:nil];
-    CFRelease(thePath); //만든건 릴리즈
     
+    //---   1. 첫번째 애니메이션 : 현상액 위로 위치이동
+    int cx1 = chemicalStartX + chemicalOffsetX;
+    int cy1 = chemicalStartY - chemicalOffsetY;
+    int cx2 = cx1 + chemicalOffsetX;
+    int cy2 = cy1 - chemicalOffsetY;
+    int cx3 = cx2 + chemicalOffsetX;
+    int cy3 = cy2 - chemicalOffsetY;
+    
+    CAKeyframeAnimation * AnimationChemicalPathUp = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CGMutablePathRef thePathUp = CGPathCreateMutable();
+    CGPathMoveToPoint(thePathUp, NULL, chemicalStartX, chemicalStartY);
+    CGPathAddLineToPoint(thePathUp, NULL, cx1, cy1);
+    CGPathAddLineToPoint(thePathUp, NULL, cx2, cy2);
+    CGPathAddLineToPoint(thePathUp, NULL, cx3, cy3);
+    
+    AnimationChemicalPathUp.path = thePathUp;
+    AnimationChemicalPathUp.calculationMode = kCAAnimationPaced;
+    AnimationChemicalPathUp.duration = firstAniDuration;
+    AnimationChemicalPathUp.fillMode = kCAFillModeForwards;
+    CFRelease(thePathUp);
+
+    //---   2. 첫번째 애니에이션 : 현상액 회전
     CABasicAnimation *rotation =
     [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotation.fromValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)]; //0도에서 시작
-    rotation.toValue = [NSNumber numberWithFloat:(150 * M_PI / 180.0)];
-    rotation.duration = 1.0;
-    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:rotation forKey:nil];
+    rotation.toValue = [NSNumber numberWithFloat:(chemicalRotationAngle * M_PI / 180.0)];
+    rotation.duration = firstAniDuration;
+    rotation.fillMode = kCAFillModeForwards;
+    
+    //---   3. 두번째 애니메이션 : 현상액 아래로 위치이동
+    int rev_x1 = cx3;
+    int rev_y1 = cy3;
+    
+    int rev_cx1 = rev_x1 - chemicalOffsetX;
+    int rev_cy1 = rev_y1 + chemicalOffsetY;
+    int rev_cx2 = rev_cx1 - chemicalOffsetX;
+    int rev_cy2 = rev_cy1 + chemicalOffsetY;
+    int rev_cx3 = rev_cx2 - chemicalOffsetX;
+    int rev_cy3 = rev_cy2 + chemicalOffsetY;
+    
+    CAKeyframeAnimation * AnimationChemicalPathDown = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CGMutablePathRef thePathDown = CGPathCreateMutable();
+    CGPathMoveToPoint(thePathDown, NULL, rev_x1, rev_y1);
+    CGPathAddLineToPoint(thePathDown, NULL, rev_cx1, rev_cy1);
+    CGPathAddLineToPoint(thePathDown, NULL, rev_cx2, rev_cy2);
+    CGPathAddLineToPoint(thePathDown, NULL, rev_cx3, rev_cy3);
+    
+    AnimationChemicalPathDown.path = thePathDown;
+    AnimationChemicalPathDown.calculationMode = kCAAnimationPaced;
+    AnimationChemicalPathDown.duration = secondAniDuration;
+    AnimationChemicalPathDown.beginTime = 2.0f;
+    AnimationChemicalPathDown.fillMode = kCAFillModeForwards;
+    CFRelease(thePathDown);
+    
+    //---   4. 두번째 애니메이션 : 현상액 역회전
+    CABasicAnimation *rotation2 =
+    [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotation2.fromValue = [NSNumber numberWithFloat:(chemicalRotationAngle * M_PI / 180.0)]; //0도에서 시작
+    rotation2.toValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)];
+    rotation2.duration = secondAniDuration;
+    rotation2.beginTime  = secondAniBeginTime;
+    rotation2.fillMode = kCAFillModeForwards;
+    rotation2.delegate = self;
+    
+    //---   5. 애니메이션 그룹
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    // 아래와 같이 배열로 애니메이션을 초기화해서 셋하게되면 애니메이션 그룹으로 사용가능.
+    group.animations = [NSArray arrayWithObjects:AnimationChemicalPathUp, rotation, AnimationChemicalPathDown, rotation2, nil];
+    group.duration = totalAniDuration;
+    
+    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:group forKey:nil];
 }
+
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-    CGRect imageViewFrame;
-    imageViewFrame = CGRectMake(0, 0, 10, 20);
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
-    UIImage *image = [UIImage imageNamed:
-                      [NSString stringWithFormat:@"water_drop.png"]];
-    imageView.image = image;
-    [self.selectView addSubview:imageView];
-    
-    for (int i=0; i<30; i++) {
-        [UIView beginAnimations:@"waterDrop" context:nil];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDuration:0.1f];
-        //[UIView setAnimationDelegate:self];
-        //[UIView setAnimationDidStopSelector:@selector(moveAnimationRootViewLeft:finished:context:)];
-        
-        imageView.frame = CGRectMake(0, i, 10, 20);
-        [UIView commitAnimations];
-    }
-
-    /*
-    int rev_x1 = 50;
-    int rev_y1 = -40;
-    
-    int rev_cx1 = rev_x1-10;
-    int rev_cy1 = rev_y1+30;
-    int rev_cx2 = rev_cx1-10;
-    int rev_cy2 = rev_cy1+30;
-    int rev_cx3 = rev_cx2-10;
-    int rev_cy3 = rev_cy2+30;
-    
-    CAKeyframeAnimation * ani4 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    CGMutablePathRef thePath = CGPathCreateMutable();
-    CGPathMoveToPoint(thePath, NULL, rev_x1, rev_y1);
-    CGPathAddLineToPoint(thePath, NULL, rev_cx1, rev_cy1);
-    CGPathAddLineToPoint(thePath, NULL, rev_cx2, rev_cy2);
-    CGPathAddLineToPoint(thePath, NULL, rev_cx3, rev_cy3);
-    
-    ani4.path = thePath;
-    ani4.calculationMode = kCAAnimationPaced;
-    //ani4.delegate = self;
-    ani4.duration = 1.0;
-    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:ani4 forKey:nil];
-    CFRelease(thePath); //만든건 릴리즈
-    
-    CABasicAnimation *rotation2 =
-    [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotation2.fromValue = [NSNumber numberWithFloat:(150 * M_PI / 180.0)]; //0도에서 시작
-    rotation2.toValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)];
-    rotation2.duration = 1.0;
-    [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:rotation2 forKey:nil];
-     */
+    NSLog(@"%s", __FUNCTION__);
 }
+
 
 @end

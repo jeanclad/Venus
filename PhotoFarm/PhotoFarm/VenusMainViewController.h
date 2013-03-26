@@ -18,6 +18,8 @@
 #define SELECT_RIGHT_MOVE_X_IP4   240
 #define SELECT_RIGHT_MOVE_Y        50
 
+#define CHEMICAL_ROTATION_ANGLE     150
+
 typedef enum {
     BIG_STEEL_IMAGE,
     SMALL_STEEL_IMAGE
@@ -45,8 +47,8 @@ typedef enum {
     
     NSMutableArray *chemicalImageView;
     
-    int x1;
-    int y1;
+    int chemicalStartX;
+    int chemicalStartY;
 }
 @property (nonatomic, strong) ALAsset *asset;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
