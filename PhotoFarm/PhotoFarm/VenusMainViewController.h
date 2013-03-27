@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "VenusScroll.h"
+#import "VenusProgressViewController.h"
 
 #define PREVIEW_FRAME_SIZE_WIDTH    140
 #define PREVIEW_FRAME_SIZE_HEIGHT    140
@@ -18,7 +20,7 @@
 #define SELECT_RIGHT_MOVE_X_IP4   240
 #define SELECT_RIGHT_MOVE_Y        50
 
-#define CHEMICAL_ROTATION_ANGLE     150
+#define CHEMICAL_ROTATION_ANGLE     100
 
 typedef enum {
     BIG_STEEL_IMAGE,
@@ -41,11 +43,16 @@ typedef enum {
 	UIView * paperContentView;
 	UIPageControl * paperPageControl;
     
-    UIScrollView *chemicalScrollView;
+    VenusScroll *chemicalScrollView;
 	UIView * chemicalContentView;
 	UIPageControl * chemicalPageControl;
-    
     NSMutableArray *chemicalImageView;
+    
+    VenusProgressViewController *beakerView;
+    NSTimer *waitBaekerProgressTimer;
+    NSTimer *stopBeakerProgressTimer;
+    NSTimer *fillBeakerTimer;
+    float wantProgressLevel;
     
     int chemicalStartX;
     int chemicalStartY;

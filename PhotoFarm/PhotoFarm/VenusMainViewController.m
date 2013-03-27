@@ -12,7 +12,6 @@
 #import "VenusFilmGroupViewController.h"
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
-#import "VenusScroll.h"
 /* persist test by jeanclad
 #import "VenusPersistList.h"
 */
@@ -40,9 +39,8 @@
     // Do any additional setup after loading the view from its nib.
     
     //--- Will Edtt position
-    paperScrollView = [[UIScrollView alloc]
-				  initWithFrame:CGRectMake(0, 0, 240, 290)];
-	
+    //---   용지 선택 뷰
+    paperScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
 	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(75, 90, 240, 2030)];
     int paperTotal = 0;
     
@@ -72,9 +70,8 @@
 	paperScrollView.delegate = self;
     
     
-    //chemicalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
+    //--- 용액 선택 뷰
     chemicalScrollView = [[VenusScroll alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
-	
 	chemicalContentView = [[UIView alloc] initWithFrame:CGRectMake(65, 90, 240, 2610)];
     int chemicalTotal = 0;
     
@@ -106,10 +103,12 @@
 	[self.selectView addSubview:chemicalPageControl];
 	chemicalScrollView.delegate = self;
     
+    //---   비이커를 UIProgressView Custom으로 처리
+    beakerView = [[VenusProgressViewController alloc] initWithFrame:CGRectMake(130, 110, 50, 80)];
+    [self.selectView addSubview:beakerView];
     
     //---   큰 사짓 밧드 이미지 숨기기
     [self.bigSteelImage setHidden:YES];
-    
     [self.navigationController.navigationBar setHidden:YES];
     MainVIewMoved = NO;
     chemicalAnimatiing = NO;
@@ -799,12 +798,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 - (void) fillChemicalAnimation:(UIImage *)chemicalImage
 {
     int chemicalRotationAngle = CHEMICAL_ROTATION_ANGLE;
-    float firstAniDuration = 1.0f;
-    float secondAniDuration = 1.0f;
+    float firstAniDuration = 0.5f;
+    float secondAniDuration = 0.5f;
     float waterDropAniDuration = 3.0f;
     float totalAniDuration = firstAniDuration + waterDropAniDuration + secondAniDuration;
 
-    float secondAniBeginTime = 4.0f;
+    float secondAniBeginTime =3.5f;
     
     //---   Will edit position
     chemicalStartX = 20;
@@ -812,8 +811,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     chemicalStartY = [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] frame].origin.y + 50;
     NSLog(@"y = %f", [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage]frame].origin.y);
     
-    int chemicalOffsetX = 10;
-    int chemicalOffsetY = 30;
+    int chemicalOffsetX = 5;
+    int chemicalOffsetY = 20;
     
     
     //---   1. 첫번째 애니메이션 : 현상액 위로 위치이동
@@ -902,8 +901,48 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     chemicalAnimatiing = NO;
     //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하도록 함    
     [chemicalScrollView setUserInteractionEnabled:YES];
+    [waitBaekerProgressTimer fire];
+    [stopBeakerProgressTimer fire]; 
 }
 
+- (void)updateProgress
+{
+    //static float currentProgress = 0.0f;
+    //static float progressDir = 1.0f;
+    
+    float currentProgress = [beakerView progress];
+    float progressDir = 1.0f;
+    
+    if (currentProgress <= wantProgressLevel){
+        currentProgress += (0.01f * progressDir);
+        [beakerView setProgress: currentProgress];
+    }
+}
+
+- (void)fillBaakerProgress
+{
+    [self setProgressType:2 setProgress:0.5 proglessPerOnce:0.5];
+}
+
+- (void)stopBeakerProgress
+{
+    [fillBeakerTimer invalidate];
+}
+
+- (void)setProgressType:(int)fillColor setProgress:(float)setProgress proglessPerOnce:(float)perProgress
+{
+    [beakerView setFillImage:fillColor];
+    BOOL willProgress = [beakerView calculateOverProgress:perProgress];
+    NSLog(@"willProgress = %d", willProgress);
+    if (willProgress == YES){
+        // set a timer that updates the progress
+        wantProgressLevel = [beakerView progress] + setProgress;
+        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval: 0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        [fillBeakerTimer fire];
+        
+        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+    }
+}
 
 #pragma mark -
 #pragma mark Touch handling
@@ -925,6 +964,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             UIImage *image = imageView.image;
             
             [self fillChemicalAnimation:image];
+            waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
         }
         else if (point.y > 200){
             NSLog(@"select steel touched!");

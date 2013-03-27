@@ -76,7 +76,7 @@
 								<string key="NSFrame">{{60, 187}, {120, 18}}</string>
 								<reference key="NSSuperview" ref="1008706315"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="37008582"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -98,21 +98,6 @@
 								<object class="NSCustomResource" key="IBUIImage" id="1018362598">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">navi_bar.png</string>
-								</object>
-							</object>
-							<object class="IBUIImageView" id="37008582">
-								<reference key="NSNextResponder" ref="1008706315"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{129, 117}, {47, 71}}</string>
-								<reference key="NSSuperview" ref="1008706315"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="601293032"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">beaker_off_ip4.png</string>
 								</object>
 							</object>
 							<object class="IBUIButton" id="194839924">
@@ -572,14 +557,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">beakerImage</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="37008582"/>
-					</object>
-					<int key="connectionID">100</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">bigSteelImage</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="335187262"/>
@@ -787,7 +764,6 @@
 							<reference ref="28230993"/>
 							<reference ref="368786905"/>
 							<reference ref="194839924"/>
-							<reference ref="37008582"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -824,11 +800,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
 						<reference key="object" ref="165288199"/>
-						<reference key="parent" ref="1008706315"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">99</int>
-						<reference key="object" ref="37008582"/>
 						<reference key="parent" ref="1008706315"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -872,13 +843,12 @@
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="99.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">107</int>
+			<int key="maxID">109</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -901,7 +871,6 @@
 						<string key="beakerImage">UIImageView</string>
 						<string key="bigSteelImage">UIImageView</string>
 						<string key="pincetteImage">UIImageView</string>
-						<string key="selectSteelImage">UIImageView</string>
 						<string key="selectView">UIView</string>
 						<string key="smallSteelImage">UIImageView</string>
 						<string key="underBarItemView">UIView</string>
@@ -921,10 +890,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="pincetteImage">
 							<string key="name">pincetteImage</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="selectSteelImage">
-							<string key="name">selectSteelImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="selectView">
@@ -953,7 +918,6 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="01_1main_off_ip4.png">{960, 640}</string>
-			<string key="beaker_off_ip4.png">{64, 85}</string>
 			<string key="lamp_off_ip4.png">{115, 215}</string>
 			<string key="navi_bar.png">{960, 85}</string>
 			<string key="navi_common01_off.png">{42, 43}</string>
