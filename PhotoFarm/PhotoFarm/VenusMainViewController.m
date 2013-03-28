@@ -12,6 +12,7 @@
 #import "VenusFilmGroupViewController.h"
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
+#import "chemicalAnimation.h"
 /* persist test by jeanclad
 #import "VenusPersistList.h"
 */
@@ -111,8 +112,11 @@
     [self.bigSteelImage setHidden:YES];
     [self.navigationController.navigationBar setHidden:YES];
     MainVIewMoved = NO;
-    chemicalAnimatiing = NO;
+    
+    chemicalAni = [[chemicalAnimation alloc] init];
+    chemicalAni.chemicalAnimating = NO;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -795,44 +799,34 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return imgThumb;
 }
 
-- (void) fillChemicalAnimation:(UIImage *)chemicalImage
+- (void) fillChemicalAnimation
 {
     int chemicalRotationAngle = CHEMICAL_ROTATION_ANGLE;
-    float firstAniDuration = 0.5f;
-    float secondAniDuration = 0.5f;
-    float waterDropAniDuration = 3.0f;
-    float totalAniDuration = firstAniDuration + waterDropAniDuration + secondAniDuration;
-
-    float secondAniBeginTime =3.5f;
+    
+    [chemicalAni setChemicalAniDuration];
     
     //---   Will edit position
-    chemicalStartX = 20;
-    //chemicalStartY = 50;
-    chemicalStartY = [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] frame].origin.y + 50;
-    NSLog(@"y = %f", [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage]frame].origin.y);
-    
-    int chemicalOffsetX = 5;
-    int chemicalOffsetY = 20;
-    
+    chemicalAni.chemicalStartX = 20;
+    chemicalAni.chemicalStartY = [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] frame].origin.y + 50;
     
     //---   1. 첫번째 애니메이션 : 현상액 위로 위치이동
-    int cx1 = chemicalStartX + chemicalOffsetX;
-    int cy1 = chemicalStartY - chemicalOffsetY;
-    int cx2 = cx1 + chemicalOffsetX;
-    int cy2 = cy1 - chemicalOffsetY;
-    int cx3 = cx2 + chemicalOffsetX;
-    int cy3 = cy2 - chemicalOffsetY;
+    int cx1 = chemicalAni.chemicalStartX + chemicalAni.chemicalOffSetX;
+    int cy1 = chemicalAni.chemicalStartY - chemicalAni.chemicalOffSetY;
+    int cx2 = cx1 + chemicalAni.chemicalOffSetX;
+    int cy2 = cy1 - chemicalAni.chemicalOffSetY;
+    int cx3 = cx2 + chemicalAni.chemicalOffSetX;
+    int cy3 = cy2 - chemicalAni.chemicalOffSetY;
     
     CAKeyframeAnimation * AnimationChemicalPathUp = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     CGMutablePathRef thePathUp = CGPathCreateMutable();
-    CGPathMoveToPoint(thePathUp, NULL, chemicalStartX, chemicalStartY);
+    CGPathMoveToPoint(thePathUp, NULL, chemicalAni.chemicalStartX, chemicalAni.chemicalStartY);
     CGPathAddLineToPoint(thePathUp, NULL, cx1, cy1);
     CGPathAddLineToPoint(thePathUp, NULL, cx2, cy2);
     CGPathAddLineToPoint(thePathUp, NULL, cx3, cy3);
     
     AnimationChemicalPathUp.path = thePathUp;
     AnimationChemicalPathUp.calculationMode = kCAAnimationPaced;
-    AnimationChemicalPathUp.duration = firstAniDuration;
+    AnimationChemicalPathUp.duration = chemicalAni.firstAniDuration;
     AnimationChemicalPathUp.fillMode = kCAFillModeForwards;
     CFRelease(thePathUp);
 
@@ -841,19 +835,19 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotation.fromValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)]; //0도에서 시작
     rotation.toValue = [NSNumber numberWithFloat:(chemicalRotationAngle * M_PI / 180.0)];
-    rotation.duration = firstAniDuration;
+    rotation.duration = chemicalAni.firstAniDuration;
     rotation.fillMode = kCAFillModeForwards;
     
     //---   3. 두번째 애니메이션 : 현상액 아래로 위치이동
     int rev_x1 = cx3;
     int rev_y1 = cy3;
     
-    int rev_cx1 = rev_x1 - chemicalOffsetX;
-    int rev_cy1 = rev_y1 + chemicalOffsetY;
-    int rev_cx2 = rev_cx1 - chemicalOffsetX;
-    int rev_cy2 = rev_cy1 + chemicalOffsetY;
-    int rev_cx3 = rev_cx2 - chemicalOffsetX;
-    int rev_cy3 = rev_cy2 + chemicalOffsetY;
+    int rev_cx1 = rev_x1 - chemicalAni.chemicalOffSetX;
+    int rev_cy1 = rev_y1 + chemicalAni.chemicalOffSetY;
+    int rev_cx2 = rev_cx1 - chemicalAni.chemicalOffSetX;
+    int rev_cy2 = rev_cy1 + chemicalAni.chemicalOffSetY;
+    int rev_cx3 = rev_cx2 - chemicalAni.chemicalOffSetX;
+    int rev_cy3 = rev_cy2 + chemicalAni.chemicalOffSetY;
     
     CAKeyframeAnimation * AnimationChemicalPathDown = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     CGMutablePathRef thePathDown = CGPathCreateMutable();
@@ -864,8 +858,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     AnimationChemicalPathDown.path = thePathDown;
     AnimationChemicalPathDown.calculationMode = kCAAnimationPaced;
-    AnimationChemicalPathDown.duration = secondAniDuration;
-    AnimationChemicalPathDown.beginTime = secondAniBeginTime;
+    AnimationChemicalPathDown.duration = chemicalAni.secondAniDuration;
+    AnimationChemicalPathDown.beginTime = chemicalAni.secondAniBeginTime;
     AnimationChemicalPathDown.fillMode = kCAFillModeForwards;
     CFRelease(thePathDown);
     
@@ -874,21 +868,21 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotation2.fromValue = [NSNumber numberWithFloat:(chemicalRotationAngle * M_PI / 180.0)]; //0도에서 시작
     rotation2.toValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)];
-    rotation2.duration = secondAniDuration;
-    rotation2.beginTime  = secondAniBeginTime;
+    rotation2.duration = chemicalAni.secondAniDuration;
+    rotation2.beginTime  = chemicalAni.secondAniBeginTime;
     rotation2.fillMode = kCAFillModeForwards;
     
     //---   5. 애니메이션 그룹
     CAAnimationGroup *group = [CAAnimationGroup animation];
     // 아래와 같이 배열로 애니메이션을 초기화해서 셋하게되면 애니메이션 그룹으로 사용가능.
     group.animations = [NSArray arrayWithObjects:AnimationChemicalPathUp, rotation, AnimationChemicalPathDown, rotation2, nil];
-    group.duration = totalAniDuration;
+    group.duration = chemicalAni.totalAniDuration;
     group.delegate = self;
     
     [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:group forKey:nil];
 
     //--- 현상액 애니메이션 중일때는 터치 이벤트를 받지 않도록 함
-    chemicalAnimatiing = YES;
+    chemicalAni.chemicalAnimating = YES;
     //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하지 않도록 함
     [chemicalScrollView setUserInteractionEnabled:NO];
 }
@@ -898,7 +892,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     NSLog(@"%s", __FUNCTION__);
     //--- 현상액 애니메이션 중일때는 터치 이벤트를 받도록 함
-    chemicalAnimatiing = NO;
+    chemicalAni.chemicalAnimating = NO;
     //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하도록 함    
     [chemicalScrollView setUserInteractionEnabled:YES];
     [waitBaekerProgressTimer fire];
@@ -955,15 +949,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSLog(@"point %f, %f", point.x, point.y);
     
 	// Only move the placard view if the touch was in the placard view
-    if (chemicalAnimatiing == NO){
+    if (chemicalAni.chemicalAnimating == NO){
         //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
         if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
-            //  test by hkkwon
-            UIImageView *imageView = [[UIImageView alloc]init];
-            imageView = [chemicalImageView objectAtIndex:chemicalPageControl.currentPage];
-            UIImage *image = imageView.image;
-            
-            [self fillChemicalAnimation:image];
+            chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
+            [self fillChemicalAnimation];
             waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
         }
         else if (point.y > 200){

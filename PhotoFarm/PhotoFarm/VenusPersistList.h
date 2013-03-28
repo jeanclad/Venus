@@ -28,6 +28,18 @@
 #define CHEMICAL_TYPE_SUNNY             @"Sunny"
 #define CHEMICAL_TYPE_GLOOM             @"Gloom"
 #define CHEMICAL_TYPE_SPECIAL           @"Special"
+
+typedef enum{
+    CHEMICAL_INDEX_DEVELOP_PINK,
+    CHEMICAL_INDEX_DEVELOP_GREEN,
+    CHEMICAL_INDEX_1620,
+    CHEMICAL_INDEX_YELLO,
+    CHEMICAL_INDEX_VALENTINE,
+    CHEMICAL_INDEX_CYAN,
+    CHEMICAL_INDEX_SUNNY,
+    CHEMICAL_INDEX_GLOOM,
+    CHEMICAL_INDEX_SPECIAL,
+}chemialIndex;
  
 #define PAPER_TYPE_WHITE                @"White Paper"
 #define PAPER_TYPE_POLAROID             @"Polaroid Paper"

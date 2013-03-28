@@ -47,6 +47,7 @@
 		E61A8330170311680062071F /* progress_fill_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E61A832F170311680062071F /* progress_fill_1.png */; };
 		E61A83331703118C0062071F /* VenusProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61A83321703118C0062071F /* VenusProgressViewController.m */; };
 		E61A833C170338C50062071F /* progress_fill_2.png in Resources */ = {isa = PBXBuildFile; fileRef = E61A833B170338C50062071F /* progress_fill_2.png */; };
+		E61A833F1703CF630062071F /* chemicalAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E61A833E1703CF630062071F /* chemicalAnimation.m */; };
 		E623415B16F965BE0003FB52 /* select_bg_left_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415916F965BE0003FB52 /* select_bg_left_ip4.png */; };
 		E623415C16F965BE0003FB52 /* select_bg_right_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */; };
 		E623415F16F969130003FB52 /* 01_1main_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415D16F969130003FB52 /* 01_1main_off_ip4.png */; };
@@ -162,6 +163,8 @@
 		E61A83311703118C0062071F /* VenusProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusProgressViewController.h; sourceTree = "<group>"; };
 		E61A83321703118C0062071F /* VenusProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusProgressViewController.m; sourceTree = "<group>"; };
 		E61A833B170338C50062071F /* progress_fill_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress_fill_2.png; sourceTree = "<group>"; };
+		E61A833D1703CF630062071F /* chemicalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chemicalAnimation.h; sourceTree = "<group>"; };
+		E61A833E1703CF630062071F /* chemicalAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chemicalAnimation.m; sourceTree = "<group>"; };
 		E623415916F965BE0003FB52 /* select_bg_left_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_bg_left_ip4.png; sourceTree = "<group>"; };
 		E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_bg_right_ip4.png; sourceTree = "<group>"; };
 		E623415D16F969130003FB52 /* 01_1main_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01_1main_off_ip4.png; sourceTree = "<group>"; };
@@ -435,6 +438,8 @@
 				215EF5E916E48F6D0043C029 /* ThumbnailImageView.m */,
 				E6C8FC6B16F096DB00D86CC1 /* VenusPersistList.h */,
 				E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */,
+				E61A833D1703CF630062071F /* chemicalAnimation.h */,
+				E61A833E1703CF630062071F /* chemicalAnimation.m */,
 			);
 			name = "Additional Views and Cells";
 			sourceTree = "<group>";
@@ -673,6 +678,7 @@
 				E62341AE16FAD3290003FB52 /* VenusSelectDetailViewController.m in Sources */,
 				E61A832E1701B4490062071F /* VenusScroll.m in Sources */,
 				E61A83331703118C0062071F /* VenusProgressViewController.m in Sources */,
+				E61A833F1703CF630062071F /* chemicalAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

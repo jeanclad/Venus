@@ -10,6 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "VenusScroll.h"
 #import "VenusProgressViewController.h"
+#import "chemicalAnimation.h"
 
 #define PREVIEW_FRAME_SIZE_WIDTH    140
 #define PREVIEW_FRAME_SIZE_HEIGHT    140
@@ -26,6 +27,7 @@ typedef enum {
     BIG_STEEL_IMAGE,
     SMALL_STEEL_IMAGE
 }steelSize;
+
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
     UIButton    *selectedButton;
@@ -54,9 +56,7 @@ typedef enum {
     NSTimer *fillBeakerTimer;
     float wantProgressLevel;
     
-    int chemicalStartX;
-    int chemicalStartY;
-    BOOL  chemicalAnimatiing;
+    chemicalAnimation *chemicalAni;
 }
 @property (nonatomic, strong) ALAsset *asset;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
