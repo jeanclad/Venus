@@ -915,7 +915,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void)fillBaakerProgress
 {
-    [self setProgressType:2 setProgress:0.5 proglessPerOnce:0.5];
+    float chemicalLevelPerOnce = [chemicalAni getChemicalPerOnceLevel:[chemicalAni selectedChemicalIndex]];
+    [self setProgressType:2 setProgress:chemicalLevelPerOnce];
 }
 
 - (void)stopBeakerProgress
@@ -923,18 +924,18 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [fillBeakerTimer invalidate];
 }
 
-- (void)setProgressType:(int)fillColor setProgress:(float)setProgress proglessPerOnce:(float)perProgress
+- (void)setProgressType:(int)fillColor setProgress:(float)setProgress
 {
     [beakerView setFillImage:fillColor];
-    BOOL willProgress = [beakerView calculateOverProgress:perProgress];
+    BOOL willProgress = [beakerView calculateOverProgress:setProgress];
     NSLog(@"willProgress = %d", willProgress);
     if (willProgress == YES){
         // set a timer that updates the progress
         wantProgressLevel = [beakerView progress] + setProgress;
-        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval: 0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
         [fillBeakerTimer fire];
         
-        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:([chemicalAni waterDropAniDuration] - [chemicalAni firstAniDuration]) target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
     }
 }
 
@@ -953,6 +954,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
         if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
             chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
+            if (chemicalAni.oldSelectedChemicalIndex != chemicalAni.selectedChemicalIndex){
+                [beakerView setProgress:0.0f];
+                chemicalAni.oldSelectedChemicalIndex = chemicalPageControl.currentPage;
+            }
+
             [self fillChemicalAnimation];
             waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
         }

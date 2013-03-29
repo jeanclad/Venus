@@ -61,6 +61,14 @@
 - (void)setFillImage:(int)index
 {
     fill = [UIImage imageNamed:[NSString stringWithFormat:@"progress_fill_%d.png", index]];
+    
+    //---   fill 이미지의 알파값 적용
+    CGSize newSize = CGSizeMake(fill.size.width, fill.size.height);
+    UIGraphicsBeginImageContext(newSize);    
+    [fill drawInRect:CGRectMake(0, 0, fill.size.width, fill.size.height) blendMode:kCGBlendModeNormal alpha:0.7];
+    fill = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
 }
 
 - (BOOL)calculateOverProgress:(float)progressPerOnce

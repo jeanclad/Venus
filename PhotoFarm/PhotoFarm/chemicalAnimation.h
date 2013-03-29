@@ -9,6 +9,16 @@
 #import <Foundation/Foundation.h>
 
 @interface chemicalAnimation : NSObject{
+    float   chemicalLevelDevelopPink;
+    float   chemicalLevelDevelopGreen;
+    float   chemicalLevel1620;
+    float   chemicalLevelYello;
+    float   chemicalLevelValentine;
+    float   chemicalLevelCyan;
+    float   chemicalLevelSunny;
+    float   chemicalLevelGloom;
+    float   chemicalLevelSpecial;
+    
     int _chemicalOffsetX;
     int _chemicalOffsetY;
     
@@ -20,6 +30,7 @@
     
     int _chemicalStartX;
     int _chemicalStartY;
+    int _oldSelectedChemicalIndex;
     int _selectedChemicalIndex;
     BOOL _chemicalAnimating;
 }
@@ -34,8 +45,11 @@
 
 @property (nonatomic) int chemicalStartX;
 @property (nonatomic) int chemicalStartY;
+@property (nonatomic) int oldSelectedChemicalIndex;
 @property (nonatomic) int selectedChemicalIndex;
 @property (nonatomic) BOOL chemicalAnimating;
 
 - (void)setChemicalAniDuration;
+- (float)getChemicalPerOnceLevel:(int)selectedChemical;
+
 @end
