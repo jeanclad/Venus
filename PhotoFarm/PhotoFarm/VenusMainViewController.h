@@ -22,6 +22,7 @@
 #define SELECT_RIGHT_MOVE_Y        50
 
 #define CHEMICAL_ROTATION_ANGLE     100
+#define PROGRRESS_FILL_IMAGE_ALPHA  0.7
 
 typedef enum {
     BIG_STEEL_IMAGE,

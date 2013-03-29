@@ -916,7 +916,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 - (void)fillBaakerProgress
 {
     float chemicalLevelPerOnce = [chemicalAni getChemicalPerOnceLevel:[chemicalAni selectedChemicalIndex]];
-    [self setProgressType:2 setProgress:chemicalLevelPerOnce];
+    [self setProgressType:2 alpha:PROGRRESS_FILL_IMAGE_ALPHA setProgress:chemicalLevelPerOnce];
 }
 
 - (void)stopBeakerProgress
@@ -924,9 +924,9 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [fillBeakerTimer invalidate];
 }
 
-- (void)setProgressType:(int)fillColor setProgress:(float)setProgress
+- (void)setProgressType:(int)fillColor alpha:(float)alpha setProgress:(float)setProgress
 {
-    [beakerView setFillImage:fillColor];
+    [beakerView setFillImage:fillColor alpha:alpha];
     BOOL willProgress = [beakerView calculateOverProgress:setProgress];
     NSLog(@"willProgress = %d", willProgress);
     if (willProgress == YES){

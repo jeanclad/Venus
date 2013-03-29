@@ -28,6 +28,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    parentRect = rect;
     progessHeight = rect.size.height;
     
     // Drawing code   
@@ -50,22 +51,28 @@
     
     // 1 in the X direction and 1, 3 on the top and bottom for the Y.
     CGRect fillRect = CGRectMake(rect.origin.x + kCustomProgressViewFillOffsetLeftX,
-                                 rect.origin.y + progessHeight- curHeight,
+                                 rect.origin.y + progessHeight - curHeight,
                                  rect.size.width - kCustomProgressViewFillOffsetRightX,
                                  curHeight);
     
     // Draw the fill
     [fill drawInRect:fillRect];
+    [self drawWillRect];
 }
 
-- (void)setFillImage:(int)index
+-(void)drawWillRect
+{
+    NSLog(@"parentRect = %f, %f", parentRect.size.width, parentRect.size.height);
+}
+
+- (void)setFillImage:(int)index alpha:(float)alpha
 {
     fill = [UIImage imageNamed:[NSString stringWithFormat:@"progress_fill_%d.png", index]];
     
     //---   fill 이미지의 알파값 적용
     CGSize newSize = CGSizeMake(fill.size.width, fill.size.height);
     UIGraphicsBeginImageContext(newSize);    
-    [fill drawInRect:CGRectMake(0, 0, fill.size.width, fill.size.height) blendMode:kCGBlendModeNormal alpha:0.7];
+    [fill drawInRect:CGRectMake(0, 0, fill.size.width, fill.size.height) blendMode:kCGBlendModeNormal alpha:alpha];
     fill = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();

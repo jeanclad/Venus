@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface VenusProgressViewController : UIProgressView{
+    CGRect parentRect;
     UIImage *fill;
     CGFloat  progessHeight;
     NSInteger maxHeight;
 }
 
-- (void)setFillImage:(int)index;
+- (void)setFillImage:(int)index alpha:(float)alpha;
 - (BOOL)calculateOverProgress:(float)progressPerOnce;
 
 @end
