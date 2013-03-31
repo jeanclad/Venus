@@ -30,7 +30,6 @@
     
     int _chemicalStartX;
     int _chemicalStartY;
-    int _oldSelectedChemicalIndex;
     int _selectedChemicalIndex;
     BOOL _chemicalAnimating;
 }
@@ -45,7 +44,6 @@
 
 @property (nonatomic) int chemicalStartX;
 @property (nonatomic) int chemicalStartY;
-@property (nonatomic) int oldSelectedChemicalIndex;
 @property (nonatomic) int selectedChemicalIndex;
 @property (nonatomic) BOOL chemicalAnimating;
 

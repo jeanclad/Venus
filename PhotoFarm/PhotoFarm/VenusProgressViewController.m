@@ -11,6 +11,7 @@
 #define kCustomProgressViewFillOffsetY 15
 #define kCustomProgressViewFillOffsetLeftX 5
 #define kCustomProgressViewFillOffsetRightX 10
+#define MAX_PROGRESS_LEVEL  90
 
 @implementation VenusProgressViewController
 
@@ -28,7 +29,10 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    /* test by willProgress
     parentRect = rect;
+    */
+    
     progessHeight = rect.size.height;
     
     // Drawing code   
@@ -40,7 +44,8 @@
     
     // Compute the max width in pixels for the fill.  Max width being how
     // wide the fill should be at 100% progress.
-    maxHeight = progessHeight - (2 * kCustomProgressViewFillOffsetY);
+    //maxHeight = progessHeight - (2 * kCustomProgressViewFillOffsetY);
+    maxHeight = MAX_PROGRESS_LEVEL;
     
     // Compute the width for the current progress value, 0.0 - 1.0 corresponding
     // to 0% and 100% respectively.
@@ -57,13 +62,18 @@
     
     // Draw the fill
     [fill drawInRect:fillRect];
+
+    /* test by willProgress
     [self drawWillRect];
+    */
 }
 
+/* test by willProgress
 -(void)drawWillRect
 {
     NSLog(@"parentRect = %f, %f", parentRect.size.width, parentRect.size.height);
 }
+*/
 
 - (void)setFillImage:(int)index alpha:(float)alpha
 {
@@ -87,6 +97,11 @@
         return NO;
     }
     return YES;
+}
+
+- (float)getMaxHeight
+{
+    return maxHeight;
 }
 
 @end

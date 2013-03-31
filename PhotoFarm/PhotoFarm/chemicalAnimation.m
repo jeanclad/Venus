@@ -12,7 +12,7 @@
 #define CHEMICAL_OFFSET_X   5
 #define CHEMICAL_OFFSET_Y   20
 
-#define  CHEMICAL_MIN_LEVEL  0.2
+#define CHEMICAL_MIN_LEVEL  0.2
 #define CHEMICAL_LOW_LEVEL  0.4
 #define CHEMICAL_MID_LEVEL  0.5
 #define CHEMICAL_HIGH_LEVEL 0.7
@@ -28,7 +28,6 @@
 
 @synthesize chemicalStartX = _chemicalStartX;
 @synthesize chemicalStartY = _chemicalStartY;
-@synthesize oldSelectedChemicalIndex = _oldSelectedChemicalIndex;
 @synthesize selectedChemicalIndex = _selectedChemicalIndex;
 @synthesize chemicalAnimating = _chemicalAnimating;
 
@@ -37,7 +36,8 @@
     _chemicalOffSetX = CHEMICAL_OFFSET_X;
     _chemicalOffSetY = CHEMICAL_OFFSET_Y;
     
-    chemicalLevelDevelopPink = CHEMICAL_MID_LEVEL;    
+    //chemicalLevelDevelopPink = CHEMICAL_MID_LEVEL;
+    chemicalLevelDevelopPink = CHEMICAL_MAX_LEVEL;
     chemicalLevelDevelopGreen = CHEMICAL_MID_LEVEL;
     chemicalLevelGloom = CHEMICAL_MID_LEVEL;
     
@@ -59,8 +59,8 @@
         case CHEMICAL_INDEX_GLOOM:
             self.firstAniDuration = 0.5f;
             self.secondAniDuration = 0.5f;
-            self.waterDropAniDuration = 3.0f;
-            self.secondAniBeginTime = 3.5f;
+            self.waterDropAniDuration = 2.0f;
+            self.secondAniBeginTime = 2.5f;
             break;
             
         case CHEMICAL_INDEX_CYAN:
@@ -69,8 +69,8 @@
         case CHEMICAL_INDEX_YELLO:
             self.firstAniDuration = 0.5f;
             self.secondAniDuration = 0.5f;
-            self.waterDropAniDuration = 2.0f;
-            self.secondAniBeginTime = 2.5f;
+            self.waterDropAniDuration = 1.5f;
+            self.secondAniBeginTime = 2.0f;
             break;
             
         case CHEMICAL_INDEX_1620:

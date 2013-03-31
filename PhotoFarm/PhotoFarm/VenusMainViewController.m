@@ -411,6 +411,21 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark - Alert View delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //NSLog(@"button = %d", buttonIndex);
+    
+    //---   비이커 비움 alert의 버튼 처리
+    if (buttonIndex == 0){
+        // set a timer that updates the progress
+        wantProgressLevel = 0;
+        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        [fillBeakerTimer fire];
+        
+        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:([chemicalAni waterDropAniDuration] - [chemicalAni firstAniDuration]) target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+    }
+}
 
 #pragma mark  -jeanclad
 // IOS 6.0 이하 버전에서 landscape로 시작하지 않기 때문에 강제로 설정해주는 부분 (IOS 6.0 이상에서는 Call 되지 않음)
@@ -900,17 +915,25 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 - (void)updateProgress
-{
-    //static float currentProgress = 0.0f;
-    //static float progressDir = 1.0f;
-    
+{    
     float currentProgress = [beakerView progress];
-    float progressDir = 1.0f;
+    float progressDir;
     
-    if (currentProgress <= wantProgressLevel){
-        currentProgress += (0.01f * progressDir);
-        [beakerView setProgress: currentProgress];
+    if (wantProgressLevel == 0){
+        progressDir = -1.0f;
+        if (currentProgress >= 0){
+            currentProgress += (0.01f * progressDir);
+            [beakerView setProgress: currentProgress];
+        }
+    }else {
+        progressDir = 1.0f;
+        if (currentProgress <= wantProgressLevel){
+            currentProgress += (0.01f * progressDir);
+            [beakerView setProgress: currentProgress];
+        }
     }
+    
+
 }
 
 - (void)fillBaakerProgress
@@ -954,17 +977,26 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
         if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
             chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
-            if (chemicalAni.oldSelectedChemicalIndex != chemicalAni.selectedChemicalIndex){
-                [beakerView setProgress:0.0f];
-                chemicalAni.oldSelectedChemicalIndex = chemicalPageControl.currentPage;
+            float chemicalLevelPerOnce = [chemicalAni getChemicalPerOnceLevel:[chemicalAni selectedChemicalIndex]];
+            float beakerMaxProgress = [beakerView getMaxHeight] * 0.01;
+            if ((beakerView.progress + chemicalLevelPerOnce) <= beakerMaxProgress){
+                [self fillChemicalAnimation];
+                waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
             }
-
-            [self fillChemicalAnimation];
-            waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
+            else {
+                NSString *string1 = NSLocalizedString(@"NoRoomInTrayTitle", @"트레이 비움 타이틀");
+                NSString *string2 = NSLocalizedString(@"NoRoomInTrayMessage", @"트레이 비움 메세지");
+                NSString *string3 = NSLocalizedString(@"EmptyTray", "트레이 비움 버튼");
+                NSString *string4 = NSLocalizedString(@"OK", "확인");
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:self cancelButtonTitle:string3 otherButtonTitles:string4, nil];
+                [alert show];
+                //[beakerView setProgress:0.0f];
+            }
         }
-        else if (point.y > 200){
-            NSLog(@"select steel touched!");
-        }
+    }
+    else if (point.y > 200){
+        NSLog(@"select steel touched!");
     }
 }
 

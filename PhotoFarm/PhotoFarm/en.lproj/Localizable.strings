@@ -16,7 +16,7 @@
 "Delete" = "Delete";
 
 /* 확인   */
-"OK" = "확인";
+"OK" = "OK";
 
 /* 사진첩  */
 "SelectFromLibrary" = "Select From Library";
@@ -62,3 +62,12 @@
 
 /* 사진 없음 메세지  */
 "NoPhotoMessage" = "You must select a photo to develop before you select to papers and chemicals";
+
+/* 트레이 비움 타이틀   */
+"NoRoomInTrayTitle" = "No Room in Tray";
+
+/* 트레이 비움 메세지   */
+"NoRoomInTrayMessage" = "Your development tray is full. Either turn on the safe light and develop this print or empty the development tray to start over.";
+
+/* 트레이 비움 버튼    */
+"EmptyTray" = "Empty Tray";
