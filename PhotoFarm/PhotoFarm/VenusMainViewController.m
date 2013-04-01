@@ -738,18 +738,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x, self.smallSteelImage.frame.origin.y - SMALL_STEEL_MOVE_Y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
     
     [UIView commitAnimations];
-    
-    /*
-    [UIView beginAnimations:@"pincetteDown" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDelay:delay];        
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x - PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    
-    [UIView commitAnimations];
-     */
-
 }
 
 - (void)pincetteAndPhotoDownAnimation:(NSString *)animationID finished:(BOOL)finished context:(void *)context
