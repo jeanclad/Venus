@@ -8,7 +8,7 @@
 
 #import "VenusProgressViewController.h"
 
-#define kCustomProgressViewFillOffsetY 15
+#define kCustomProgressViewFillOffsetY  25
 #define kCustomProgressViewFillOffsetLeftX 5
 #define kCustomProgressViewFillOffsetRightX 10
 
@@ -89,8 +89,8 @@
 - (BOOL)calculateOverProgress:(float)progressPerOnce
 {
     //--- floor는 내림함수
-    NSInteger willHeight = floor([self progress] * maxHeight + [self progress] * maxHeight);
-    NSLog(@"progress = %f", self.progress);
+    NSInteger willHeight = floor([self progress] * maxHeight + progressPerOnce * maxHeight);
+    NSLog(@"[%s] progress = %f, willHeight = %d, maxHight = %d", __FUNCTION__, self.progress, willHeight, maxHeight);
     if (willHeight > maxHeight) {
         return NO;
     }

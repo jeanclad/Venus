@@ -17,6 +17,10 @@
 #import "VenusPersistList.h"
 */
 
+//---   Float Pointing Compare Macro
+#define float_epsilon 0.00001
+#define float_equal(a,b) (fabs((a) - (b)) < float_epsilon)
+
 @interface VenusMainViewController ()
 
 @end
@@ -420,10 +424,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (buttonIndex == 0){
         // set a timer that updates the progress
         wantProgressLevel = 0;
-        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
         [fillBeakerTimer fire];
         
-        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:([chemicalAni waterDropAniDuration] - [chemicalAni firstAniDuration]) target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
     }
 }
 
@@ -919,7 +923,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     CGFloat currentProgress = [beakerView progress];
     CGFloat progressDir = 0.00f;
     
-    if (wantProgressLevel == 0){
+    if (float_equal(wantProgressLevel, 0)){
         progressDir = -1.0f;
         if (currentProgress >= 0){
             currentProgress += (0.01f * progressDir);
@@ -927,9 +931,15 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }
     }else {
         progressDir = 1.0f;
-        NSLog(@"wantProgress = %f, 1 currentProgress = %f", wantProgressLevel, currentProgress);
         
-        if (wantProgressLevel >     currentProgress){
+        if (float_equal(wantProgressLevel, currentProgress)){
+            if (float_equal(currentProgress, 0)){
+                NSLog(@"666");
+                currentProgress += (0.01f * progressDir);
+                [beakerView setProgress: currentProgress];
+            }
+            
+        } else if (wantProgressLevel > currentProgress){
             if (currentProgress < wantProgressLevel){
                 NSLog(@"5555");
                 currentProgress += (0.01f * progressDir);
@@ -938,7 +948,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }
     }
     
-    NSLog(@"2 currentProgress = %f", currentProgress);
+    NSLog(@"wantProgress = %f, 1 currentProgress = %f", wantProgressLevel, currentProgress);
 }
 
 - (void)fillBaakerProgress
