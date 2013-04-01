@@ -11,7 +11,6 @@
 #define kCustomProgressViewFillOffsetY 15
 #define kCustomProgressViewFillOffsetLeftX 5
 #define kCustomProgressViewFillOffsetRightX 10
-#define MAX_PROGRESS_LEVEL  90
 
 @implementation VenusProgressViewController
 
@@ -44,8 +43,7 @@
     
     // Compute the max width in pixels for the fill.  Max width being how
     // wide the fill should be at 100% progress.
-    //maxHeight = progessHeight - (2 * kCustomProgressViewFillOffsetY);
-    maxHeight = MAX_PROGRESS_LEVEL;
+    maxHeight = progessHeight - kCustomProgressViewFillOffsetY;
     
     // Compute the width for the current progress value, 0.0 - 1.0 corresponding
     // to 0% and 100% respectively.

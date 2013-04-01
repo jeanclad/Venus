@@ -36,8 +36,7 @@
     _chemicalOffSetX = CHEMICAL_OFFSET_X;
     _chemicalOffSetY = CHEMICAL_OFFSET_Y;
     
-    //chemicalLevelDevelopPink = CHEMICAL_MID_LEVEL;
-    chemicalLevelDevelopPink = CHEMICAL_MAX_LEVEL;
+    chemicalLevelDevelopPink = CHEMICAL_MID_LEVEL;
     chemicalLevelDevelopGreen = CHEMICAL_MID_LEVEL;
     chemicalLevelGloom = CHEMICAL_MID_LEVEL;
     

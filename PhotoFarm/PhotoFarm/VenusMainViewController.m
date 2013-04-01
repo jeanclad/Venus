@@ -916,8 +916,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void)updateProgress
 {    
-    float currentProgress = [beakerView progress];
-    float progressDir;
+    CGFloat currentProgress = [beakerView progress];
+    CGFloat progressDir = 0.00f;
     
     if (wantProgressLevel == 0){
         progressDir = -1.0f;
@@ -927,13 +927,18 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }
     }else {
         progressDir = 1.0f;
-        if (currentProgress <= wantProgressLevel){
-            currentProgress += (0.01f * progressDir);
-            [beakerView setProgress: currentProgress];
+        NSLog(@"wantProgress = %f, 1 currentProgress = %f", wantProgressLevel, currentProgress);
+        
+        if (wantProgressLevel >     currentProgress){
+            if (currentProgress < wantProgressLevel){
+                NSLog(@"5555");
+                currentProgress += (0.01f * progressDir);
+                [beakerView setProgress: currentProgress];
+            }
         }
     }
     
-
+    NSLog(@"2 currentProgress = %f", currentProgress);
 }
 
 - (void)fillBaakerProgress
@@ -978,8 +983,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
             chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
             float chemicalLevelPerOnce = [chemicalAni getChemicalPerOnceLevel:[chemicalAni selectedChemicalIndex]];
-            float beakerMaxProgress = [beakerView getMaxHeight] * 0.01;
-            if ((beakerView.progress + chemicalLevelPerOnce) <= beakerMaxProgress){
+            if ((beakerView.progress + chemicalLevelPerOnce) <= 1.0){
                 [self fillChemicalAnimation];
                 waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
             }
