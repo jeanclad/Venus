@@ -556,6 +556,9 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
          MainVIewMoved = NO;
+        
+        //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
+        [beakerView setProgress: wantProgressLevel];
     }
 }
 
@@ -646,7 +649,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"pincetteUp" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:delay];        
     [UIView setAnimationDelegate:self];
     self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
@@ -656,7 +659,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
     [UIView beginAnimations:@"smllSteelDown" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:delay];    
     [UIView setAnimationDelegate:self];
     self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x, self.smallSteelImage.frame.origin.y + SMALL_STEEL_MOVE_Y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);  
@@ -666,7 +669,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"bigSteelUp" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:delay];
     [UIView setAnimationDidStopSelector:@selector(pincetteAndPhotoDownAnimation:finished:context:)];
     self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x, self.bigSteelImage.frame.origin.y - BIG_STEEL_MOVE_Y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
@@ -674,11 +677,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView commitAnimations];
     //---   핀셋과 사진이 내려가는 SEL함수가 실행되야 하므로 delay는 2배가 되어야 한다.
     delay += MAINVIEW_ANIMATION_DELAY;
-    delay += MAINVIEW_ANIMATION_DELAY;        
+    delay += MAINVIEW_ANIMATION_DELAY;    
     
     [UIView beginAnimations:@"MainViewRight" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:delay];
     [UIView setAnimationDelegate:self];
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
@@ -701,7 +704,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"MainViewLeft" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:0];
     [UIView setAnimationDelegate:self];
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
@@ -711,7 +714,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"PhotoUp" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:delay];
     [UIView setAnimationDelegate:self];   
     selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y - SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
@@ -721,7 +724,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"bigSteelDown" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelay:delay];
     [UIView setAnimationDelegate:self];
     self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x, self.bigSteelImage.frame.origin.y + BIG_STEEL_MOVE_Y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
@@ -731,7 +734,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
     [UIView beginAnimations:@"smllSteelUp" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDidStopSelector:@selector(pincetteDownAnimation:finished:context:)];    
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDelay:delay];    
@@ -744,7 +747,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     [UIView beginAnimations:@"PincettePhotoDown" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelegate:self];
     selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y + SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
     self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
@@ -756,7 +759,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     [UIView beginAnimations:@"PincetteDown" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     [UIView setAnimationDelegate:self];
     self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x - PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     

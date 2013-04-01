@@ -12,26 +12,27 @@
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
 
-#define PREVIEW_FRAME_SIZE_WIDTH    140
-#define PREVIEW_FRAME_SIZE_HEIGHT    140
-#define PREVIEW_PHOTO_SIZE_WIDTH    130
-#define PREVIEW_PHOTO_SIZE_HEIGHT   130
+#define PREVIEW_FRAME_SIZE_WIDTH        140
+#define PREVIEW_FRAME_SIZE_HEIGHT       140
+#define PREVIEW_PHOTO_SIZE_WIDTH        130
+#define PREVIEW_PHOTO_SIZE_HEIGHT       130
 
-#define SELECT_RIGHT_MOVE_X_IP5   284
-#define SELECT_RIGHT_MOVE_X_IP4   240
-#define SELECT_RIGHT_MOVE_Y        50
+#define SELECT_RIGHT_MOVE_X_IP5         284
+#define SELECT_RIGHT_MOVE_X_IP4         240
+#define SELECT_RIGHT_MOVE_Y             50
 
-#define CHEMICAL_ROTATION_ANGLE     100
-#define PROGRRESS_FILL_IMAGE_ALPHA  0.7
+#define CHEMICAL_ROTATION_ANGLE         100
+#define PROGRRESS_FILL_IMAGE_ALPHA      0.7f
 
-#define BEAKER_DROP_WATER_TIME      1.0f
+#define BEAKER_DROP_WATER_TIME          1.0f
 
-#define SELECTED_BUTTON_MOVE_Y  50
-#define PINCETTE_MOVE_X         50
-#define PINCETTE_MOVE_Y         50
-#define SMALL_STEEL_MOVE_Y      100
-#define BIG_STEEL_MOVE_Y        420
-#define MAINVIEW_ANIMATION_DELAY      0.3f
+#define SELECTED_BUTTON_MOVE_Y          50
+#define PINCETTE_MOVE_X                 50
+#define PINCETTE_MOVE_Y                 50
+#define SMALL_STEEL_MOVE_Y              100
+#define BIG_STEEL_MOVE_Y                420
+#define MAINVIEW_ANIMATION_DURATION     0.5f
+#define MAINVIEW_ANIMATION_DELAY        0.5f
 
 typedef enum {
     BIG_STEEL_IMAGE,
