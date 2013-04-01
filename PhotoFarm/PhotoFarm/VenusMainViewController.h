@@ -24,7 +24,7 @@
 #define CHEMICAL_ROTATION_ANGLE         100
 #define PROGRRESS_FILL_IMAGE_ALPHA      0.7f
 
-#define BEAKER_DROP_WATER_TIME          1.0f
+#define BEAKER_DROP_WATER_TIME          3.0f
 
 #define SELECTED_BUTTON_MOVE_Y          50
 #define PINCETTE_MOVE_X                 50
