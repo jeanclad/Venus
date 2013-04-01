@@ -91,7 +91,7 @@
 								<string key="NSFrame">{{0, 291}, {240, 30}}</string>
 								<reference key="NSSuperview" ref="1008706315"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="194839924"/>
+								<reference key="NSNextKeyView" ref="368786905"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -106,7 +106,7 @@
 								<string key="NSFrame">{{183, 292}, {27, 27}}</string>
 								<reference key="NSSuperview" ref="1008706315"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="368786905"/>
+								<reference key="NSNextKeyView" ref="800804720"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -146,7 +146,7 @@
 								<string key="NSFrame">{{28, 291}, {27, 27}}</string>
 								<reference key="NSSuperview" ref="1008706315"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="194839924"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -204,7 +204,7 @@
 							<object class="IBUIImageView" id="335187262">
 								<reference key="NSNextResponder" ref="800804720"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{480, 60}, {240, 240}}</string>
+								<string key="NSFrame">{{50, 480}, {240, 240}}</string>
 								<reference key="NSSuperview" ref="800804720"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -483,8 +483,6 @@
 				<int key="NSvFlags">292</int>
 				<string key="NSFrameSize">{240, 320}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIUserInteractionEnabled">NO</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

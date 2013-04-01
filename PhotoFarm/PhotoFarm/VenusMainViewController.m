@@ -192,7 +192,7 @@
             selectedButton.frame = CGRectMake((w/2-90) + moveXpos - 50, (h/2-90) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:selectedButton];
+        [self.MainView addSubview:selectedButton];
         firstSelect = YES;
         
         ///*/ Photo Save to caches test by jenaclad
@@ -256,7 +256,7 @@
         }
         [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:selectedButton];
+        [self.MainView addSubview:selectedButton];
         
         /* Photo load to caches test by jeanclad
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -635,26 +635,27 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         
         [UIView beginAnimations:@"pincetteUp" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDuration:0.5f];
+        [UIView setAnimationDuration:0.3f];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(moveAnimationRootViewRight:finished:context:)];
-        self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + 50, self.pincetteImage.frame.origin.y - 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+        self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
         [UIView commitAnimations];
     }
     else{
         [selectedButton setUserInteractionEnabled:YES];
         
-        [UIView beginAnimations:@"pincetteUp" context:nil];
+        [UIView beginAnimations:@"MainViewRight" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDuration:0.5f];
+        [UIView setAnimationDuration:0.3f];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(moveAnimationRootViewLeft:finished:context:)];
-        self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y - 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-        selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y - 45, selectedButton.frame.size.width, selectedButton.frame.size.height);
+        self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+        
         [UIView commitAnimations];
     }
 }
 
+/*
 - (void)moveAnimationRootViewRight:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
 {
     //---   아이폰4,5 해상도 대응
@@ -672,7 +673,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
     selectedButton.frame = CGRectMake(selectedButton.frame.origin.x + moveXpos - 50, selectedButton.frame.origin.y + 45, selectedButton.frame.size.width, selectedButton.frame.size.height);
-    
+ 
     self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x + 200, self.smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
     self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x - 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
     
@@ -681,6 +682,88 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView commitAnimations];
 
 }
+ 
+- (void)moveAnimationRootViewLeft:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+ {
+ //---   아이폰4,5 해상도 대응
+ UIScreen *screen = [UIScreen mainScreen];
+ float moveXpos;
+ 
+ if (screen.bounds.size.height== 568)
+ moveXpos = 284;
+ else
+ moveXpos = 240;
+ 
+ [UIView beginAnimations:nil context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+ [UIView setAnimationDuration:0.5f];
+ 
+ self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+ selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos + 50, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+ 
+ self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x + 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
+ self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x  - 200, self                                 .smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+ 
+ self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y + 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+ 
+ [UIView commitAnimations];
+ }
+*/
+
+- (void)moveAnimationRootViewRight:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+    
+    float delay = 0;
+    
+    [UIView beginAnimations:@"smllSteelDown" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelay:delay];    
+    [UIView setAnimationDelegate:self];
+    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x, self.smallSteelImage.frame.origin.y + SMALL_STEEL_MOVE_Y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+
+    [UIView commitAnimations];
+    delay += MAINVIEW_ANIMATION_DELAY;
+    
+    [UIView beginAnimations:@"bigSteelUp" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelay:delay];
+    [UIView setAnimationDelegate:self];
+    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x, self.bigSteelImage.frame.origin.y - BIG_STEEL_MOVE_Y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
+    
+    [UIView commitAnimations];
+    delay += MAINVIEW_ANIMATION_DELAY;
+    
+    [UIView beginAnimations:@"PhotoDown" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelay:delay];
+    [UIView setAnimationDelegate:self];
+    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y + SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    
+    [UIView commitAnimations];
+    delay += MAINVIEW_ANIMATION_DELAY;
+    
+    [UIView beginAnimations:@"MainViewRight" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelay:delay];
+    [UIView setAnimationDelegate:self];
+    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    
+    [UIView commitAnimations];
+}
+
 
 - (void)moveAnimationRootViewLeft:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
 {
@@ -688,24 +771,53 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     UIScreen *screen = [UIScreen mainScreen];
     float moveXpos;
     
-    if (screen.bounds.size.height== 568)
-        moveXpos = 284;
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
     else
-        moveXpos = 240;
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
     
-    [UIView beginAnimations:nil context:nil];
+    float delay = 0;
+        
+    [UIView beginAnimations:@"PhotoUp" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.5f];
-
-    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x - moveXpos + 50, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelay:delay];
+    [UIView setAnimationDelegate:self];   
+    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y - SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);    
+    [UIView commitAnimations];    
+    delay += MAINVIEW_ANIMATION_DELAY;
     
-    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x + 450, self.bigSteelImage.frame.origin.y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
-    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x  - 200, self                                 .smallSteelImage.frame.origin.y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+    [UIView beginAnimations:@"bigSteelDown" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelay:delay];
+    [UIView setAnimationDelegate:self];
+    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x, self.bigSteelImage.frame.origin.y + BIG_STEEL_MOVE_Y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
     
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y + 100, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-
     [UIView commitAnimations];
+    delay += MAINVIEW_ANIMATION_DELAY;
+
+    [UIView beginAnimations:@"smllSteelUp" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDelay:delay];    
+    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x, self.smallSteelImage.frame.origin.y - SMALL_STEEL_MOVE_Y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
+    
+    [UIView commitAnimations];
+    delay += MAINVIEW_ANIMATION_DELAY;
+    
+    
+    [UIView beginAnimations:@"pincetteDown" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDelay:delay];        
+    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x - PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    
+    [UIView commitAnimations];
+
 }
 
 - (void)setHiddenRootItem:(BOOL)isHidden

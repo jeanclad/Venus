@@ -26,6 +26,13 @@
 
 #define BEAKER_DROP_WATER_TIME      1.0f
 
+#define SELECTED_BUTTON_MOVE_Y  50
+#define PINCETTE_MOVE_X         50
+#define PINCETTE_MOVE_Y         100
+#define SMALL_STEEL_MOVE_Y      100
+#define BIG_STEEL_MOVE_Y        420
+#define MAINVIEW_ANIMATION_DELAY      0.3f
+
 typedef enum {
     BIG_STEEL_IMAGE,
     SMALL_STEEL_IMAGE
