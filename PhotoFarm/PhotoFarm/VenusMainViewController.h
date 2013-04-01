@@ -65,7 +65,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIView *MainView;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (weak, nonatomic) IBOutlet UIView *underBarItemView;
-@property (weak, nonatomic) IBOutlet UIImageView *beakerImage;
 @property (weak, nonatomic) IBOutlet UIImageView *bigSteelImage;
 @property (weak, nonatomic) IBOutlet UIImageView *smallSteelImage;
 @property (weak, nonatomic) IBOutlet UIImageView *pincetteImage;

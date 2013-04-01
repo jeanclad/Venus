@@ -350,7 +350,6 @@
     [self setMainView:nil];
     [self setSelectView:nil];
     [self setUnderBarItemView:nil];
-    [self setBeakerImage:nil];
     [self setBigSteelImage:nil];
     [self setSmallSteelImage:nil];
     [self setPincetteImage:nil];
@@ -505,7 +504,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [paperPageControl setHidden:NO];
             [chemicalScrollView setHidden:YES];
             [chemicalPageControl setHidden:YES];
-            [self.beakerImage setHidden:YES];
+            [beakerView setHidden:YES];
             MainVIewMoved = YES;
         //}else{
            // UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
@@ -521,7 +520,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [paperPageControl setHidden:YES];
             [chemicalScrollView setHidden:NO];
             [chemicalPageControl setHidden:NO];
-            [self.beakerImage setHidden:NO];
+            [beakerView setHidden:NO];
             MainVIewMoved = YES;
         
         //} else {
@@ -532,10 +531,15 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     else if ([buttonName isEqualToString:@"Info"]){
         VenusSelectDetailViewController *venusSelectDetailView = [[VenusSelectDetailViewController alloc] initWithNibName:@"VenusSelectDetailViewController" bundle:nil];
 
+        //---   Chemical View
         if (paperScrollView.isHidden == YES){
             [venusSelectDetailView setItemValue:ITEM_VALUE_CHEMICAL];
             [venusSelectDetailView setCurrentItem:[chemicalPageControl currentPage]];
+            
+            //--- 용액 채우는 애니메이션 중 Info 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
+            [beakerView setProgress: wantProgressLevel];
         }
+        //---   Paper View
         else{
             [venusSelectDetailView setItemValue:ITEM_VALUE_PAPER];
             [venusSelectDetailView setCurrentItem:[paperPageControl currentPage]];
@@ -973,9 +977,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         // set a timer that updates the progress
         wantProgressLevel = willProgress;
         fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        [[NSRunLoop mainRunLoop] addTimer:fillBeakerTimer forMode:NSRunLoopCommonModes];
+        
         [fillBeakerTimer fire];
         
         stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:([chemicalAni waterDropAniDuration] - [chemicalAni firstAniDuration]) target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+        [[NSRunLoop mainRunLoop] addTimer:stopBeakerProgressTimer forMode:NSRunLoopCommonModes];
     }
 }
 

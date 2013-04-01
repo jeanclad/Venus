@@ -97,9 +97,12 @@
     
     if (float_equal(willProgressLevel, BEAKER_MAX_PROGRESS)){
         willProgressLevel = BEAKER_MAX_PROGRESS;
-    }
-    else if (willProgressLevel > BEAKER_MAX_PROGRESS)
+    } else if (willProgressLevel > BEAKER_MAX_PROGRESS) {
         willProgressLevel = BEAKER_MAX_PROGRESS;
+    } else if (willProgressLevel < 0){
+        willProgressLevel = 0;
+    }
+    
     
     return willProgressLevel;
 }
