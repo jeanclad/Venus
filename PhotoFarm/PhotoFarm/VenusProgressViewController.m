@@ -12,6 +12,10 @@
 #define kCustomProgressViewFillOffsetLeftX 5
 #define kCustomProgressViewFillOffsetRightX 10
 
+//---   Float Pointing Compare Macro
+#define float_epsilon 0.00001
+#define float_equal(a,b) (fabs((a) - (b)) < float_epsilon)
+
 @implementation VenusProgressViewController
 
 - (id)initWithFrame:(CGRect)frame
@@ -86,15 +90,27 @@
     UIGraphicsEndImageContext();
 }
 
-- (BOOL)calculateOverProgress:(float)progressPerOnce
+- (float)calculateOverProgress:(float)progressPerOnce
 {
-    //--- floor는 내림함수
-    NSInteger willHeight = floor([self progress] * maxHeight + progressPerOnce * maxHeight);
-    NSLog(@"[%s] progress = %f, willHeight = %d, maxHight = %d", __FUNCTION__, self.progress, willHeight, maxHeight);
-    if (willHeight > maxHeight) {
-        return NO;
+    float willProgressLevel = self.progress + progressPerOnce;
+    
+    if (float_equal(willProgressLevel, 1.0f)){
+        willProgressLevel = 1.0f;
     }
-    return YES;
+    else if (willProgressLevel > 1.0f)
+        willProgressLevel = 1.0f;
+    
+    return willProgressLevel;
+}
+
+- (BOOL)isMaxProgress
+{
+    if (float_equal(self.progress, 1.0f))
+        return YES;
+    else if (self.progress > 1.0f)
+        return YES;
+    
+    return NO;
 }
 
 - (float)getMaxHeight

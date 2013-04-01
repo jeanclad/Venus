@@ -18,7 +18,8 @@
 }
 
 - (void)setFillImage:(int)index alpha:(float)alpha;
-- (BOOL)calculateOverProgress:(float)progressPerOnce;
+- (float)calculateOverProgress:(float)progressPerOnce;
 - (float)getMaxHeight;
+- (BOOL)isMaxProgress;
 
 @end

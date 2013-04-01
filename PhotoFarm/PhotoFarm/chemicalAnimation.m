@@ -58,8 +58,8 @@
         case CHEMICAL_INDEX_GLOOM:
             self.firstAniDuration = 0.5f;
             self.secondAniDuration = 0.5f;
-            self.waterDropAniDuration = 2.0f;
-            self.secondAniBeginTime = 2.5f;
+            self.waterDropAniDuration = 2.5f;
+            self.secondAniBeginTime = 3.0f;
             break;
             
         case CHEMICAL_INDEX_CYAN:
@@ -68,16 +68,16 @@
         case CHEMICAL_INDEX_YELLO:
             self.firstAniDuration = 0.5f;
             self.secondAniDuration = 0.5f;
-            self.waterDropAniDuration = 1.5f;
-            self.secondAniBeginTime = 2.0f;
+            self.waterDropAniDuration = 2.0f;
+            self.secondAniBeginTime = 2.5f;
             break;
             
         case CHEMICAL_INDEX_1620:
         case CHEMICAL_INDEX_SPECIAL:
             self.firstAniDuration = 0.5f;
             self.secondAniDuration = 0.5f;
-            self.waterDropAniDuration = 1.0f;
-            self.secondAniBeginTime = 1.5f;
+            self.waterDropAniDuration = 1.5f;
+            self.secondAniBeginTime = 2.0f;
             break;
             
         default:

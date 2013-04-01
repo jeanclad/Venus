@@ -964,12 +964,14 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void)setProgressType:(int)fillColor alpha:(float)alpha setProgress:(float)setProgress
 {
-    [beakerView setFillImage:fillColor alpha:alpha];
-    BOOL willProgress = [beakerView calculateOverProgress:setProgress];
-    NSLog(@"willProgress = %d", willProgress);
-    if (willProgress == YES){
+    BOOL isMaxProgress = [beakerView isMaxProgress];
+    if (isMaxProgress == NO){
+        [beakerView setFillImage:fillColor alpha:alpha];
+        float willProgress = [beakerView calculateOverProgress:setProgress];
+        NSLog(@"willProgress = %f", willProgress);
+        
         // set a timer that updates the progress
-        wantProgressLevel = [beakerView progress] + setProgress;
+        wantProgressLevel = willProgress;
         fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
         [fillBeakerTimer fire];
         
@@ -991,9 +993,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     if (chemicalAni.chemicalAnimating == NO){
         //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
         if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
-            chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
-            float chemicalLevelPerOnce = [chemicalAni getChemicalPerOnceLevel:[chemicalAni selectedChemicalIndex]];
-            if ((beakerView.progress + chemicalLevelPerOnce) <= 1.0){
+            //if (beakerView.progress <= 1.0){
+            BOOL isMaxProgress = [beakerView isMaxProgress];
+            if (isMaxProgress == NO) {
+                chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
                 [self fillChemicalAnimation];
                 waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
             }
