@@ -552,9 +552,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
-    else if ([buttonName isEqualToString:@"Reset"]){
-        ;
-    }
     else if ([buttonName isEqualToString:@"Select"]){
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
@@ -993,6 +990,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *string3;
     NSString *string4;
     
+    //---   비이커의 현재 용액이 비어 있으면 더이상 비울수 없다는 alert를 띄우고, 아닌 경우에는 비이커를 비우는 alert를 띄운다.
     if ([beakerView isMinProgress]){
         string1 = NSLocalizedString(@"EmptyTrayTitle", @"트레이 비어있음 타이틀");
         string2 = NSLocalizedString(@"EmptyTrayMessage", @"트레이 비어있음 메세지");
@@ -1023,7 +1021,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 	// Only move the placard view if the touch was in the placard view
     if (chemicalAni.chemicalAnimating == NO){
         //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
-        //if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
         if (point.x > 65 && point.x < 110 && point.y > 90 && point.y < 200) {
             BOOL isMaxProgress = [beakerView isMaxProgress];
             if (isMaxProgress == NO) {
