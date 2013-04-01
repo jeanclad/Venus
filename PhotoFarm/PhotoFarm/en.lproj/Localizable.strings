@@ -71,3 +71,9 @@
 
 /* 트레이 비움 버튼    */
 "EmptyTray" = "Empty Tray";
+
+/* 트레이 비어있음 타이틀 */
+"EmptyTrayTitle" = "Development Tray is Empty";
+
+/* 트레이 비어있음 메세지 */
+"EmptyTrayMessage" = "You cannot empty your development tray if there are no chemicals in it. Add some chemicals and start Swankifying!";

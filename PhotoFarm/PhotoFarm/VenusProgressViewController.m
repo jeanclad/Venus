@@ -12,6 +12,7 @@
 #define kCustomProgressViewFillOffsetLeftX 5
 #define kCustomProgressViewFillOffsetRightX 10
 
+#define BEAKER_MAX_PROGRESS 1.0f
 //---   Float Pointing Compare Macro
 #define float_epsilon 0.00001
 #define float_equal(a,b) (fabs((a) - (b)) < float_epsilon)
@@ -94,22 +95,30 @@
 {
     float willProgressLevel = self.progress + progressPerOnce;
     
-    if (float_equal(willProgressLevel, 1.0f)){
-        willProgressLevel = 1.0f;
+    if (float_equal(willProgressLevel, BEAKER_MAX_PROGRESS)){
+        willProgressLevel = BEAKER_MAX_PROGRESS;
     }
-    else if (willProgressLevel > 1.0f)
-        willProgressLevel = 1.0f;
+    else if (willProgressLevel > BEAKER_MAX_PROGRESS)
+        willProgressLevel = BEAKER_MAX_PROGRESS;
     
     return willProgressLevel;
 }
 
 - (BOOL)isMaxProgress
 {
-    if (float_equal(self.progress, 1.0f))
+    if (float_equal(self.progress, BEAKER_MAX_PROGRESS))
         return YES;
-    else if (self.progress > 1.0f)
+    else if (self.progress > BEAKER_MAX_PROGRESS)
         return YES;
     
+    return NO;
+}
+
+- (BOOL)isMinProgress
+{
+    if (float_equal(self.progress, 0.0f))
+        return YES;
+
     return NO;
 }
 

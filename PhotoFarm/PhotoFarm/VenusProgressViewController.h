@@ -21,5 +21,6 @@
 - (float)calculateOverProgress:(float)progressPerOnce;
 - (float)getMaxHeight;
 - (BOOL)isMaxProgress;
+- (BOOL)isMinProgress;
 
 @end

@@ -979,6 +979,30 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
+- (void)showBeakerEmptyAlertView
+{
+    NSString *string1;
+    NSString *string2;
+    NSString *string3;
+    NSString *string4;
+    
+    if ([beakerView isMinProgress]){
+        string1 = NSLocalizedString(@"EmptyTrayTitle", @"트레이 비어있음 타이틀");
+        string2 = NSLocalizedString(@"EmptyTrayMessage", @"트레이 비어있음 메세지");
+        string3 = NSLocalizedString(@"OK", "확인");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:self cancelButtonTitle:string3 otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else{
+        string1 = NSLocalizedString(@"NoRoomInTrayTitle", @"트레이 비움 타이틀");
+        string2 = NSLocalizedString(@"NoRoomInTrayMessage", @"트레이 비움 메세지");
+        string3 = NSLocalizedString(@"EmptyTray", "트레이 비움 버튼");
+        string4 = NSLocalizedString(@"OK", "확인");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:self cancelButtonTitle:string3 otherButtonTitles:string4, nil];
+        [alert show];
+    }
+}
+
 #pragma mark -
 #pragma mark Touch handling
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -992,8 +1016,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 	// Only move the placard view if the touch was in the placard view
     if (chemicalAni.chemicalAnimating == NO){
         //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
-        if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
-            //if (beakerView.progress <= 1.0){
+        //if (point.x > 65 && point.x < 150 && point.y > 90 && point.y < 200) {
+        if (point.x > 65 && point.x < 110 && point.y > 90 && point.y < 200) {
             BOOL isMaxProgress = [beakerView isMaxProgress];
             if (isMaxProgress == NO) {
                 chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
@@ -1001,15 +1025,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                 waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
             }
             else {
-                NSString *string1 = NSLocalizedString(@"NoRoomInTrayTitle", @"트레이 비움 타이틀");
-                NSString *string2 = NSLocalizedString(@"NoRoomInTrayMessage", @"트레이 비움 메세지");
-                NSString *string3 = NSLocalizedString(@"EmptyTray", "트레이 비움 버튼");
-                NSString *string4 = NSLocalizedString(@"OK", "확인");
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:self cancelButtonTitle:string3 otherButtonTitles:string4, nil];
-                [alert show];
-                //[beakerView setProgress:0.0f];
+                [self showBeakerEmptyAlertView];
             }
+        }
+        if (point.x > 130 && point.x < 180 && point.y > 110 && point.y < 190){
+            [self showBeakerEmptyAlertView];            
         }
     }
     else if (point.y > 200){
