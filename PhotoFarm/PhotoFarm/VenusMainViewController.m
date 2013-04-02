@@ -880,6 +880,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                 UIGraphicsEndImageContext();
             }
         }
+    } else{
+        preview_img = mainPhotoView;
     }
 
 }
