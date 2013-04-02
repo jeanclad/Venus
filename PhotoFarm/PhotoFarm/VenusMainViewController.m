@@ -168,12 +168,19 @@
             mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
             
             if (asset != oldAsset){
-                _bg = nil;
-                oldAsset = asset;
+                if (_bg != nil){
+                    oldAsset = asset;
+                } else{
+                    _bg = nil;
+                    oldAsset = asset;
+                }
             }
         }
         
+        //---   용지가 선택되어 있는 상태에서 사진을 변경하여 선택하였을 경우 그 사진에 다시 용지를 입혀야 한다.
         if (_bg != nil) {
+            [self setPaperPreviewImage];
+            //result_img = thumbnail;            
             result_img = preview_img;
         }
         
@@ -819,61 +826,62 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    //---   PaperView
     if (scrollView == paperScrollView){
-        NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);                    
-        // currentPage가 0일때는 no page 일때 이므로 이때는 Paper와 합성을 하지 않고 원본 사진 이미지만 표시하게 한다.        
-        if (paperPageControl.currentPage != 0){
-            //get character image
-            //UIImage *_character = thumbnail;
-            UIImage *_character = mainPhotoView;
-            _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-            if (_bg != nil) {
-                UIGraphicsBeginImageContext(_bg.size);
-                if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
-                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];
-                    [_character drawInRect:CGRectMake(PREVIEW_POLAROID_PHOTO_ORIGIN_X, PREVIEW_POLAROID_PHOTO_ORIGIN_Y, PREVIEW_POLAROID_PHOTO_SIZE_WIDTH, PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT)];
-                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
-                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-                    
-                }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
-                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH, PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT)];
-                    [_character drawInRect:CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT)];
-                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
-                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-                    
-                }else if ([paperPageControl currentPage] == PAPER_INDeX_SPRING){
-                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_SPRING_FRAME_SIZE_WIDTH, PREVIEW_SPRING_FRAME_SIZE_HEIGHT)];
-                    [_character drawInRect:CGRectMake(PREVIEW_SPRING_PHOTO_ORIGIN_X, PREVIEW_SPRING_PHOTO_ORIGIN_Y, PREVIEW_SPRING_PHOTO_SIZE_WIDTH, PREVIEW_SPRING_PHOTO_SIZE_HEIGHT)];
-                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
-                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-                    
-                }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
-                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_VINTAGE_FRAME_SIZE_WIDTH, PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT)];
-                    [_character drawInRect:CGRectMake(PREVIEW_VINTAGE_PHOTO_ORIGIN_X, PREVIEW_VINTAGE_PHOTO_ORIGIN_Y, PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH, PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
-                    //preview_img = [self maskingImage:_bg maskImage:_character];
-                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();                    
-                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-                }else{
-                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
-                    [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
-                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
-                    UIGraphicsEndImageContext();
-                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-                }
-            }
-        } else{
-            _bg = nil;
-            //[selectedButton setBackgroundImage:thumbnail forState:UIControlStateNormal];
-            [selectedButton setBackgroundImage:mainPhotoView forState:UIControlStateNormal];
-        }
+        [self setPaperPreviewImage];
+        [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];        
+    //---   ChemicalView
     } else{
-        
+        ;
+    }    
+}
+
+- (void)setPaperPreviewImage
+{
+    NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);
+    // currentPage가 0일때는 no page 일때 이므로 이때는 Paper와 합성을 하지 않고 원본 사진 이미지만 표시하게 한다.
+    if (paperPageControl.currentPage != 0){
+        //get character image
+        //UIImage *_character = thumbnail;
+        UIImage *_character = mainPhotoView;
+        _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+        if (_bg != nil) {
+            UIGraphicsBeginImageContext(_bg.size);
+            if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
+                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];
+                [_character drawInRect:CGRectMake(PREVIEW_POLAROID_PHOTO_ORIGIN_X, PREVIEW_POLAROID_PHOTO_ORIGIN_Y, PREVIEW_POLAROID_PHOTO_SIZE_WIDTH, PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT)];
+                preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                
+            }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
+                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH, PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT)];
+                [_character drawInRect:CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT)];
+                preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                
+            }else if ([paperPageControl currentPage] == PAPER_INDeX_SPRING){
+                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_SPRING_FRAME_SIZE_WIDTH, PREVIEW_SPRING_FRAME_SIZE_HEIGHT)];
+                [_character drawInRect:CGRectMake(PREVIEW_SPRING_PHOTO_ORIGIN_X, PREVIEW_SPRING_PHOTO_ORIGIN_Y, PREVIEW_SPRING_PHOTO_SIZE_WIDTH, PREVIEW_SPRING_PHOTO_SIZE_HEIGHT)];
+                preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                
+            }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
+                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_VINTAGE_FRAME_SIZE_WIDTH, PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT)];
+                [_character drawInRect:CGRectMake(PREVIEW_VINTAGE_PHOTO_ORIGIN_X, PREVIEW_VINTAGE_PHOTO_ORIGIN_Y, PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH, PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
+                //preview_img = [self maskingImage:_bg maskImage:_character];
+                preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }else{
+                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
+                [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeScreen
+                                 alpha:1.0];
+                //preview_img = [self maskingImage:_bg maskImage:_character];
+                preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }
+        }
     }
-    
+
 }
 
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size

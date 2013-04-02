@@ -12,12 +12,12 @@
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
 
-#define PREVIEW_ORIGIN_X                5
-#define PREVIEW_ORIGIN_Y                5
+#define PREVIEW_ORIGIN_X                0
+#define PREVIEW_ORIGIN_Y                0
 #define PREVIEW_FRAME_SIZE_WIDTH        140
 #define PREVIEW_FRAME_SIZE_HEIGHT       140
-#define PREVIEW_PHOTO_SIZE_WIDTH        130
-#define PREVIEW_PHOTO_SIZE_HEIGHT       130
+#define PREVIEW_PHOTO_SIZE_WIDTH        140
+#define PREVIEW_PHOTO_SIZE_HEIGHT       140
 
 #define PREVIEW_POLAROID_PHOTO_ORIGIN_X         8
 #define PREVIEW_POLAROID_PHOTO_ORIGIN_Y         2
