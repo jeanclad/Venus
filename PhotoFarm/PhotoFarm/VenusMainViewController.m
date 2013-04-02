@@ -46,7 +46,7 @@
     //--- Will Edtt position
     //---   용지 선택 뷰
     paperScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
-	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(75, 90, 240, 2030)];
+	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(70, 90, 240, 2030)];
     int paperTotal = 0;
     
     for (int i = 0; i < 7; i++) {
@@ -185,9 +185,8 @@
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
 
-        //        selectButton.frame = CGRectMake(200, 200, 67, 67);
         if (MainVIewMoved == NO)
-            selectedButton.frame = CGRectMake(w/2-90, h/2-90, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+            selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         else
             selectedButton.frame = CGRectMake((w/2-90) + moveXpos - 50, (h/2-90) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         
@@ -830,11 +829,41 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
             if (_bg != nil) {
                 UIGraphicsBeginImageContext(_bg.size);
-                [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
-                [_character drawInRect:CGRectMake(5, 5, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
-                preview_img = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+                if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
+                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];
+                    [_character drawInRect:CGRectMake(PREVIEW_POLAROID_PHOTO_ORIGIN_X, PREVIEW_POLAROID_PHOTO_ORIGIN_Y, PREVIEW_POLAROID_PHOTO_SIZE_WIDTH, PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT)];
+                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+                    
+                }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
+                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH, PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT)];
+                    [_character drawInRect:CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT)];
+                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+                    
+                }else if ([paperPageControl currentPage] == PAPER_INDeX_SPRING){
+                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_SPRING_FRAME_SIZE_WIDTH, PREVIEW_SPRING_FRAME_SIZE_HEIGHT)];
+                    [_character drawInRect:CGRectMake(PREVIEW_SPRING_PHOTO_ORIGIN_X, PREVIEW_SPRING_PHOTO_ORIGIN_Y, PREVIEW_SPRING_PHOTO_SIZE_WIDTH, PREVIEW_SPRING_PHOTO_SIZE_HEIGHT)];
+                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+                    
+                }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
+                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_VINTAGE_FRAME_SIZE_WIDTH, PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT)];
+                    [_character drawInRect:CGRectMake(PREVIEW_VINTAGE_PHOTO_ORIGIN_X, PREVIEW_VINTAGE_PHOTO_ORIGIN_Y, PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH, PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
+                    //preview_img = [self maskingImage:_bg maskImage:_character];
+                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();                    
+                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+                }else{
+                    [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
+                    [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT)];
+                    preview_img = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+                }
             }
         } else{
             _bg = nil;
@@ -877,6 +906,37 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     UIGraphicsEndImageContext();
     
     return imgThumb;
+}
+
+-(UIImage *)maskingImage:(UIImage *)image maskImage:(UIImage *)_maskImage{
+    CGImageRef imageRef = [image CGImage];
+    CGImageRef maskRef = [_maskImage CGImage];
+    
+    CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
+                                        CGImageGetHeight(maskRef),
+                                        CGImageGetBitsPerComponent(maskRef),
+                                        CGImageGetBitsPerPixel(maskRef),
+                                        CGImageGetBytesPerRow(maskRef),
+                                        CGImageGetDataProvider(maskRef),
+                                        NULL, false);
+    
+    CGImageRef masked = CGImageCreateWithMask(imageRef, mask);
+    CGImageRelease(mask);
+    
+    UIImage *maskedImage = [UIImage imageWithCGImage:masked];
+    CGImageRelease(masked);
+    return maskedImage;
+}
+
+-(UIImage *) shadowImage:(UIImage *)image{
+    //3 pixel shadow blur 픽셀치를 조정해서 세도우 블뤄 효과의 크기를 조절할수 있습니다.
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width + 6, image.size.height + 6));
+    CGContextSetShadow(UIGraphicsGetCurrentContext(),CGSizeMake(3.0f, -3.0f),3.0f);
+    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 - (void) fillChemicalAnimation

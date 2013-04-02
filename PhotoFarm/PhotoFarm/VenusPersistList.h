@@ -8,10 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum{
+    CHEMICAL_INDEX_DEVELOP_PINK,
+    CHEMICAL_INDEX_DEVELOP_GREEN,
+    CHEMICAL_INDEX_1620,
+    CHEMICAL_INDEX_YELLO,
+    CHEMICAL_INDEX_VALENTINE,
+    CHEMICAL_INDEX_CYAN,
+    CHEMICAL_INDEX_SUNNY,
+    CHEMICAL_INDEX_GLOOM,
+    CHEMICAL_INDEX_SPECIAL,
+}chemialIndex;
+
+typedef enum{
+    PAPER_INDEX_WHITE,
+    PAPER_INDEX_POLARIOD,
+    PAPER_INDEX_VINTAGE,
+    PAPER_INDEX_ROLLED_UP,
+    PAPER_INDeX_SPRING,
+    PAPER_INDEX_CRUMPLED,
+    PAPER_INDEX_FOLDED,
+}paperIndex;
+
 #define kFilename         @"persist_photo_list.plist"
 #define kDataKey          @"Data"
-
-@interface VenusPersistList : NSObject
 
 #define KEY_PHOTO_ITEM_NAME             @"photoItemName"
 #define KEY_PAPER_PHOTO_FILE_NAME       @"paperPhotoFileName"
@@ -28,18 +48,6 @@
 #define CHEMICAL_TYPE_SUNNY             @"Sunny"
 #define CHEMICAL_TYPE_GLOOM             @"Gloom"
 #define CHEMICAL_TYPE_SPECIAL           @"Special"
-
-typedef enum{
-    CHEMICAL_INDEX_DEVELOP_PINK,
-    CHEMICAL_INDEX_DEVELOP_GREEN,
-    CHEMICAL_INDEX_1620,
-    CHEMICAL_INDEX_YELLO,
-    CHEMICAL_INDEX_VALENTINE,
-    CHEMICAL_INDEX_CYAN,
-    CHEMICAL_INDEX_SUNNY,
-    CHEMICAL_INDEX_GLOOM,
-    CHEMICAL_INDEX_SPECIAL,
-}chemialIndex;
  
 #define PAPER_TYPE_WHITE                @"White Paper"
 #define PAPER_TYPE_POLAROID             @"Polaroid Paper"
@@ -57,6 +65,8 @@ typedef enum{
 
 #define ITEM_VALUE_PAPER                    1
 #define ITEM_VALUE_CHEMICAL                 2
+
+@interface VenusPersistList : NSObject
 
 @property (nonatomic, retain) NSMutableDictionary   *persistList;
 @property (nonatomic, retain) NSMutableArray        *photoItem;
