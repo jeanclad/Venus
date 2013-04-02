@@ -423,7 +423,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (buttonIndex == 0){
         // set a timer that updates the progress
         wantProgressLevel = 0;
-        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+        [[NSRunLoop mainRunLoop] addTimer:fillBeakerTimer forMode:NSRunLoopCommonModes];        
         [fillBeakerTimer fire];
         
         stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
@@ -496,7 +497,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusAlbumPageView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Papers"]){
-        //if (firstSelect == YES){
+        if (firstSelect == YES){
             [self moveAnimationRootView:YES];
             [self setHiddenRootItem:YES];
             
@@ -506,13 +507,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [chemicalPageControl setHidden:YES];
             [beakerView setHidden:YES];
             MainVIewMoved = YES;
-        //}else{
-           // UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
-            //[alert show];
-        //}
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            [alert show];
+        }
     }
     else if ([buttonName isEqualToString:@"Chemicals"]){
-        //if (firstSelect == YES){
+        if (firstSelect == YES){
             [self moveAnimationRootView:YES];
             [self setHiddenRootItem:YES];
             
@@ -523,10 +524,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [beakerView setHidden:NO];
             MainVIewMoved = YES;
         
-        //} else {
-            //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
-            //[alert show];
-        ///}
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            [alert show];
+        }
     }
     else if ([buttonName isEqualToString:@"Info"]){
         VenusSelectDetailViewController *venusSelectDetailView = [[VenusSelectDetailViewController alloc] initWithNibName:@"VenusSelectDetailViewController" bundle:nil];
