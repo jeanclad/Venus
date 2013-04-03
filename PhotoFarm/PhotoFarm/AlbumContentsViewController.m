@@ -110,7 +110,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return ceil((float)assets.count / 4); // there are four photos per 
+    return ceil((float)assets.count / 4); // there are four photos per
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -132,6 +132,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     
     cell.rowNumber = indexPath.row;
     cell.selectionDelegate = self;
+    NSLog(@"cell.rowNumber = %d, indexPath.row = %d", cell.rowNumber, indexPath.row);
     
     // Configure the cell...
     NSUInteger firstPhotoInCell = indexPath.row * 4;
@@ -143,6 +144,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     }
     NSUInteger currentPhotoIndex = 0;
     lastPhotoIndex = MIN(lastPhotoInCell, assets.count);
+    NSLog(@"firstPhotoIncell = %d, lastPhotoInCell = %d", firstPhotoInCell, lastPhotoInCell);
     for ( ; firstPhotoInCell + currentPhotoIndex < lastPhotoIndex ; currentPhotoIndex++) {
         
         ALAsset *asset = [assets objectAtIndex:firstPhotoInCell + currentPhotoIndex];
@@ -191,13 +193,12 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     [photoViewController setAsset:[assets objectAtIndex:(cell.rowNumber * 5) + index]];
     [[self navigationController] pushViewController:photoViewController animated:YES];
      */
-    NSLog(@"cell.rowNumber = %d, index = %d", cell.rowNumber, index);
-
     NSUInteger currentSelectedPhotoIndex = (cell.rowNumber * 4) + index;
-    if (currentSelectedPhotoIndex < lastPhotoIndex) {
+    NSUInteger totalPhotoNumber = assets.count;
+    
+    if (currentSelectedPhotoIndex <= (totalPhotoNumber - 1)) {
         [[GlobalDataManager sharedGlobalDataManager] setSelectedAssets:[assets objectAtIndex:(cell.rowNumber * 4) + index]];
-        NSLog(@"shared assets = %@", [GlobalDataManager sharedGlobalDataManager].selectedAssets);
-
+        //NSLog(@"shared assets = %@", [GlobalDataManager sharedGlobalDataManager].selectedAssets);
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }

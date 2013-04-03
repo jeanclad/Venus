@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/AlbumContentsViewController.m"
-         timestampString = "384696163.362395"
+         timestampString = "386657783.196762"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "196"
-         endingLineNumber = "196"
+         startingLineNumber = "198"
+         endingLineNumber = "198"
          landmarkName = "-albumContentsTableViewCell:selectedPhotoAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -435,12 +435,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "921"
-         endingLineNumber = "921"
-         landmarkName = "-fillChemicalAnimation"
+         startingLineNumber = "918"
+         endingLineNumber = "918"
+         landmarkName = "-maskingImage:maskImage:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -448,12 +448,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "907"
-         endingLineNumber = "907"
-         landmarkName = "-fillChemicalAnimation"
+         startingLineNumber = "904"
+         endingLineNumber = "904"
+         landmarkName = "-makeThumbnailImage:onlyCrop:Size:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -466,7 +466,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "865"
          endingLineNumber = "865"
-         landmarkName = "-makeThumbnailImage:onlyCrop:Size:"
+         landmarkName = "-setPaperPreviewImage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -492,8 +492,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "826"
          endingLineNumber = "826"
-         landmarkName = "-scrollViewDidEndDecelerating:"
-         landmarkType = "5">
+         landmarkName = "@implementation VenusMainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -505,8 +505,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "813"
          endingLineNumber = "813"
-         landmarkName = "-scrollViewDidScroll:"
-         landmarkType = "5">
+         landmarkName = "@implementation VenusMainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -531,7 +531,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "822"
          endingLineNumber = "822"
-         landmarkName = "-scrollViewDidEndDecelerating:"
+         landmarkName = "-scrollViewDidScroll:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -557,7 +557,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "855"
          endingLineNumber = "855"
-         landmarkName = "-makeThumbnailImage:onlyCrop:Size:"
+         landmarkName = "-setPaperPreviewImage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -570,7 +570,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "823"
          endingLineNumber = "823"
-         landmarkName = "-scrollViewDidEndDecelerating:"
+         landmarkName = "-scrollViewDidScroll:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -591,12 +591,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "942"
-         endingLineNumber = "942"
-         landmarkName = "-fillChemicalAnimation"
+         startingLineNumber = "939"
+         endingLineNumber = "939"
+         landmarkName = "-shadowImage:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -617,11 +617,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "966"
-         endingLineNumber = "966"
+         startingLineNumber = "963"
+         endingLineNumber = "963"
          landmarkName = "-fillChemicalAnimation"
          landmarkType = "5">
       </FileBreakpoint>
@@ -630,12 +630,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "986"
-         endingLineNumber = "986"
-         landmarkName = "-updateProgress"
+         startingLineNumber = "983"
+         endingLineNumber = "983"
+         landmarkName = "-fillChemicalAnimation"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -669,12 +669,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "989"
-         endingLineNumber = "989"
-         landmarkName = "-updateProgress"
+         startingLineNumber = "986"
+         endingLineNumber = "986"
+         landmarkName = "-fillChemicalAnimation"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -682,12 +682,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "919"
+         endingLineNumber = "919"
+         landmarkName = "-maskingImage:maskImage:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PhotoFarm/VenusMainViewController.m"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "922"
          endingLineNumber = "922"
-         landmarkName = "-fillChemicalAnimation"
+         landmarkName = "-maskingImage:maskImage:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -695,25 +708,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
+         timestampString = "386664081.14106"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "925"
-         endingLineNumber = "925"
-         landmarkName = "-fillChemicalAnimation"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386518057.24312"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "937"
-         endingLineNumber = "937"
-         landmarkName = "-fillChemicalAnimation"
+         startingLineNumber = "934"
+         endingLineNumber = "934"
+         landmarkName = "-maskingImage:maskImage:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

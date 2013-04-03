@@ -868,14 +868,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
                 [_bg drawInRect:CGRectMake(0, 0, PREVIEW_VINTAGE_FRAME_SIZE_WIDTH, PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT)];
                 [_character drawInRect:CGRectMake(PREVIEW_VINTAGE_PHOTO_ORIGIN_X, PREVIEW_VINTAGE_PHOTO_ORIGIN_Y, PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH, PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
-                //preview_img = [self maskingImage:_bg maskImage:_character];
                 preview_img = UIGraphicsGetImageFromCurrentImageContext();
                 UIGraphicsEndImageContext();
             }else{
                 [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
-                [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeScreen
-                                 alpha:1.0];
-                //preview_img = [self maskingImage:_bg maskImage:_character];
+                [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
                 preview_img = UIGraphicsGetImageFromCurrentImageContext();
                 UIGraphicsEndImageContext();
             }
