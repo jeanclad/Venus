@@ -112,10 +112,11 @@
     beakerView = [[VenusProgressViewController alloc] initWithFrame:CGRectMake(130, 110, 50, 80)];
     [self.selectView addSubview:beakerView];
     
-    //---   큰 사짓 밧드 이미지 숨기기
-    [self.bigSteelImage setHidden:YES];
     [self.navigationController.navigationBar setHidden:YES];
     MainVIewMoved = NO;
+    
+    //---   MainSecondView 숨기기
+    [self.MainSecondView setHidden:YES];
     
     chemicalAni = [[chemicalAnimation alloc] init];
     chemicalAni.chemicalAnimating = NO;
@@ -193,7 +194,7 @@
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
 
         if (MainVIewMoved == NO)
-            selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+            selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
         else
             selectedButton.frame = CGRectMake((w/2-90) + moveXpos - 50, (h/2-90) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         
@@ -356,8 +357,8 @@
     [self setMainView:nil];
     [self setSelectView:nil];
     [self setUnderBarItemView:nil];
-    [self setBigSteelImage:nil];
-    [self setSmallSteelImage:nil];
+    [self setPincetteImage:nil];
+    [self setMainSecondView:nil];
     [self setPincetteImage:nil];
     [super viewDidUnload];
 }
@@ -628,16 +629,15 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void)moveAnimationRootView:(BOOL)move
 {
-    [self.bigSteelImage setHidden:NO];
-    [self.smallSteelImage setHidden:NO];
-    
     if (move == YES){
         [selectedButton setUserInteractionEnabled:NO];
-        [self setAnimationRootViewRight];
+        //[self setAnimationRootViewRight];
+        [self setMainSecondView];
     }
     else{
-        [self setAnimationRootViewLeft];        
+        //[self setAnimationRootViewLeft];
         [selectedButton setUserInteractionEnabled:YES];
+        [self setMainView];
     }
 }
 
@@ -661,27 +661,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDelegate:self];
     self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     [UIView commitAnimations];
-    delay += MAINVIEW_ANIMATION_DELAY;
     
-
-    [UIView beginAnimations:@"smllSteelDown" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:delay];    
-    [UIView setAnimationDelegate:self];
-    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x, self.smallSteelImage.frame.origin.y + SMALL_STEEL_MOVE_Y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);  
-    [UIView commitAnimations];
-    delay += MAINVIEW_ANIMATION_DELAY;
-    
-    
-    [UIView beginAnimations:@"bigSteelUp" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:delay];
-    [UIView setAnimationDidStopSelector:@selector(pincetteAndPhotoDownAnimation:finished:context:)];
-    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x, self.bigSteelImage.frame.origin.y - BIG_STEEL_MOVE_Y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
-    [UIView setAnimationDelegate:self];
-    [UIView commitAnimations];
     //---   핀셋과 사진이 내려가는 SEL함수가 실행되야 하므로 delay는 2배가 되어야 한다.
     delay += MAINVIEW_ANIMATION_DELAY;
     delay += MAINVIEW_ANIMATION_DELAY;    
@@ -726,27 +706,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDelegate:self];   
     selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y - SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
     self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [UIView commitAnimations];    
-    delay += MAINVIEW_ANIMATION_DELAY;
-    
-    [UIView beginAnimations:@"bigSteelDown" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:delay];
-    [UIView setAnimationDelegate:self];
-    self.bigSteelImage.frame = CGRectMake(self.bigSteelImage.frame.origin.x, self.bigSteelImage.frame.origin.y + BIG_STEEL_MOVE_Y, self.bigSteelImage.frame.size.width, self.bigSteelImage.frame.size.height);
-    
-    [UIView commitAnimations];
-    delay += MAINVIEW_ANIMATION_DELAY;
-
-    [UIView beginAnimations:@"smllSteelUp" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDidStopSelector:@selector(pincetteDownAnimation:finished:context:)];    
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDelay:delay];    
-    self.smallSteelImage.frame = CGRectMake(self.smallSteelImage.frame.origin.x, self.smallSteelImage.frame.origin.y - SMALL_STEEL_MOVE_Y, self.smallSteelImage.frame.size.width, self.smallSteelImage.frame.size.height);
-    
     [UIView commitAnimations];
 }
 
@@ -773,6 +732,104 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView commitAnimations];
 }
 
+-(void)setMainView
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float w,h;
+    
+    if (screen.bounds.size.height== 568) {
+        w = 568;
+        h = 320;
+    }else{
+        w = 480;
+        h = 320;
+    }
+    
+    self.pincetteImage.frame = CGRectMake(40, 210, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+    
+    [UIView beginAnimations:@"BigSteelHide" context:nil];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                           forView:self.MainView
+                             cache:NO];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2]
+    ;
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(mainViewAnmiationDone:finished:context:)];
+    [self.MainSecondView setHidden:YES];
+    [UIView commitAnimations];
+}
+
+
+-(void)setMainSecondView
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+    
+    [UIView beginAnimations:@"MainViewRight" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(mainSecondViewAnmiationDone:finished:context:)];
+    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    [UIView commitAnimations];
+}
+
+- (void)mainSecondViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
+{
+    float delay = 0;
+    
+    [UIView beginAnimations:@"BigSteelShow" context:nil];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                           forView:self.MainView
+                             cache:NO];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    [self.MainSecondView setHidden:NO];
+    [UIView commitAnimations];
+    
+    delay += MAINVIEW_ANIMATION_DELAY*2;
+
+    selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+    [selectedButton setAlpha:0];
+    
+    self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    [self.pincetteImage setAlpha:0];
+    
+    [UIView beginAnimations:@"PhotoDown" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
+    [UIView setAnimationDelay:delay];
+    selectedButton.frame = CGRectMake(60, 60, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+    [selectedButton setAlpha:1];
+    self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    [self.pincetteImage setAlpha:1];
+    [UIView commitAnimations];
+}
+
+- (void)mainViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+    
+    [UIView beginAnimations:@"MainViewRight" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    [UIView commitAnimations];
+}
 
 - (void)setHiddenRootItem:(BOOL)isHidden
 {
@@ -828,8 +885,23 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     //---   PaperView
     if (scrollView == paperScrollView){
-        [self setPaperPreviewImage];
-        [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];        
+        _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+        [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];        
+        [selectedButton setBackgroundImage:_bg forState:UIControlStateNormal];
+        //[selectedButton setAlpha:0];
+        
+        float delay = MAINVIEW_ANIMATION_DELAY * 2;
+        [UIView beginAnimations:@"PaperPhoto" context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
+        [UIView setAnimationDelay:delay];
+        [UIView setAnimationDelegate:self];
+        //[self setPaperPreviewImage];
+        //[selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+        [selectedButton setBackgroundImage:mainPhotoView forState:UIControlStateNormal];
+        [selectedButton setAlpha:1];
+        
+        [UIView commitAnimations];
     //---   ChemicalView
     } else{
         ;
@@ -839,6 +911,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 - (void)setPaperPreviewImage
 {
     NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);
+    
     // currentPage가 0일때는 no page 일때 이므로 이때는 Paper와 합성을 하지 않고 원본 사진 이미지만 표시하게 한다.
     if (paperPageControl.currentPage != 0){
         //get character image
@@ -880,7 +953,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     } else{
         preview_img = mainPhotoView;
     }
-
 }
 
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size

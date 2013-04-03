@@ -14,10 +14,12 @@
 
 #define PREVIEW_ORIGIN_X                0
 #define PREVIEW_ORIGIN_Y                0
-#define PREVIEW_FRAME_SIZE_WIDTH        140
-#define PREVIEW_FRAME_SIZE_HEIGHT       140
-#define PREVIEW_PHOTO_SIZE_WIDTH        140
-#define PREVIEW_PHOTO_SIZE_HEIGHT       140
+#define PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH    140
+#define PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT   140
+#define PREVIEW_FRAME_SIZE_WIDTH        200
+#define PREVIEW_FRAME_SIZE_HEIGHT       200
+#define PREVIEW_PHOTO_SIZE_WIDTH        200
+#define PREVIEW_PHOTO_SIZE_HEIGHT       200
 
 
 #define PREVIEW_POLAROID_PHOTO_ORIGIN_X         8
@@ -62,13 +64,8 @@
 #define PINCETTE_MOVE_Y                 50
 #define SMALL_STEEL_MOVE_Y              100
 #define BIG_STEEL_MOVE_Y                420
-#define MAINVIEW_ANIMATION_DURATION     0.3f
-#define MAINVIEW_ANIMATION_DELAY        0.3f
-
-typedef enum {
-    BIG_STEEL_IMAGE,
-    SMALL_STEEL_IMAGE
-}steelSize;
+#define MAINVIEW_ANIMATION_DURATION     0.5f
+#define MAINVIEW_ANIMATION_DELAY        0.5f
 
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
@@ -102,10 +99,9 @@ typedef enum {
 }
 @property (nonatomic, strong) ALAsset *asset;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
+@property (weak, nonatomic) IBOutlet UIView *MainSecondView;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (weak, nonatomic) IBOutlet UIView *underBarItemView;
-@property (weak, nonatomic) IBOutlet UIImageView *bigSteelImage;
-@property (weak, nonatomic) IBOutlet UIImageView *smallSteelImage;
 @property (weak, nonatomic) IBOutlet UIImageView *pincetteImage;
 
 - (IBAction)UnderButtonPressed:(UIButton *)sender;
