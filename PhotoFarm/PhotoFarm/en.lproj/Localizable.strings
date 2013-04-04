@@ -77,3 +77,9 @@
 
 /* 트레이 비어있음 메세지 */
 "EmptyTrayMessage" = "You cannot empty your development tray if there are no chemicals in it. Add some chemicals and start Swankifying!";
+
+/* 사진인화 에러 타이틀  */
+"ErrDevelopingTitle" = "No Chemicals in tray";
+
+/* 사진인화 에러 메세지  */
+"ErrDevelopingMessage" = "You can't start developing your print until you add chemicals to your tray. Tap chemicals from the shelf to add them.";

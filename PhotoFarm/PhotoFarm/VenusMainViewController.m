@@ -447,13 +447,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     //---   비이커 비움 alert의 버튼 처리
     if (buttonIndex == 0){
-        // set a timer that updates the progress
-        wantProgressLevel = 0;
-        fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
-        [[NSRunLoop mainRunLoop] addTimer:fillBeakerTimer forMode:NSRunLoopCommonModes];        
-        [fillBeakerTimer fire];
-        
-        stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+        [self performSelectorOnMainThread:@selector(setEmptyBeaker:) withObject:nil waitUntilDone:NO];
     }
 }
 
@@ -503,10 +497,23 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 - (IBAction)lightSwitchPressed:(UIButton *)sender {
-    [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
-    [self setHiddenRootItem:YES];
-    [self setLightOnAnimation];
-    developing = YES;
+    //---(1번안) 사진 용액을 하나도 추가 하지 않았거나 사진용지를 No Paper상태에서 변경하지 않으면 원본사진과 동일하므로 사진인화를 진행하지 않고 alertView를 띄운다. 사진용액을 추가 하였거나 사진 용지가 No Paper 상태가 아니라면 사진 인화를 진행한다.
+    //if (((float_equal([beakerView progress], 0)) || ([beakerView progress] < 0)) && (paperPageControl.currentPage == PAPER_INDEX_WHITE)){
+    //---(2번안) 사진 용액과 사진 용지 둘다 선택해야만 사진인화를 진행한다.
+    if ((float_equal([beakerView progress], 0)) || ([beakerView progress] < 0)){
+        NSString *string1 = NSLocalizedString(@"ErrDevelopingTitle", @"사진인화 에러 타이틀");
+        NSString *string2 = NSLocalizedString(@"ErrDevelopingMessage", @"사진인화 에러 메세지");
+        NSString *string3 = NSLocalizedString(@"OK", "확인");
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+        [alert show];        
+    } else {
+        [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
+        [self setHiddenRootItem:YES];
+        [self setLightOnAnimation];
+        [chemicalContentView setHidden:YES];
+        developing = YES;
+    }
 }
 
 - (IBAction)UnderButtonPressed:(UIButton *)sender
@@ -843,11 +850,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"PhotoDown" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
     [UIView setAnimationDelay:delay];
     if (developing == YES){
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
+        [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
     }
     selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
     [selectedButton setAlpha:1];
@@ -940,7 +948,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         
         [UIView beginAnimations:@"PaperPhoto" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
+        [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
         [UIView setAnimationDelay:0.5f];
         [selectedButton setAlpha:1.0];
 
@@ -1349,6 +1357,17 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
+- (void)setEmptyBeaker:(id)sendor
+{
+    // set a timer that updates the progress
+    wantProgressLevel = 0;
+    fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
+    [[NSRunLoop mainRunLoop] addTimer:fillBeakerTimer forMode:NSRunLoopCommonModes];
+    [fillBeakerTimer fire];
+    
+    stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+}
+
 - (void)setLightOnAnimation
 {
     UIImage *image = nil;
@@ -1371,8 +1390,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     //---   Dark Room In Use 네온사인만 먼저 On 시키고 나머지 아이템은 애니메이션 처리함
     [UIView beginAnimations:@"SwitchOff" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
     [UIView setAnimationDidStopSelector:@selector(setChemicalView)];
     [UIView setAnimationDelegate:self];
     
