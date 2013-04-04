@@ -59,6 +59,7 @@
 #define SELECT_BUTTON_MOVE_Y            60
 
 #define CHEMICAL_ROTATION_ANGLE         100
+#define BEAKER_ROTATION_ANGLE           -100
 #define PROGRRESS_FILL_IMAGE_ALPHA      0.7f
 
 #define BEAKER_DROP_WATER_TIME          3.0f
@@ -80,6 +81,7 @@
     UIImage *mainPhotoView;
     BOOL        firstSelect;
     BOOL        MainVIewMoved;
+    BOOL        developing;
     UIImage     *_bg;
     UIImage     *preview_img;
   

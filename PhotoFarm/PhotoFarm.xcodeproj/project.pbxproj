@@ -335,10 +335,10 @@
 				21B3B54C16E46B96008A1D15 /* VenusFilmGroupViewController.m */,
 				21B3B54616E44C94008A1D15 /* VenusMainViewController.h */,
 				21B3B54716E44C95008A1D15 /* VenusMainViewController.m */,
-				E62341AB16FAD3290003FB52 /* VenusSelectDetailViewController.h */,
-				E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */,
 				E61A832C1701B4490062071F /* VenusScroll.h */,
 				E61A832D1701B4490062071F /* VenusScroll.m */,
+				E62341AB16FAD3290003FB52 /* VenusSelectDetailViewController.h */,
+				E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -429,6 +429,8 @@
 			children = (
 				215EF5F616E4968C0043C029 /* AlbumContentsTableViewCell.h */,
 				215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */,
+				E61A833D1703CF630062071F /* chemicalAnimation.h */,
+				E61A833E1703CF630062071F /* chemicalAnimation.m */,
 				E6F9BDCE16EDFCF7002241FA /* ContentViewController.h */,
 				E6F9BDCF16EDFCF7002241FA /* ContentViewController.m */,
 				E69B165816EC43D10075365E /* GlobalDataManager.h */,
@@ -438,8 +440,6 @@
 				215EF5E916E48F6D0043C029 /* ThumbnailImageView.m */,
 				E6C8FC6B16F096DB00D86CC1 /* VenusPersistList.h */,
 				E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */,
-				E61A833D1703CF630062071F /* chemicalAnimation.h */,
-				E61A833E1703CF630062071F /* chemicalAnimation.m */,
 				E61A83311703118C0062071F /* VenusProgressViewController.h */,
 				E61A83321703118C0062071F /* VenusProgressViewController.m */,
 			);

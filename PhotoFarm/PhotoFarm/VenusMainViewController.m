@@ -114,6 +114,7 @@
     
     [self.navigationController.navigationBar setHidden:YES];
     MainVIewMoved = NO;
+    developing = NO;
     
     //---   MainSecondView 숨기기
     [self.MainSecondView setHidden:YES];
@@ -505,6 +506,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
     [self setHiddenRootItem:YES];
     [self setLightOnAnimation];
+    developing = YES;
 }
 
 - (IBAction)UnderButtonPressed:(UIButton *)sender
@@ -667,12 +669,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     if (move == YES){
         [selectedButton setUserInteractionEnabled:NO];
         //[self setAnimationRootViewRight];
-        [self setMainSecondView];
+        [self showMainSecondView];
     }
     else{
         //[self setAnimationRootViewLeft];
         [selectedButton setUserInteractionEnabled:YES];
-        [self setMainView];
+        [self showMainView];
     }
 }
 
@@ -769,7 +771,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
  */
 
--(void)setMainView
+-(void)showMainView
 {
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
@@ -799,7 +801,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 
--(void)setMainSecondView
+-(void)showMainSecondView
 {
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
@@ -843,6 +845,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
     [UIView setAnimationDelay:delay];
+    if (developing == YES){
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
+    }
     selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
     [selectedButton setAlpha:1];
     self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
@@ -1062,6 +1068,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [chemicalAni setChemicalAniDuration];
     
     //---   Will edit position
+    
+    //---   애니메이션 시작 좌표는 실제 오브젝트 size의 높이, 너비를 2로 나눈 점에서 시작해야 한다.
     chemicalAni.chemicalStartX = 20;
     chemicalAni.chemicalStartY = [[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] frame].origin.y + 50;
     
@@ -1137,6 +1145,103 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:group forKey:nil];
 
+    //--- 현상액 애니메이션 중일때는 터치 이벤트를 받지 않도록 함
+    chemicalAni.chemicalAnimating = YES;
+    //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하지 않도록 함
+    [chemicalScrollView setUserInteractionEnabled:NO];
+}
+
+- (void) beakerDropAnimation
+{
+    int beakerRotationAngle = BEAKER_ROTATION_ANGLE;
+    
+    //---   Will edit position
+
+    //---   애니메이션 시작 좌표는 실제 오브젝트 size의 높이, 너비를 2로 나눈 점에서 시작해야 한다.
+    int beakerStartX = beakerView.frame.origin.x + beakerView.frame.size.width/2;
+    int beakerStartY = beakerView.frame.origin.y + beakerView.frame.size.height/2;
+    
+    int beakerOffsetX = 5;
+    int beakerOffsetY = 20;
+    
+    //---   1. 첫번째 애니메이션 : 현상액 위로 위치이동
+    int cx1 = beakerStartX - beakerOffsetX;
+    int cy1 = beakerStartY - beakerOffsetY;
+    int cx2 = cx1 - beakerOffsetX;
+    int cy2 = cy1 - beakerOffsetY;
+    int cx3 = cx2 - beakerOffsetX;
+    int cy3 = cy2 - beakerOffsetY;
+    
+    float firstAniDuration = 0.5f;
+    float secondAniDuration = 0.5f;
+    float waterDropAniDuration = 2.5f;
+    float secondAniBeginTime = 3.0f;
+    float totalAniDuration = firstAniDuration + waterDropAniDuration + secondAniDuration;
+    
+    CAKeyframeAnimation * AnimationChemicalPathUp = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CGMutablePathRef thePathUp = CGPathCreateMutable();
+    CGPathMoveToPoint(thePathUp, NULL, beakerStartX, beakerStartY);
+    CGPathAddLineToPoint(thePathUp, NULL, cx1, cy1);
+    CGPathAddLineToPoint(thePathUp, NULL, cx2, cy2);
+    CGPathAddLineToPoint(thePathUp, NULL, cx3, cy3);
+    
+    AnimationChemicalPathUp.path = thePathUp;
+    AnimationChemicalPathUp.calculationMode = kCAAnimationPaced;
+    AnimationChemicalPathUp.duration = firstAniDuration;
+    AnimationChemicalPathUp.fillMode = kCAFillModeForwards;
+    CFRelease(thePathUp);
+    
+    //---   2. 첫번째 애니에이션 : 현상액 회전
+    CABasicAnimation *rotation =
+    [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotation.fromValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)]; //0도에서 시작
+    rotation.toValue = [NSNumber numberWithFloat:(beakerRotationAngle * M_PI / 180.0)];
+    rotation.duration = firstAniDuration;
+    rotation.fillMode = kCAFillModeForwards;
+    
+    //---   3. 두번째 애니메이션 : 현상액 아래로 위치이동
+    int rev_x1 = cx3;
+    int rev_y1 = cy3;
+    
+    int rev_cx1 = rev_x1 + beakerOffsetX;
+    int rev_cy1 = rev_y1 + beakerOffsetY;
+    int rev_cx2 = rev_cx1 + beakerOffsetX;
+    int rev_cy2 = rev_cy1 + beakerOffsetY;
+    int rev_cx3 = rev_cx2 + beakerOffsetX;
+    int rev_cy3 = rev_cy2 + beakerOffsetY;
+    
+    CAKeyframeAnimation * AnimationChemicalPathDown = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    CGMutablePathRef thePathDown = CGPathCreateMutable();
+    CGPathMoveToPoint(thePathDown, NULL, rev_x1, rev_y1);
+    CGPathAddLineToPoint(thePathDown, NULL, rev_cx1, rev_cy1);
+    CGPathAddLineToPoint(thePathDown, NULL, rev_cx2, rev_cy2);
+    CGPathAddLineToPoint(thePathDown, NULL, rev_cx3, rev_cy3);
+    
+    AnimationChemicalPathDown.path = thePathDown;
+    AnimationChemicalPathDown.calculationMode = kCAAnimationPaced;
+    AnimationChemicalPathDown.duration = secondAniDuration;
+    AnimationChemicalPathDown.beginTime = secondAniBeginTime;
+    AnimationChemicalPathDown.fillMode = kCAFillModeForwards;
+    CFRelease(thePathDown);
+    
+    //---   4. 두번째 애니메이션 : 현상액 역회전
+    CABasicAnimation *rotation2 =
+    [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotation2.fromValue = [NSNumber numberWithFloat:(beakerRotationAngle * M_PI / 180.0)]; //0도에서 시작
+    rotation2.toValue = [NSNumber numberWithFloat:(0 * M_PI / 180.0)];
+    rotation2.duration = secondAniDuration;
+    rotation2.beginTime  = secondAniBeginTime;
+    rotation2.fillMode = kCAFillModeForwards;
+    
+    //---   5. 애니메이션 그룹
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    // 아래와 같이 배열로 애니메이션을 초기화해서 셋하게되면 애니메이션 그룹으로 사용가능.
+    group.animations = [NSArray arrayWithObjects:AnimationChemicalPathUp, rotation, AnimationChemicalPathDown, rotation2, nil];
+    group.duration = totalAniDuration;
+    group.delegate = self;
+    
+    [[beakerView layer] addAnimation:group forKey:nil];
+    
     //--- 현상액 애니메이션 중일때는 터치 이벤트를 받지 않도록 함
     chemicalAni.chemicalAnimating = YES;
     //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하지 않도록 함
@@ -1262,18 +1367,17 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [self.lamp setAlpha:0.3];
     [self.room setAlpha:0.3];
-    [self.darkRoomInUseTitle setAlpha:0.3];
     [self.bigSteel setAlpha:0.3];
     
+    //---   Dark Room In Use 네온사인만 먼저 On 시키고 나머지 아이템은 애니메이션 처리함
     [UIView beginAnimations:@"SwitchOff" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
     [UIView setAnimationDidStopSelector:@selector(setChemicalView)];
     [UIView setAnimationDelegate:self];
     
     [self.lamp setAlpha:1];
     [self.room setAlpha:1];
-    [self.darkRoomInUseTitle setAlpha:1];
     [self.bigSteel setAlpha:1];
     
     [UIView commitAnimations];
