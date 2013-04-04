@@ -120,6 +120,13 @@
     
     chemicalAni = [[chemicalAnimation alloc] init];
     chemicalAni.chemicalAnimating = NO;
+    
+    if (paperPreviewImageView == nil){
+        CGRect imageViewFrame;
+        imageViewFrame = CGRectMake(60, 60, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+        paperPreviewImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+        [self.MainView addSubview:paperPreviewImageView];
+    }
 }
 
 
@@ -549,6 +556,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }
         //---   Paper View
         else{
+            [paperPreviewImageView setHidden:YES];
             [venusSelectDetailView setItemValue:ITEM_VALUE_PAPER];
             [venusSelectDetailView setCurrentItem:[paperPageControl currentPage]];
         }
@@ -561,6 +569,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Select"]){
+        [paperPreviewImageView setHidden:YES];        
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
          MainVIewMoved = NO;
@@ -885,22 +894,22 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     //---   PaperView
     if (scrollView == paperScrollView){
-        _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-        [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];        
-        [selectedButton setBackgroundImage:_bg forState:UIControlStateNormal];
-        //[selectedButton setAlpha:0];
+        //---   용지가 먼저 보이고 그 위에 사진이 디졸브 되는 애니메이션을 위해서 selectedButton과 동일한 위치와 동일한 크기로 용지를 먼저 보이게 한다.
+		UIImage *image = [UIImage imageNamed:
+						  [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+        paperPreviewImageView.image = image;
+        [paperPreviewImageView setHidden:NO];
+
+        [self setPaperPreviewImage];
+        [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+        [selectedButton setAlpha:0];
         
-        float delay = MAINVIEW_ANIMATION_DELAY * 2;
         [UIView beginAnimations:@"PaperPhoto" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
-        [UIView setAnimationDelay:delay];
-        [UIView setAnimationDelegate:self];
-        //[self setPaperPreviewImage];
-        //[selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-        [selectedButton setBackgroundImage:mainPhotoView forState:UIControlStateNormal];
-        [selectedButton setAlpha:1];
-        
+        [UIView setAnimationDelay:0.5f];
+        [selectedButton setAlpha:1.0];
+
         [UIView commitAnimations];
     //---   ChemicalView
     } else{

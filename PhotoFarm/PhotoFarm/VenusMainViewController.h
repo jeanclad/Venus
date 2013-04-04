@@ -78,6 +78,9 @@
     BOOL        MainVIewMoved;
     UIImage     *_bg;
     UIImage     *preview_img;
+  
+    //---   Paper View
+	UIImageView *paperPreviewImageView;
     
     //---   Scroll View
     UIScrollView * paperScrollView;
