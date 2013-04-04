@@ -1366,6 +1366,21 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [fillBeakerTimer fire];
     
     stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
+    
+    CGRect imageViewFrame;
+    imageViewFrame = CGRectMake(20, 30, 480-20, 320-50);
+    UIImageView *waterImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    UIImage *image = [UIImage imageNamed:@"02_water_ip4.png"];
+    waterImageView.image = image;
+    [self.MainView addSubview:waterImageView];
+    [waterImageView setAlpha:0];
+    
+    //---   Dark Room In Use 네온사인만 먼저 On 시키고 나머지 아이템은 애니메이션 처리함
+    [UIView beginAnimations:@"water" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];
+    [waterImageView setAlpha:1];
+    [UIView commitAnimations];
 }
 
 - (void)setLightOnAnimation

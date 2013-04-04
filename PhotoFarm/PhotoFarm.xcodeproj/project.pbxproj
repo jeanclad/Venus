@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211A4D4F170D751F0023A121 /* 02_water_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = 211A4D4E170D751F0023A121 /* 02_water_ip4.png */; };
 		211B2F9116FEDFDD002F5FD7 /* paper_preview_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8B16FEDFDB002F5FD7 /* paper_preview_1.png */; };
 		211B2F9216FEDFDD002F5FD7 /* paper_preview_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8C16FEDFDB002F5FD7 /* paper_preview_2.png */; };
 		211B2F9316FEDFDD002F5FD7 /* paper_preview_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 211B2F8D16FEDFDC002F5FD7 /* paper_preview_3.png */; };
@@ -113,6 +114,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211A4D4E170D751F0023A121 /* 02_water_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 02_water_ip4.png; sourceTree = "<group>"; };
 		211B2F8B16FEDFDB002F5FD7 /* paper_preview_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_1.png; sourceTree = "<group>"; };
 		211B2F8C16FEDFDB002F5FD7 /* paper_preview_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_2.png; sourceTree = "<group>"; };
 		211B2F8D16FEDFDC002F5FD7 /* paper_preview_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_3.png; sourceTree = "<group>"; };
@@ -255,6 +257,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		211A4D4D170D75070023A121 /* 02_darkroom */ = {
+			isa = PBXGroup;
+			children = (
+				211A4D4E170D751F0023A121 /* 02_water_ip4.png */,
+			);
+			name = 02_darkroom;
+			sourceTree = "<group>";
+		};
 		2142086116F0005C0097FCE3 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +498,7 @@
 		E6F9BDCA16EDF23C002241FA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				211A4D4D170D75070023A121 /* 02_darkroom */,
 				E623415816F965B00003FB52 /* select */,
 				E6ADEFEF16F8808200160B9D /* 01_main */,
 				E6ADF00816F8844800160B9D /* 06_Navi */,
@@ -657,6 +668,7 @@
 				218CC8BE170A6D9800DBC7EC /* paper_preview_4.png in Resources */,
 				E61A8356170C066C0062071F /* paper_preview_5.jpg in Resources */,
 				E61A8357170C066C0062071F /* paper_preview_6.jpg in Resources */,
+				211A4D4F170D751F0023A121 /* 02_water_ip4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

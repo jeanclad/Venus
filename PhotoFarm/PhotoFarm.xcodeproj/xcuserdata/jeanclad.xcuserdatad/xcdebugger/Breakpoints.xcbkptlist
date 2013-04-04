@@ -671,11 +671,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PhotoFarm/VenusMainViewController.m"
-         timestampString = "386756961.968424"
+         timestampString = "386758236.314001"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1394"
-         endingLineNumber = "1394"
+         startingLineNumber = "1409"
+         endingLineNumber = "1409"
          landmarkName = "-setLightOnAnimation"
          landmarkType = "5">
       </FileBreakpoint>
