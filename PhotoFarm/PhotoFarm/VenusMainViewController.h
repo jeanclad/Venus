@@ -54,6 +54,10 @@
 #define SELECT_RIGHT_MOVE_X_IP4         240
 #define SELECT_RIGHT_MOVE_Y             50
 
+#define SELECT_BUTTON_MOVE_X_IP5        80
+#define SELECT_BUTTON_MOVE_X_IP4        60
+#define SELECT_BUTTON_MOVE_Y            60
+
 #define CHEMICAL_ROTATION_ANGLE         100
 #define PROGRRESS_FILL_IMAGE_ALPHA      0.7f
 
