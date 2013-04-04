@@ -373,6 +373,11 @@
     [self setPincetteImage:nil];
     [self setMainSecondView:nil];
     [self setPincetteImage:nil];
+    [self setLightButton:nil];
+    [self setDarkRoomInUseTitle:nil];
+    [self setLamp:nil];
+    [self setBigSteel:nil];
+    [self setRoom:nil];
     [super viewDidUnload];
 }
 
@@ -496,6 +501,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return final;
 }
 
+- (IBAction)lightSwitchPressed:(UIButton *)sender {
+    [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
+    [self setHiddenRootItem:YES];
+    [self setLightOnAnimation];
+}
+
 - (IBAction)UnderButtonPressed:(UIButton *)sender
 {
     NSString *buttonName = [sender titleForState:UIControlStateNormal];
@@ -518,15 +529,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
     else if ([buttonName isEqualToString:@"Papers"]){
         if (firstSelect == YES){
-            [self moveAnimationRootView:YES];
-            [self setHiddenRootItem:YES];
-            
-            [paperScrollView setHidden:NO];
-            [paperPageControl setHidden:NO];
-            [chemicalScrollView setHidden:YES];
-            [chemicalPageControl setHidden:YES];
-            [beakerView setHidden:YES];
-            MainVIewMoved = YES;
+            [self setPaperView];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
             [alert show];
@@ -534,16 +537,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
     else if ([buttonName isEqualToString:@"Chemicals"]){
         if (firstSelect == YES){
-            [self moveAnimationRootView:YES];
-            [self setHiddenRootItem:YES];
-            
-            [paperScrollView setHidden:YES];
-            [paperPageControl setHidden:YES];
-            [chemicalScrollView setHidden:NO];
-            [chemicalPageControl setHidden:NO];
-            [beakerView setHidden:NO];
-            MainVIewMoved = YES;
-        
+            [self setChemicalView];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
             [alert show];
@@ -641,6 +635,32 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
  //*/
+
+- (void)setChemicalView
+{
+    [self moveAnimationRootView:YES];
+    [self setHiddenRootItem:YES];
+    
+    [paperScrollView setHidden:YES];
+    [paperPageControl setHidden:YES];
+    [chemicalScrollView setHidden:NO];
+    [chemicalPageControl setHidden:NO];
+    [beakerView setHidden:NO];
+    MainVIewMoved = YES;
+}
+
+- (void)setPaperView
+{
+    [self moveAnimationRootView:YES];
+    [self setHiddenRootItem:YES];
+    
+    [paperScrollView setHidden:NO];
+    [paperPageControl setHidden:NO];
+    [chemicalScrollView setHidden:YES];
+    [chemicalPageControl setHidden:YES];
+    [beakerView setHidden:YES];
+    MainVIewMoved = YES;
+}
 
 - (void)moveAnimationRootView:(BOOL)move
 {
@@ -1224,6 +1244,41 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
+- (void)setLightOnAnimation
+{
+    UIImage *image = nil;
+    
+    image = [UIImage imageNamed:@"lamp_on_ip4.png"];
+    [self.lamp setImage:image];
+    
+    image = [UIImage imageNamed:@"01_1main_on_ip4.png"];
+    [self.room setImage:image];
+    
+    image = [UIImage imageNamed:@"title_on_ip4.png"];
+    [self.darkRoomInUseTitle setImage:image];
+    
+    image = [UIImage imageNamed:@"steel_on_ip4.png"];
+    [self.bigSteel setImage:image];
+    
+    [self.lamp setAlpha:0.3];
+    [self.room setAlpha:0.3];
+    [self.darkRoomInUseTitle setAlpha:0.3];
+    [self.bigSteel setAlpha:0.3];
+    
+    [UIView beginAnimations:@"SwitchOff" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    [UIView setAnimationDidStopSelector:@selector(setChemicalView)];
+    [UIView setAnimationDelegate:self];
+    
+    [self.lamp setAlpha:1];
+    [self.room setAlpha:1];
+    [self.darkRoomInUseTitle setAlpha:1];
+    [self.bigSteel setAlpha:1];
+    
+    [UIView commitAnimations];
+}
+
 #pragma mark -
 #pragma mark Touch handling
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -1236,7 +1291,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
 	// Only move the placard view if the touch was in the placard view
     if (chemicalAni.chemicalAnimating == NO){
-        //if (([touch view] == chemicalScrollView) || ([touch view] == chemicalContentView)) {
         if (point.x > 65 && point.x < 110 && point.y > 90 && point.y < 200) {
             BOOL isMaxProgress = [beakerView isMaxProgress];
             if (isMaxProgress == NO) {

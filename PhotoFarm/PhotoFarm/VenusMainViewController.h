@@ -111,6 +111,14 @@
 @property (weak, nonatomic) IBOutlet UIView *underBarItemView;
 @property (weak, nonatomic) IBOutlet UIImageView *pincetteImage;
 
+@property (weak, nonatomic) IBOutlet UIImageView *room;
+@property (weak, nonatomic) IBOutlet UIButton *lightButton;
+- (IBAction)lightSwitchPressed:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *darkRoomInUseTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *lamp;
+@property (weak, nonatomic) IBOutlet UIImageView *bigSteel;
+
+
 - (IBAction)UnderButtonPressed:(UIButton *)sender;
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size;
 
