@@ -84,6 +84,9 @@
     BOOL        developing;
     UIImage     *_bg;
     UIImage     *preview_img;
+    UIImageView *waterImageView;
+    UIImageView *darkRoomOffSteelImageView;
+    UIImageView *darkRoomOnSteelImageView;
   
     //---   Paper View
 	UIImageView *paperPreviewImageView;
@@ -106,6 +109,7 @@
     
     chemicalAnimation *chemicalAni;
 }
+
 @property (nonatomic, strong) ALAsset *asset;
 @property (weak, nonatomic) IBOutlet UIView *MainView;
 @property (weak, nonatomic) IBOutlet UIView *MainSecondView;
@@ -115,13 +119,13 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *room;
 @property (weak, nonatomic) IBOutlet UIButton *lightButton;
-- (IBAction)lightSwitchPressed:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *darkRoomInUseTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *lamp;
 @property (weak, nonatomic) IBOutlet UIImageView *bigSteel;
 
-
 - (IBAction)UnderButtonPressed:(UIButton *)sender;
+- (IBAction)lightSwitchPressed:(UIButton *)sender;
+
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size;
 
 @end

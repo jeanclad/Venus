@@ -83,7 +83,7 @@
 		E62341A016F9E7430003FB52 /* select_solution08.png in Resources */ = {isa = PBXBuildFile; fileRef = E623418B16F9E7430003FB52 /* select_solution08.png */; };
 		E62341A116F9E7430003FB52 /* select_solution09.png in Resources */ = {isa = PBXBuildFile; fileRef = E623418C16F9E7430003FB52 /* select_solution09.png */; };
 		E62341A316FA0B890003FB52 /* beaker_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A216FA0B890003FB52 /* beaker_off_ip4.png */; };
-		E62341A516FA151F0003FB52 /* stee_big_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A416FA151F0003FB52 /* stee_big_off_ip4.png */; };
+		E62341A516FA151F0003FB52 /* steel_big_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A416FA151F0003FB52 /* steel_big_off_ip4.png */; };
 		E62341A716FA99640003FB52 /* pincette_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A616FA99640003FB52 /* pincette_off_ip4.png */; };
 		E62341AE16FAD3290003FB52 /* VenusSelectDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */; };
 		E62341AF16FAD3290003FB52 /* VenusSelectDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E62341AD16FAD3290003FB52 /* VenusSelectDetailViewController.xib */; };
@@ -111,6 +111,7 @@
 		E6F9BDD216EDFCF8002241FA /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDD016EDFCF7002241FA /* ContentViewController.xib */; };
 		E6F9BDDB16EF742B002241FA /* VenusAlbumDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F9BDD916EF742A002241FA /* VenusAlbumDetailViewController.m */; };
 		E6F9BDDC16EF742B002241FA /* VenusAlbumDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6F9BDDA16EF742B002241FA /* VenusAlbumDetailViewController.xib */; };
+		E6FFEA06170E566F00027FF7 /* steel_big_on_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6FFEA05170E566F00027FF7 /* steel_big_on_ip4.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -202,7 +203,7 @@
 		E623418B16F9E7430003FB52 /* select_solution08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_solution08.png; sourceTree = "<group>"; };
 		E623418C16F9E7430003FB52 /* select_solution09.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_solution09.png; sourceTree = "<group>"; };
 		E62341A216FA0B890003FB52 /* beaker_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beaker_off_ip4.png; path = "solution(공통)/beaker_off_ip4.png"; sourceTree = "<group>"; };
-		E62341A416FA151F0003FB52 /* stee_big_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stee_big_off_ip4.png; sourceTree = "<group>"; };
+		E62341A416FA151F0003FB52 /* steel_big_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = steel_big_off_ip4.png; path = ../steel_big_off_ip4.png; sourceTree = "<group>"; };
 		E62341A616FA99640003FB52 /* pincette_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pincette_off_ip4.png; sourceTree = "<group>"; };
 		E62341AB16FAD3290003FB52 /* VenusSelectDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusSelectDetailViewController.h; sourceTree = "<group>"; };
 		E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusSelectDetailViewController.m; sourceTree = "<group>"; };
@@ -239,6 +240,7 @@
 		E6F9BDD816EF7429002241FA /* VenusAlbumDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusAlbumDetailViewController.h; sourceTree = "<group>"; };
 		E6F9BDD916EF742A002241FA /* VenusAlbumDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusAlbumDetailViewController.m; sourceTree = "<group>"; };
 		E6F9BDDA16EF742B002241FA /* VenusAlbumDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusAlbumDetailViewController.xib; sourceTree = "<group>"; };
+		E6FFEA05170E566F00027FF7 /* steel_big_on_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steel_big_on_ip4.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,7 +375,6 @@
 				E623416C16F9873B0003FB52 /* select_steel_ip4.png */,
 				E623415916F965BE0003FB52 /* select_bg_left_ip4.png */,
 				E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */,
-				E62341A416FA151F0003FB52 /* stee_big_off_ip4.png */,
 				E62341A616FA99640003FB52 /* pincette_off_ip4.png */,
 				E61A832F170311680062071F /* progress_fill_1.png */,
 				E61A833B170338C50062071F /* progress_fill_2.png */,
@@ -471,6 +472,8 @@
 				E6ADEFF716F8808200160B9D /* steel_text_on_ip4.png */,
 				E6ADEFF816F8808200160B9D /* switch_off_ip4.png */,
 				E6ADEFF916F8808200160B9D /* switch_on_ip4.png */,
+				E62341A416FA151F0003FB52 /* steel_big_off_ip4.png */,
+				E6FFEA05170E566F00027FF7 /* steel_big_on_ip4.png */,
 			);
 			path = 01_main;
 			sourceTree = "<group>";
@@ -654,7 +657,7 @@
 				E62341A016F9E7430003FB52 /* select_solution08.png in Resources */,
 				E62341A116F9E7430003FB52 /* select_solution09.png in Resources */,
 				E62341A316FA0B890003FB52 /* beaker_off_ip4.png in Resources */,
-				E62341A516FA151F0003FB52 /* stee_big_off_ip4.png in Resources */,
+				E62341A516FA151F0003FB52 /* steel_big_off_ip4.png in Resources */,
 				E62341A716FA99640003FB52 /* pincette_off_ip4.png in Resources */,
 				E62341AF16FAD3290003FB52 /* VenusSelectDetailViewController.xib in Resources */,
 				211B2F9116FEDFDD002F5FD7 /* paper_preview_1.png in Resources */,
@@ -669,6 +672,7 @@
 				E61A8356170C066C0062071F /* paper_preview_5.jpg in Resources */,
 				E61A8357170C066C0062071F /* paper_preview_6.jpg in Resources */,
 				211A4D4F170D751F0023A121 /* 02_water_ip4.png in Resources */,
+				E6FFEA06170E566F00027FF7 /* steel_big_on_ip4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

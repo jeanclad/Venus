@@ -132,6 +132,29 @@
         paperPreviewImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
         [self.MainView addSubview:paperPreviewImageView];
     }
+    
+    //---   암실 트레이 이미지 설정
+    CGRect imageViewFrame;
+    imageViewFrame = CGRectMake(0, 10, 240, 300);
+    darkRoomOffSteelImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    UIImage *image = [UIImage imageNamed:@"steel_big_off_ip4.png"];
+    darkRoomOffSteelImageView.image = image;
+    [self.MainSecondView addSubview:darkRoomOffSteelImageView];
+    
+    imageViewFrame = CGRectMake(0, 10, 480, 300);
+    darkRoomOnSteelImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    image = [UIImage imageNamed:@"steel_big_on_ip4.png"];
+    darkRoomOnSteelImageView.image = image;
+    [self.MainSecondView addSubview:darkRoomOnSteelImageView];
+    [darkRoomOnSteelImageView setHidden:YES];
+    
+    //---   트레이의 용액 채워지는 애니메이션 이미지 초기화
+    imageViewFrame = CGRectMake(30, 40, 480-60, 320-70);
+    waterImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    image = [UIImage imageNamed:@"02_water_ip4.png"];
+    waterImageView.image = image;
+    [self.MainView addSubview:waterImageView];
+    [waterImageView setAlpha:0];
 }
 
 
@@ -508,11 +531,15 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
         [alert show];        
     } else {
+        developing = YES;
+        //---   암실 트레이 이미지 설정
+        [darkRoomOffSteelImageView setHidden:YES];
+        [darkRoomOnSteelImageView setHidden:NO];
+        
         [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
         [self setHiddenRootItem:YES];
         [self setLightOnAnimation];
         [chemicalContentView setHidden:YES];
-        developing = YES;
     }
 }
 
@@ -850,7 +877,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [UIView beginAnimations:@"PhotoDown" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
     [UIView setAnimationDelay:delay];
     if (developing == YES){
         [UIView setAnimationDelegate:self];
@@ -865,6 +892,24 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 - (void)mainViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
+{
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float moveXpos;
+    
+    if (screen.bounds.size.height == 568)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+    
+    [UIView beginAnimations:@"MainViewLeft" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    [UIView commitAnimations];
+}
+
+- (void)setEmptyBeakerDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
 {
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
@@ -1367,18 +1412,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
     
-    CGRect imageViewFrame;
-    imageViewFrame = CGRectMake(20, 30, 480-20, 320-50);
-    UIImageView *waterImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
-    UIImage *image = [UIImage imageNamed:@"02_water_ip4.png"];
-    waterImageView.image = image;
-    [self.MainView addSubview:waterImageView];
-    [waterImageView setAlpha:0];
-    
     //---   Dark Room In Use 네온사인만 먼저 On 시키고 나머지 아이템은 애니메이션 처리함
     [UIView beginAnimations:@"water" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];
+    [UIView setAnimationDidStopSelector:@selector(setEmptyBeakerDone:finished:context:)];
+    [UIView setAnimationDelegate:self];
     [waterImageView setAlpha:1];
     [UIView commitAnimations];
 }
