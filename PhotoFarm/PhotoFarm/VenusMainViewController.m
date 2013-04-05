@@ -868,7 +868,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView commitAnimations];
     
     delay += MAINVIEW_ANIMATION_DELAY*2;
-
+    
     selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
     [selectedButton setAlpha:0];
     
@@ -880,6 +880,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
     [UIView setAnimationDelay:delay];
     if (developing == YES){
+        //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다.
+        UIImage *image = [UIImage imageNamed:
+                          [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+        [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
         [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
@@ -924,6 +928,20 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+    [UIView commitAnimations];
+    
+    if (screen.bounds.size.height == 568)
+        moveXpos = 90;
+    else
+        moveXpos = 70;
+    
+    [UIView beginAnimations:@"PhotoRight" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    [UIView setAnimationDelay:0.1f];
+    selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4 + moveXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+
+    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + moveXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     [UIView commitAnimations];
 }
 
@@ -1215,7 +1233,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     int beakerStartY = beakerView.frame.origin.y + beakerView.frame.size.height/2;
     
     int beakerOffsetX = 5;
-    int beakerOffsetY = 20;
+    //int beakerOffsetY = 20;
+    int beakerOffsetY = 5;
     
     //---   1. 첫번째 애니메이션 : 현상액 위로 위치이동
     int cx1 = beakerStartX - beakerOffsetX;
@@ -1419,6 +1438,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDidStopSelector:@selector(setEmptyBeakerDone:finished:context:)];
     [UIView setAnimationDelegate:self];
     [waterImageView setAlpha:1];
+    [selectedButton setAlpha:0.5];
     [UIView commitAnimations];
 }
 
