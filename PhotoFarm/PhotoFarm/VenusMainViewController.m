@@ -13,6 +13,7 @@
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
 #import "chemicalAnimation.h"
+#import "VenusAccelView.h"
 /* persist test by jeanclad
 #import "VenusPersistList.h"
 */
@@ -886,6 +887,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
+        
+        //---   사진이 점점 보이다가 완전히 보이게 된 시간(afterDelay) 이후에 비이커가 비워지게 한다. 대략 비이커가 트레이에 기울어지는 시간과 일치한다.
         [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
     }
     selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
@@ -924,7 +927,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     else
         moveXpos = SELECT_RIGHT_MOVE_X_IP4;
     
-    [UIView beginAnimations:@"MainViewRight" context:nil];
+    //---   트레이가 완전히 보이게 하는 애니메이션 (Move Left)
+    [UIView beginAnimations:@"MainViewLeft" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
@@ -935,6 +939,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     else
         moveXpos = 70;
     
+    //---   트레이가 좌측으로 이동했으므로 사진도 좌측으로 이동시킨다. (현재 selectedButton에는 paper이미지가 설저되어 있다.
     [UIView beginAnimations:@"PhotoRight" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
@@ -943,6 +948,27 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
     self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + moveXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     [UIView commitAnimations];
+    
+    //---   가속도 센서 설정
+    if (motionManager == nil){
+        motionManager = [[CMMotionManager alloc] init];
+    }
+    
+    if (motionManager.accelerometerAvailable){
+        VenusAccelView *venusAccelView = [[VenusAccelView alloc] init];
+        [self.MainSecondView addSubview:venusAccelView];
+        [venusAccelView initAccelImage:preview_img];
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        motionManager.accelerometerUpdateInterval = kUpdateInterval;
+        [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
+         ^(CMAccelerometerData *accelerometerData, NSError *error) {
+             acceleration = accelerometerData.acceleration;
+             [venusAccelView setAcceleration:accelerometerData.acceleration];
+             //[(VenusAccelView *)self.view setAcceleration:accelerometerData.acceleration];
+             [venusAccelView performSelectorOnMainThread:@selector(updatePhotoPostion)
+                                         withObject:nil waitUntilDone:NO];
+         }];
+    }
 }
 
 - (void)setHiddenRootItem:(BOOL)isHidden
@@ -1424,6 +1450,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 - (void)setEmptyBeaker:(id)sendor
 {
     // set a timer that updates the progress
+    //---   비이커가 비워지게 한다.
     wantProgressLevel = 0;
     fillBeakerTimer = [NSTimer scheduledTimerWithTimeInterval:0.03f target: self selector: @selector(updateProgress) userInfo: nil repeats: YES];
     [[NSRunLoop mainRunLoop] addTimer:fillBeakerTimer forMode:NSRunLoopCommonModes];
@@ -1431,7 +1458,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
     
-    //---   Dark Room In Use 네온사인만 먼저 On 시키고 나머지 아이템은 애니메이션 처리함
+    //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
     [UIView beginAnimations:@"water" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];

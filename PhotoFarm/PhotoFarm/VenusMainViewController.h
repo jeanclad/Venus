@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreMotion/CoreMotion.h>
 #import "VenusScroll.h"
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
@@ -72,6 +73,7 @@
 #define MAINVIEW_ANIMATION_DURATION     0.5f
 #define MAINVIEW_ANIMATION_DELAY        0.5f
 
+#define kUpdateInterval    (10.0f/60.0f)
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
     UIButton    *selectedButton;
@@ -108,6 +110,9 @@
     float wantProgressLevel;
     
     chemicalAnimation *chemicalAni;
+    
+    CMMotionManager *motionManager;
+    CMAcceleration acceleration;
 }
 
 @property (nonatomic, strong) ALAsset *asset;
@@ -122,6 +127,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *darkRoomInUseTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *lamp;
 @property (weak, nonatomic) IBOutlet UIImageView *bigSteel;
+
 
 - (IBAction)UnderButtonPressed:(UIButton *)sender;
 - (IBAction)lightSwitchPressed:(UIButton *)sender;

@@ -78,7 +78,7 @@ Copyright (C) 2011 Apple Inc. All Rights Reserved.
     ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
         
         if (result) {
-            NSLog(@"result = %@", result);
+            //NSLog(@"result = %@", result);
             [assets addObject:result];
         }
     };

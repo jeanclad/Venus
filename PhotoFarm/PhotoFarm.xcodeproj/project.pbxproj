@@ -50,6 +50,7 @@
 		E61A83411709CD0E0062071F /* film_table_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E61A83401709CD0E0062071F /* film_table_ip4.png */; };
 		E61A8356170C066C0062071F /* paper_preview_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E61A8354170C06660062071F /* paper_preview_5.jpg */; };
 		E61A8357170C066C0062071F /* paper_preview_6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E61A8355170C06670062071F /* paper_preview_6.jpg */; };
+		E61C95B1170F0B6E00154E37 /* VenusAccelView.m in Sources */ = {isa = PBXBuildFile; fileRef = E61C95B0170F0B6E00154E37 /* VenusAccelView.m */; };
 		E623415B16F965BE0003FB52 /* select_bg_left_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415916F965BE0003FB52 /* select_bg_left_ip4.png */; };
 		E623415C16F965BE0003FB52 /* select_bg_right_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */; };
 		E623415F16F969130003FB52 /* 01_1main_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E623415D16F969130003FB52 /* 01_1main_off_ip4.png */; };
@@ -87,6 +88,7 @@
 		E62341A716FA99640003FB52 /* pincette_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A616FA99640003FB52 /* pincette_off_ip4.png */; };
 		E62341AE16FAD3290003FB52 /* VenusSelectDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */; };
 		E62341AF16FAD3290003FB52 /* VenusSelectDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E62341AD16FAD3290003FB52 /* VenusSelectDetailViewController.xib */; };
+		E65E5CFB170E9CF700A35435 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65E5CFA170E9CF700A35435 /* CoreMotion.framework */; };
 		E69B165A16EC43D10075365E /* GlobalDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E69B165916EC43D10075365E /* GlobalDataManager.m */; };
 		E6ADEFFC16F8808200160B9D /* lamp_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6ADEFF016F8808200160B9D /* lamp_off_ip4.png */; };
 		E6ADEFFD16F8808200160B9D /* lamp_on_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6ADEFF116F8808200160B9D /* lamp_on_ip4.png */; };
@@ -170,6 +172,8 @@
 		E61A83401709CD0E0062071F /* film_table_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = film_table_ip4.png; sourceTree = "<group>"; };
 		E61A8354170C06660062071F /* paper_preview_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paper_preview_5.jpg; sourceTree = "<group>"; };
 		E61A8355170C06670062071F /* paper_preview_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paper_preview_6.jpg; sourceTree = "<group>"; };
+		E61C95AF170F0B6E00154E37 /* VenusAccelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusAccelView.h; sourceTree = "<group>"; };
+		E61C95B0170F0B6E00154E37 /* VenusAccelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusAccelView.m; sourceTree = "<group>"; };
 		E623415916F965BE0003FB52 /* select_bg_left_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_bg_left_ip4.png; sourceTree = "<group>"; };
 		E623415A16F965BE0003FB52 /* select_bg_right_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_bg_right_ip4.png; sourceTree = "<group>"; };
 		E623415D16F969130003FB52 /* 01_1main_off_ip4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01_1main_off_ip4.png; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 		E62341AB16FAD3290003FB52 /* VenusSelectDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusSelectDetailViewController.h; sourceTree = "<group>"; };
 		E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusSelectDetailViewController.m; sourceTree = "<group>"; };
 		E62341AD16FAD3290003FB52 /* VenusSelectDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusSelectDetailViewController.xib; sourceTree = "<group>"; };
+		E65E5CFA170E9CF700A35435 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		E69B165716EC43D10075365E /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		E69B165816EC43D10075365E /* GlobalDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataManager.h; sourceTree = "<group>"; };
 		E69B165916EC43D10075365E /* GlobalDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataManager.m; sourceTree = "<group>"; };
@@ -248,6 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E65E5CFB170E9CF700A35435 /* CoreMotion.framework in Frameworks */,
 				211B2F9F17004868002F5FD7 /* QuartzCore.framework in Frameworks */,
 				215EF5DC16E487EB0043C029 /* AssetsLibrary.framework in Frameworks */,
 				21B3B51716E43C76008A1D15 /* UIKit.framework in Frameworks */,
@@ -280,6 +286,7 @@
 		21B3B50A16E43C76008A1D15 = {
 			isa = PBXGroup;
 			children = (
+				E65E5CFA170E9CF700A35435 /* CoreMotion.framework */,
 				211B2F9D17004789002F5FD7 /* QuartzCore.framework */,
 				215EF5DB16E487EB0043C029 /* AssetsLibrary.framework */,
 				21B3B51C16E43C76008A1D15 /* PhotoFarm */,
@@ -453,6 +460,8 @@
 				E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */,
 				E61A83311703118C0062071F /* VenusProgressViewController.h */,
 				E61A83321703118C0062071F /* VenusProgressViewController.m */,
+				E61C95AF170F0B6E00154E37 /* VenusAccelView.h */,
+				E61C95B0170F0B6E00154E37 /* VenusAccelView.m */,
 			);
 			name = "Additional Views and Cells";
 			sourceTree = "<group>";
@@ -699,6 +708,7 @@
 				E61A832E1701B4490062071F /* VenusScroll.m in Sources */,
 				E61A83331703118C0062071F /* VenusProgressViewController.m in Sources */,
 				E61A833F1703CF630062071F /* chemicalAnimation.m in Sources */,
+				E61C95B1170F0B6E00154E37 /* VenusAccelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
