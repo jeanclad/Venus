@@ -970,6 +970,9 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     //---   가속도 센서 설정
     if (motionManager == nil){
         motionManager = [[CMMotionManager alloc] init];
+        photoXVelocity = 0;
+        photoYVelocity = 0;
+        currentPoint = developingPaper.center;
     }
     
     if (motionManager.accelerometerAvailable){
@@ -978,49 +981,41 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
          ^(CMAccelerometerData *accelerometerData, NSError *error) {
              acceleration = accelerometerData.acceleration;
-             [self.view performSelectorOnMainThread:@selector(updatePhotoPostion)
+             [self performSelectorOnMainThread:@selector(updatePhotoPostion)
                                          withObject:nil waitUntilDone:NO];
          }];
     }
 }
 
-/*
 - (void)setCurrentPoint:(CGPoint)newPoint {
-    previousPoint = currentPoint;
     currentPoint = newPoint;
+    CGPoint beakerEndPoint;
+    beakerEndPoint.y = currentPoint.y + PREVIEW_FRAME_SIZE_WIDTH;
+    beakerEndPoint.x = currentPoint.x + PREVIEW_FRAME_SIZE_HEIGHT;
     
-    if (currentPoint.x < 0) {
-        currentPoint.x = 0;
-        photoXVelocity = 0;
-    }
-    if (currentPoint.y < 0){
-        currentPoint.y = 0;
-        photoYVelocity = 0;
-    }
-    if (currentPoint.x > self.bounds.size.width - image.size.width) {
-        currentPoint.x = self.bounds.size.width - image.size.width;
-        photoXVelocity = 0;
-    }
-    if (currentPoint.y > self.bounds.size.height - image.size.height) {
-        currentPoint.y = self.bounds.size.height - image.size.height;
+    if (currentPoint.y < BIG_BEAKER_START_X_IP4){
+        currentPoint.y = BIG_BEAKER_START_X_IP4;
         photoYVelocity = 0;
     }
     
-    NSLog(@"aa = %f", self.bounds.size.width - image.size.width);
-    NSLog(@"bb = %f", self.bounds.size.height - image.size.height);
+    if (currentPoint.x < BIG_BEAKER_START_Y_IP4) {
+        currentPoint.x = BIG_BEAKER_START_Y_IP4;
+        photoXVelocity = 0;
+    }
+
+    if (beakerEndPoint.y > BIG_BEAKER_END_X_IP4) {
+        currentPoint.y = BIG_BEAKER_END_X_IP4 - PREVIEW_FRAME_SIZE_WIDTH;
+        photoYVelocity = 0;
+    }
     
-    CGRect currentImageRect = CGRectMake(currentPoint.x, currentPoint.y,
-                                         currentPoint.x + image.size.width,
-                                         currentPoint.y + image.size.height);
-    CGRect previousImageRect = CGRectMake(previousPoint.x, previousPoint.y,
-                                          previousPoint.x + image.size.width,
-                                          currentPoint.y + image.size.width);
-    [self setNeedsDisplayInRect:CGRectUnion(currentImageRect,
-                                            previousImageRect)];
-    
-    NSLog(@"currentImageRect = %@, previousImageRect = %@", NSStringFromCGRect(currentImageRect), NSStringFromCGRect(previousImageRect));
+    if (beakerEndPoint.x > BIG_BEAKER_END_Y_IP4) {
+        currentPoint.x = BIG_BEAKER_END_Y_IP4 - PREVIEW_FRAME_SIZE_HEIGHT;
+        photoXVelocity = 0;
+    }
+
+    developingPaper.center = CGPointMake(currentPoint.y+PREVIEW_FRAME_SIZE_WIDTH/2, currentPoint.x+PREVIEW_FRAME_SIZE_HEIGHT/2);
+    //NSLog(@"paper = %@", NSStringFromCGPoint(developingPaper.frame.origin));
 }
- */
 
 - (void)updatePhotoPostion {
     static NSDate *lastUpdateTime;
@@ -1030,19 +1025,18 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         NSTimeInterval secondsSinceLastDraw =
         -([lastUpdateTime timeIntervalSinceNow]);
         
-        photoYVelocity = photoYVelocity + -(acceleration.y *
-                                            secondsSinceLastDraw);
-        photoXVelocity = photoXVelocity + acceleration.x *
-        secondsSinceLastDraw;
+        photoYVelocity = photoYVelocity + -(acceleration.y * secondsSinceLastDraw);
+        photoXVelocity = photoXVelocity + -(acceleration.x * secondsSinceLastDraw);
         
         CGFloat xAcceleration = secondsSinceLastDraw * photoXVelocity * 500;
         CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
+        //NSLog(@"yAcc = %f(%f), xAcc = %f(%f)", yAcceleration, photoYVelocity, xAcceleration, photoXVelocity);
         
         currentPoint = CGPointMake(currentPoint.x +
                                         xAcceleration, currentPoint.y + yAcceleration);
         
-        darkRoomOnSteelImageView.center = CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration);
-
+        [self setCurrentPoint:CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration)];
+        
     }
     // Update last time with current time
     lastUpdateTime = [[NSDate alloc] init];

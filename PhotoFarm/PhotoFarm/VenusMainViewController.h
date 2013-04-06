@@ -13,6 +13,11 @@
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
 
+#define IP5_SIZE_WIDTH                  568
+#define IP5_SIZE_HEIGHT                 320
+#define IP4_SIZE_WIDTH                  480
+#define IP4_SIZE_HEIGHT                 320
+
 #define PREVIEW_ORIGIN_X                0
 #define PREVIEW_ORIGIN_Y                0
 #define PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH    140
@@ -21,7 +26,6 @@
 #define PREVIEW_FRAME_SIZE_HEIGHT       200
 #define PREVIEW_PHOTO_SIZE_WIDTH        200
 #define PREVIEW_PHOTO_SIZE_HEIGHT       200
-
 
 #define PREVIEW_POLAROID_PHOTO_ORIGIN_X         8
 #define PREVIEW_POLAROID_PHOTO_ORIGIN_Y         2
@@ -73,7 +77,12 @@
 #define MAINVIEW_ANIMATION_DURATION     0.5f
 #define MAINVIEW_ANIMATION_DELAY        0.5f
 
-#define kUpdateInterval    (10.0f/60.0f)
+#define BIG_BEAKER_START_X_IP4          50
+#define BIG_BEAKER_END_X_IP4            IP4_SIZE_WIDTH-50
+#define BIG_BEAKER_START_Y_IP4          50
+#define BIG_BEAKER_END_Y_IP4            IP4_SIZE_HEIGHT-50
+
+#define kUpdateInterval    (1.0f/60.0f)
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
     UIButton    *selectedButton;
