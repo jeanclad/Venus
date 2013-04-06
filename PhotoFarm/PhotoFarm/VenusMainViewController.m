@@ -42,6 +42,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //---   아이폰4,5 해상도 대응
+    UIScreen *screen = [UIScreen mainScreen];
+    float w,h;
+    
+    if (screen.bounds.size.height== 568) {
+        w = 568;
+        h = 320;
+    }else{
+        w = 480;
+        h = 320;
+    }
     
     //--- Will Edtt position
     //---   용지 선택 뷰
@@ -155,6 +166,12 @@
     waterImageView.image = image;
     [self.MainView addSubview:waterImageView];
     [waterImageView setAlpha:0];
+
+    //---   사진 인화시에 가속도 센서에 의해 움직일 이미지 뷰 초기화
+    imageViewFrame = CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+    developingPaper = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    developingPaper.center = CGPointMake(w/2, h/2);
+    [self.MainSecondView addSubview:developingPaper];
 }
 
 
@@ -880,10 +897,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
     [UIView setAnimationDelay:delay];
     if (developing == YES){
-        //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다.
+        //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다. 사진인화시에는 selectedButton을 사용하지 않고 동일한 sizei의 imageView를 생성하여 가속도 센서값이 맞게 움직이게 한다.
+        [selectedButton setHidden:YES];        
         UIImage *image = [UIImage imageNamed:
                           [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-        [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
+        developingPaper.image = image;
+
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
         
@@ -959,14 +978,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
          ^(CMAccelerometerData *accelerometerData, NSError *error) {
              acceleration = accelerometerData.acceleration;
-             [venusAccelView setAcceleration:accelerometerData.acceleration];
-             //[(VenusAccelView *)self.view setAcceleration:accelerometerData.acceleration];
-             [venusAccelView performSelectorOnMainThread:@selector(updatePhotoPostion)
+             [self.view performSelectorOnMainThread:@selector(updatePhotoPostion)
                                          withObject:nil waitUntilDone:NO];
          }];
     }
 }
 
+/*
 - (void)setCurrentPoint:(CGPoint)newPoint {
     previousPoint = currentPoint;
     currentPoint = newPoint;
@@ -1002,6 +1020,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     NSLog(@"currentImageRect = %@, previousImageRect = %@", NSStringFromCGRect(currentImageRect), NSStringFromCGRect(previousImageRect));
 }
+ */
 
 - (void)updatePhotoPostion {
     static NSDate *lastUpdateTime;
@@ -1019,8 +1038,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         CGFloat xAcceleration = secondsSinceLastDraw * photoXVelocity * 500;
         CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
         
-        self.currentPoint = CGPointMake(self.currentPoint.x +
-                                        xAcceleration, self.currentPoint.y + yAcceleration);
+        currentPoint = CGPointMake(currentPoint.x +
+                                        xAcceleration, currentPoint.y + yAcceleration);
+        
+        darkRoomOnSteelImageView.center = CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration);
+
     }
     // Update last time with current time
     lastUpdateTime = [[NSDate alloc] init];
@@ -1475,6 +1497,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         
         stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:([chemicalAni waterDropAniDuration] - [chemicalAni firstAniDuration]) target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
         [[NSRunLoop mainRunLoop] addTimer:stopBeakerProgressTimer forMode:NSRunLoopCommonModes];
+        
     }
 }
 

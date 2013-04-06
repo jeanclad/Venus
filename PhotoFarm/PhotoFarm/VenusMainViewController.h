@@ -113,6 +113,10 @@
     
     CMMotionManager *motionManager;
     CMAcceleration acceleration;
+    CGFloat photoXVelocity;
+    CGFloat photoYVelocity;
+    CGPoint currentPoint;
+    UIImageView *developingPaper;
 }
 
 @property (nonatomic, strong) ALAsset *asset;
