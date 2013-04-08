@@ -554,7 +554,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *string3 = NSLocalizedString(@"OK", "확인");
     
     if ([buttonName isEqualToString:@"Album"]){
-        [self showAlbumVIew:self];
+        [self showAlbumView:self];
     }
     else if ([buttonName isEqualToString:@"Papers"]){
         if (firstSelect == YES){
@@ -608,7 +608,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
-- (void) showAlbumVIew:(id)sender
+- (void) showAlbumView:(id)sender
 {
     VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
     venusAlbumPageView.rootNaviController = self.navigationController;
@@ -619,7 +619,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.navigationController pushViewController:venusAlbumPageView animated:YES];
-
+     
+    [self setLightOffNotAnimationItem];
 }
 
 ///* persist test by jeanclad
@@ -972,14 +973,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];    
     
     if (photoDevelopingAlpha > 1){
-        photoDevelopingAlpha = 1;
+        NSLog(@"5555");
         [motionManager stopAccelerometerUpdates];
-        [devleopingProgress setHidden:YES];
-        [waterImageView setHidden:YES];
-        [darkRoomOnSteelImageView setHidden:YES];
-        [darkRoomOffSteelImageView setHidden:NO];
-        [self showPincetteOnAnimation];
-        [self performSelector:@selector(showAlbumVIew:) withObject:nil afterDelay:2.0f];
+        photoDevelopingAlpha = 1;
+        [self setDevelopingComplete];
     }
     
     if (photoYVelocity > 0.1 || photoYVelocity < -0.1){
@@ -999,25 +996,37 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     static NSDate *lastUpdateTime;
     //NSLog(@"accel = %f, %f", acceleration.x, acceleration.y);
     
-    if (lastUpdateTime != nil) {
-        NSTimeInterval secondsSinceLastDraw =
-        -([lastUpdateTime timeIntervalSinceNow]);
-        
-        photoYVelocity = photoYVelocity + -(acceleration.y * secondsSinceLastDraw);
-        photoXVelocity = photoXVelocity + -(acceleration.x * secondsSinceLastDraw);
-        
-        CGFloat xAcceleration = secondsSinceLastDraw * photoXVelocity * 500;
-        CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
-        //NSLog(@"yAcc = %f(%f), xAcc = %f(%f)", yAcceleration, photoYVelocity, xAcceleration, photoXVelocity);
-        
-        currentPoint = CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration);
-        
-        //[self setCurrentPoint:CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration)];
-        [self setCurrentPoint:currentPoint];
-        
+    if (motionManager.accelerometerActive == YES){
+        if (lastUpdateTime != nil) {
+            NSTimeInterval secondsSinceLastDraw =
+            -([lastUpdateTime timeIntervalSinceNow]);
+            
+            photoYVelocity = photoYVelocity + -(acceleration.y * secondsSinceLastDraw);
+            photoXVelocity = photoXVelocity + -(acceleration.x * secondsSinceLastDraw);
+            
+            CGFloat xAcceleration = secondsSinceLastDraw * photoXVelocity * 500;
+            CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
+            //NSLog(@"yAcc = %f(%f), xAcc = %f(%f)", yAcceleration, photoYVelocity, xAcceleration, photoXVelocity);
+            
+            currentPoint = CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration);
+            
+            //[self setCurrentPoint:CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration)];
+            [self setCurrentPoint:currentPoint];
+            
+        }
+        // Update last time with current time
+        lastUpdateTime = [[NSDate alloc] init];
     }
-    // Update last time with current time
-    lastUpdateTime = [[NSDate alloc] init];
+}
+
+- (void)setDevelopingComplete
+{
+    [devleopingProgress setHidden:YES];
+    [waterImageView setHidden:YES];
+    [darkRoomOnSteelImageView setHidden:YES];
+    [darkRoomOffSteelImageView setHidden:NO];
+    [self showPincetteOnAnimation];
+    [self performSelector:@selector(showAlbumView:) withObject:nil afterDelay:2.0f];
 }
 
 - (void)setHiddenRootItem:(BOOL)isHidden
@@ -1479,7 +1488,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             
         } else if (wantProgressLevel > currentProgress){
             if (currentProgress < wantProgressLevel){
-                NSLog(@"5555");
                 currentProgress += (0.01f * progressDir);
                 [beakerView setProgress: currentProgress];
             }
@@ -1600,6 +1608,32 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [self.bigSteel setAlpha:1];
     
     [UIView commitAnimations];
+}
+
+- (void)setLightOffNotAnimationItem
+{
+    UIImage *image = nil;
+    
+    image = [UIImage imageNamed:@"lamp_off_ip4.png"];
+    [self.lamp setImage:image];
+    
+    image = [UIImage imageNamed:@"01_1main_off_ip4.png"];
+    [self.room setImage:image];
+    
+    image = [UIImage imageNamed:@"title_off_ip4.png"];
+    [self.darkRoomInUseTitle setImage:image];
+    
+    image = [UIImage imageNamed:@"steel_off_ip4.png"];
+    [self.bigSteel setImage:image];
+    
+    [darkRoomOnSteelImageView setHidden:YES];
+    [darkRoomOffSteelImageView setHidden:NO];
+    [self.MainSecondView setHidden:YES];
+    [self setHiddenRootItem:NO];
+    [chemicalContentView setHidden:NO];
+
+    developing = NO;
+    MainVIewMoved = NO;
 }
 
 #pragma mark -
