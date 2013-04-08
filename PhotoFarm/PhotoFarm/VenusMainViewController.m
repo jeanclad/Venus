@@ -719,99 +719,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
-/*
-- (void)setAnimationRootViewRight
-{
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float moveXpos;
-    
-    if (screen.bounds.size.height == 568)
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
-    float delay = 0;
-    
-    [UIView beginAnimations:@"pincetteUp" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:delay];        
-    [UIView setAnimationDelegate:self];
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [UIView commitAnimations];
-    
-    //---   핀셋과 사진이 내려가는 SEL함수가 실행되야 하므로 delay는 2배가 되어야 한다.
-    delay += MAINVIEW_ANIMATION_DELAY;
-    delay += MAINVIEW_ANIMATION_DELAY;    
-    
-    [UIView beginAnimations:@"MainViewRight" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:delay];
-    [UIView setAnimationDelegate:self];
-    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-    
-    [UIView commitAnimations];
-}
-
-- (void)setAnimationRootViewLeft
-{
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float moveXpos;
-    
-    if (screen.bounds.size.height == 568)
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
-    float delay = 0;
-    
-    [UIView beginAnimations:@"MainViewLeft" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationDelegate:self];
-    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-    
-    [UIView commitAnimations];
-    delay += MAINVIEW_ANIMATION_DELAY;
-    
-    [UIView beginAnimations:@"PhotoUp" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelay:delay];
-    [UIView setAnimationDelegate:self];   
-    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y - SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y - PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [UIView commitAnimations];
-}
-
-- (void)pincetteAndPhotoDownAnimation:(NSString *)animationID finished:(BOOL)finished context:(void *)context
-{
-    [UIView beginAnimations:@"PincettePhotoDown" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelegate:self];
-    selectedButton.frame = CGRectMake(selectedButton.frame.origin.x, selectedButton.frame.origin.y + SELECTED_BUTTON_MOVE_Y, selectedButton.frame.size.width, selectedButton.frame.size.height);
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    
-    [UIView commitAnimations];
-}
-
-- (void)pincetteDownAnimation:(NSString *)animationID finished:(BOOL)finished context:(void *)context
-{
-    [UIView beginAnimations:@"PincetteDown" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelegate:self];
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x - PINCETTE_MOVE_X, self.pincetteImage.frame.origin.y + PINCETTE_MOVE_Y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    
-    [UIView commitAnimations];
-}
- */
-
 -(void)showMainView
 {
     //---   아이폰4,5 해상도 대응
@@ -951,7 +858,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(showPincetteOnAnimationDone)];
-    self.pincetteImage.frame = CGRectMake(currentPoint.x-90, currentPoint.y+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    self.pincetteImage.frame = CGRectMake(currentPoint.y-90, currentPoint.x+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     [self.pincetteImage setAlpha:1];
     [UIView commitAnimations];
     
@@ -969,7 +876,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
     selectedButton.frame = CGRectMake(moveX, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
-    self.pincetteImage.frame = CGRectMake(moveX, currentPoint.y+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    self.pincetteImage.frame = CGRectMake(moveX, currentPoint.x+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     [UIView commitAnimations];
 }
 
@@ -1033,7 +940,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 }
 
-/*
 - (void)setCurrentPoint:(CGPoint)newPoint {
     currentPoint = newPoint;
     CGPoint beakerEndPoint;
@@ -1104,96 +1010,15 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
         //NSLog(@"yAcc = %f(%f), xAcc = %f(%f)", yAcceleration, photoYVelocity, xAcceleration, photoXVelocity);
         
-        currentPoint = CGPointMake(currentPoint.x +
-                                        xAcceleration, currentPoint.y + yAcceleration);
+        currentPoint = CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration);
         
-        [self setCurrentPoint:CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration)];
-        
-    }
-    // Update last time with current time
-    lastUpdateTime = [[NSDate alloc] init];
-}
-*/
-- (void)setCurrentPoint:(CGPoint)newPoint {
-    CGPoint beakerEndPoint;
-    beakerEndPoint.x = newPoint.x + PREVIEW_FRAME_SIZE_WIDTH;
-    beakerEndPoint.y = newPoint.y + PREVIEW_FRAME_SIZE_HEIGHT;
-    
-    if (newPoint.x < BIG_BEAKER_START_X_IP4){
-        newPoint.x = BIG_BEAKER_START_X_IP4;
-        photoYVelocity = 0;
-    }
-    
-    if (newPoint.y < BIG_BEAKER_START_Y_IP4) {
-        newPoint.y = BIG_BEAKER_START_Y_IP4;
-        photoXVelocity = 0;
-    }
-    
-    if (beakerEndPoint.x > BIG_BEAKER_END_X_IP4) {
-        newPoint.x = BIG_BEAKER_END_X_IP4 - PREVIEW_FRAME_SIZE_WIDTH;
-        photoYVelocity = 0;
-    }
-    
-    if (beakerEndPoint.y > BIG_BEAKER_END_Y_IP4) {
-        newPoint.y = BIG_BEAKER_END_Y_IP4 - PREVIEW_FRAME_SIZE_HEIGHT;
-        photoXVelocity = 0;
-    }
-    
-    selectedButton.center = CGPointMake(newPoint.x+PREVIEW_FRAME_SIZE_WIDTH/2, newPoint.y+PREVIEW_FRAME_SIZE_HEIGHT/2);
-    
-    [self setPaperPreviewImageAlpha:photoDevelopingAlpha];
-    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-    
-    /*
-    if (photoDevelopingAlpha > 1){
-        photoDevelopingAlpha = 1;
-        [motionManager stopAccelerometerUpdates];
-        [devleopingProgress setHidden:YES];
-        [waterImageView setHidden:YES];
-        [darkRoomOnSteelImageView setHidden:YES];
-        [darkRoomOffSteelImageView setHidden:NO];
-        [self showPincetteOnAnimation];
-        [self performSelector:@selector(showAlbumVIew:) withObject:nil afterDelay:2.0f];
-    }
-     */
-    
-    if (photoYVelocity > 0.1 || photoYVelocity < -0.1){
-        photoDevelopingAlpha += 0.005;
-        devleopingProgress.progressTintColor = [UIColor redColor];
-        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
-    } else{
-        photoDevelopingAlpha += 0.0005;
-        devleopingProgress.progressTintColor = [UIColor blueColor];
-        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
-    }
-    
-    //currentPoint = newPoint;
-    //NSLog(@"paper = %@", NSStringFromCGPoint(selectedButton.frame.origin));
-}
-
-- (void)updatePhotoPostion {
-    static NSDate *lastUpdateTime;
-    //NSLog(@"accel = %f, %f", acceleration.x, acceleration.y);
-    
-    if (lastUpdateTime != nil) {
-        NSTimeInterval secondsSinceLastDraw =
-        -([lastUpdateTime timeIntervalSinceNow]);
-        
-        photoYVelocity = photoYVelocity + -(acceleration.y * secondsSinceLastDraw);
-        photoXVelocity = photoXVelocity + -(acceleration.x * secondsSinceLastDraw);
-        
-        CGFloat xAcceleration = secondsSinceLastDraw * photoXVelocity * 500;
-        CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
-        NSLog(@"yAcc = %f(%f), xAcc = %f(%f)", yAcceleration, photoYVelocity, xAcceleration, photoXVelocity);
-        
-        CGPoint point = CGPointMake(currentPoint.y + yAcceleration, currentPoint.x + xAcceleration);
-        [self setCurrentPoint:point];
+        //[self setCurrentPoint:CGPointMake(currentPoint.x + xAcceleration, currentPoint.y + yAcceleration)];
+        [self setCurrentPoint:currentPoint];
         
     }
     // Update last time with current time
     lastUpdateTime = [[NSDate alloc] init];
 }
-
 
 - (void)setHiddenRootItem:(BOOL)isHidden
 {
