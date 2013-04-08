@@ -13,6 +13,8 @@
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
 
+#define MYDEVICE_IPHONE5                1
+#define MYDEVICE_ETC                    2
 #define IP5_SIZE_WIDTH                  568
 #define IP5_SIZE_HEIGHT                 320
 #define IP4_SIZE_WIDTH                  480
@@ -85,7 +87,9 @@
 #define kUpdateInterval    (1.0f/60.0f)
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
+    NSInteger         myDevice;
     UIButton    *selectedButton;
+    
     ALAsset     *asset;
     CGImageRef thumbnailImageRef;
     //UIImage     *thumbnail;
@@ -125,6 +129,8 @@
     CGFloat photoXVelocity;
     CGFloat photoYVelocity;
     CGPoint currentPoint;
+    CGFloat photoDevelopingAlpha;
+    UIProgressView *devleopingProgress;
 }
 
 @property (nonatomic, strong) ALAsset *asset;

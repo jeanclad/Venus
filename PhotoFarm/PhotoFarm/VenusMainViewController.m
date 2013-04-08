@@ -49,9 +49,11 @@
     if (screen.bounds.size.height== 568) {
         w = 568;
         h = 320;
+        myDevice = MYDEVICE_IPHONE5;
     }else{
         w = 480;
         h = 320;
+        myDevice = MYDEVICE_ETC;
     }
     
     //--- Will Edtt position
@@ -204,10 +206,6 @@
         NSLog(@"bbb");
         UIImage *result_img = nil;
         if (asset != nil){
-            /*
-            thumbnailImageRef = [asset thumbnail];
-            thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
-             */
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
             UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
@@ -224,18 +222,11 @@
             }
         }
         
-        //---   용지가 선택되어 있는 상태에서 사진을 변경하여 선택하였을 경우 그 사진에 다시 용지를 입혀야 한다.
-        if (_bg != nil) {
-            [self setPaperPreviewImage];
-            //result_img = thumbnail;            
-            result_img = preview_img;
-        }
+        /*  용지가 선택되어 있는 상태에서 사진을 변경하여 선택하였을 경우와 용지를 아무것도 선택하지 않았을경우
+            그 사진에 paper_preview_1 용지를 입혀야 한다.  */
+        [self setPaperPreviewImage];
+        result_img = preview_img;
         
-        else{
-            //result_img = thumbnail;
-            result_img = mainPhotoView;
-        }
-            
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
 
@@ -462,7 +453,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
     UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
-    //thumbnail = shrunkenImage;
     mainPhotoView = shrunkenImage;
     firstSelect = YES;
     
@@ -564,15 +554,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *string3 = NSLocalizedString(@"OK", "확인");
     
     if ([buttonName isEqualToString:@"Album"]){
-        VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
-        venusAlbumPageView.rootNaviController = self.navigationController;
-        
-        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-        self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-        self.navigationController.navigationBar.translucent = YES;
-        
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
-        [self.navigationController pushViewController:venusAlbumPageView animated:YES];
+        [self showAlbumVIew:self];
     }
     else if ([buttonName isEqualToString:@"Papers"]){
         if (firstSelect == YES){
@@ -624,6 +606,20 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
         [beakerView setProgress: wantProgressLevel];
     }
+}
+
+- (void) showAlbumVIew:(id)sender
+{
+    VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
+    venusAlbumPageView.rootNaviController = self.navigationController;
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+    self.navigationController.navigationBar.translucent = YES;
+    
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController pushViewController:venusAlbumPageView animated:YES];
+
 }
 
 ///* persist test by jeanclad
@@ -903,7 +899,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                           [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
         
         [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
-        [selectedButton setAlpha:0.5];
+        [selectedButton setAlpha:0.3];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
         
@@ -936,6 +932,47 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
     [UIView commitAnimations];
 }
+
+- (void)showPincetteOffAnimation
+{
+    [UIView beginAnimations:@"PincettOff" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    [self.pincetteImage setAlpha:0];
+    [UIView commitAnimations];
+    
+}
+
+- (void)showPincetteOnAnimation
+{
+    [UIView beginAnimations:@"PincettOn" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(showPincetteOnAnimationDone)];
+    self.pincetteImage.frame = CGRectMake(currentPoint.x-90, currentPoint.y+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    [self.pincetteImage setAlpha:1];
+    [UIView commitAnimations];
+    
+}
+
+- (void)showPincetteOnAnimationDone
+{
+    float moveX = 0;
+    if (myDevice == MYDEVICE_IPHONE5)
+        moveX = IP5_SIZE_WIDTH;
+    else
+        moveX = IP4_SIZE_WIDTH;
+    
+    [UIView beginAnimations:@"selectedButtonToAlbum" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+    selectedButton.frame = CGRectMake(moveX, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
+    self.pincetteImage.frame = CGRectMake(moveX, currentPoint.y+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    [UIView commitAnimations];
+}
+
 
 - (void)setEmptyBeakerDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
 {
@@ -977,19 +1014,26 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         photoYVelocity = 0;
         currentPoint = selectedButton.center;
     }
-    
+
     if (motionManager.accelerometerAvailable){
+        //---   사진 인화 프로그레스바 초기화
+        devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+        devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
+        [selectedButton addSubview:devleopingProgress];
+        [devleopingProgress setProgress:0.5 animated:YES];
+        
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         motionManager.accelerometerUpdateInterval = kUpdateInterval;
         [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
          ^(CMAccelerometerData *accelerometerData, NSError *error) {
              acceleration = accelerometerData.acceleration;
              [self performSelectorOnMainThread:@selector(updatePhotoPostion)
-                                         withObject:nil waitUntilDone:NO];
+                                    withObject:nil waitUntilDone:NO];
          }];
     }
 }
 
+/*
 - (void)setCurrentPoint:(CGPoint)newPoint {
     currentPoint = newPoint;
     CGPoint beakerEndPoint;
@@ -1017,17 +1061,31 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
 
     selectedButton.center = CGPointMake(currentPoint.y+PREVIEW_FRAME_SIZE_WIDTH/2, currentPoint.x+PREVIEW_FRAME_SIZE_HEIGHT/2);
+
+    [self setPaperPreviewImageAlpha:photoDevelopingAlpha];
+    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];    
     
-    static CGFloat alpha = 0;
-    //---   test by hkkwon
-    [self setPaperPreviewImageAlpha:alpha];
+    if (photoDevelopingAlpha > 1){
+        photoDevelopingAlpha = 1;
+        [motionManager stopAccelerometerUpdates];
+        [devleopingProgress setHidden:YES];
+        [waterImageView setHidden:YES];
+        [darkRoomOnSteelImageView setHidden:YES];
+        [darkRoomOffSteelImageView setHidden:NO];
+        [self showPincetteOnAnimation];
+        [self performSelector:@selector(showAlbumVIew:) withObject:nil afterDelay:2.0f];
+    }
     
-    alpha += 0.0005;
-    
-    if (alpha > 1)
-        alpha = 1;
-    
-    
+    if (photoYVelocity > 0.1 || photoYVelocity < -0.1){
+        photoDevelopingAlpha += 0.005;
+        devleopingProgress.progressTintColor = [UIColor redColor];
+        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];        
+    } else{
+        photoDevelopingAlpha += 0.0005;
+        devleopingProgress.progressTintColor = [UIColor blueColor];
+        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
+    }
+        
     //NSLog(@"paper = %@", NSStringFromCGPoint(selectedButton.frame.origin));
 }
 
@@ -1054,7 +1112,86 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
     // Update last time with current time
     lastUpdateTime = [[NSDate alloc] init];
-    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];    
+}
+*/
+- (void)setCurrentPoint:(CGPoint)newPoint {
+    CGPoint beakerEndPoint;
+    beakerEndPoint.x = newPoint.x + PREVIEW_FRAME_SIZE_WIDTH;
+    beakerEndPoint.y = newPoint.y + PREVIEW_FRAME_SIZE_HEIGHT;
+    
+    if (newPoint.x < BIG_BEAKER_START_X_IP4){
+        newPoint.x = BIG_BEAKER_START_X_IP4;
+        photoYVelocity = 0;
+    }
+    
+    if (newPoint.y < BIG_BEAKER_START_Y_IP4) {
+        newPoint.y = BIG_BEAKER_START_Y_IP4;
+        photoXVelocity = 0;
+    }
+    
+    if (beakerEndPoint.x > BIG_BEAKER_END_X_IP4) {
+        newPoint.x = BIG_BEAKER_END_X_IP4 - PREVIEW_FRAME_SIZE_WIDTH;
+        photoYVelocity = 0;
+    }
+    
+    if (beakerEndPoint.y > BIG_BEAKER_END_Y_IP4) {
+        newPoint.y = BIG_BEAKER_END_Y_IP4 - PREVIEW_FRAME_SIZE_HEIGHT;
+        photoXVelocity = 0;
+    }
+    
+    selectedButton.center = CGPointMake(newPoint.x+PREVIEW_FRAME_SIZE_WIDTH/2, newPoint.y+PREVIEW_FRAME_SIZE_HEIGHT/2);
+    
+    [self setPaperPreviewImageAlpha:photoDevelopingAlpha];
+    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
+    
+    /*
+    if (photoDevelopingAlpha > 1){
+        photoDevelopingAlpha = 1;
+        [motionManager stopAccelerometerUpdates];
+        [devleopingProgress setHidden:YES];
+        [waterImageView setHidden:YES];
+        [darkRoomOnSteelImageView setHidden:YES];
+        [darkRoomOffSteelImageView setHidden:NO];
+        [self showPincetteOnAnimation];
+        [self performSelector:@selector(showAlbumVIew:) withObject:nil afterDelay:2.0f];
+    }
+     */
+    
+    if (photoYVelocity > 0.1 || photoYVelocity < -0.1){
+        photoDevelopingAlpha += 0.005;
+        devleopingProgress.progressTintColor = [UIColor redColor];
+        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
+    } else{
+        photoDevelopingAlpha += 0.0005;
+        devleopingProgress.progressTintColor = [UIColor blueColor];
+        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
+    }
+    
+    //currentPoint = newPoint;
+    //NSLog(@"paper = %@", NSStringFromCGPoint(selectedButton.frame.origin));
+}
+
+- (void)updatePhotoPostion {
+    static NSDate *lastUpdateTime;
+    //NSLog(@"accel = %f, %f", acceleration.x, acceleration.y);
+    
+    if (lastUpdateTime != nil) {
+        NSTimeInterval secondsSinceLastDraw =
+        -([lastUpdateTime timeIntervalSinceNow]);
+        
+        photoYVelocity = photoYVelocity + -(acceleration.y * secondsSinceLastDraw);
+        photoXVelocity = photoXVelocity + -(acceleration.x * secondsSinceLastDraw);
+        
+        CGFloat xAcceleration = secondsSinceLastDraw * photoXVelocity * 500;
+        CGFloat yAcceleration = secondsSinceLastDraw * photoYVelocity * 500;
+        NSLog(@"yAcc = %f(%f), xAcc = %f(%f)", yAcceleration, photoYVelocity, xAcceleration, photoXVelocity);
+        
+        CGPoint point = CGPointMake(currentPoint.y + yAcceleration, currentPoint.x + xAcceleration);
+        [self setCurrentPoint:point];
+        
+    }
+    // Update last time with current time
+    lastUpdateTime = [[NSDate alloc] init];
 }
 
 
@@ -1140,7 +1277,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);
     
     //get character image
-    //UIImage *_character = thumbnail;
     UIImage *_character = mainPhotoView;
     _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
     if (_bg != nil) {
@@ -1150,7 +1286,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
-            
         }
         
         else if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
@@ -1189,7 +1324,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 - (void)setPaperPreviewImageAlpha:(CGFloat)alpha
 {
     //get character image
-    //UIImage *_character = thumbnail;
     UIImage *_character = mainPhotoView;
     _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
     if (_bg != nil) {
@@ -1199,7 +1333,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [_character drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:alpha];
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
-            
         }
         else if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
             [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];
@@ -1390,6 +1523,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (void) beakerDropAnimation
 {
+    [self showPincetteOffAnimation];
     int beakerRotationAngle = BEAKER_ROTATION_ANGLE;
     
     //---   Will edit position
