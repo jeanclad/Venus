@@ -711,7 +711,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     if (move == YES){
         [selectedButton setUserInteractionEnabled:NO];
         //[self setAnimationRootViewRight];
-        [self showMainSecondView];
+        if (developing == NO)
+            [self showMainSecondView];
+        else
+            [self showMainSecondViewForDeveloping];
     }
     else{
         //[self setAnimationRootViewLeft];
@@ -752,11 +755,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 
+/*
 -(void)showMainSecondView
 {
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
     float moveXpos;
+    float delay = 0.0;
     
     if (screen.bounds.size.height == 568)
         moveXpos = SELECT_RIGHT_MOVE_X_IP5;
@@ -771,7 +776,139 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDidStopSelector:@selector(mainSecondViewAnmiationDone:finished:context:)];
     self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
     [UIView commitAnimations];
+    
+    if (developing == YES){
+        delay += MAINVIEW_ANIMATION_DELAY*6;
+        
+        //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
+        [UIView beginAnimations:@"water" context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView setAnimationDelay:delay];
+        [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];
+        [UIView setAnimationDidStopSelector:@selector(setEmptyBeakerDone:finished:context:)];
+        [UIView setAnimationDelegate:self];
+        [waterImageView setAlpha:1];
+        [selectedButton setHidden:NO];
+        [UIView commitAnimations];
+    }
 }
+ */
+-(void)showMainSecondView
+{
+    float moveXpos = 0;  
+    
+    if (myDevice == MYDEVICE_IPHONE5)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+    
+
+    //---   MainView가 우측으로 이동한다.
+    [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
+                          delay: 0.0
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+                     }
+                     completion:^(BOOL finished){
+                         //--- MainView가 뒤집히면서 MainSecondView가 나타나며 암실 트레이가 보인다.
+                         [UIView transitionWithView:self.MainView duration:MAINVIEW_ANIMATION_DURATION*2 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+                             [self.MainSecondView setHidden:NO];
+                         }completion:^(BOOL finished) {
+                             //---   사진과 핀셋이 MainSecondView의 좌측 상단에서 점점 내려오면서 뚜렷하게 보이게 한다.
+                             [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION*2
+                                                   delay: 0.0
+                                                 options: UIViewAnimationOptionCurveEaseInOut
+                                              animations:^{
+                                                  [selectedButton setAlpha:1];
+                                                  selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                  self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+                                                  [self.pincetteImage setAlpha:1];
+                                              }
+                                              completion:^(BOOL finished){
+                                                  ;
+                                              }];
+                             
+                         }];
+                         //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
+                         selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                         [selectedButton setAlpha:0];
+                         
+                         //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
+                         self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+                         [self.pincetteImage setAlpha:0];
+                         
+                     }];
+        
+}
+
+-(void)showMainSecondViewForDeveloping
+{
+    float moveXpos = 0;
+    
+    if (myDevice == MYDEVICE_IPHONE5)
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+    else
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+    
+    
+    //---   MainView가 우측으로 이동한다.
+    [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
+                          delay: 0.0
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+                     }completion:^(BOOL finished){
+                         //--- MainView가 뒤집히면서 MainSecondView가 나타나며 암실 트레이가 보인다.
+                         [UIView transitionWithView:self.MainView duration:MAINVIEW_ANIMATION_DURATION*2 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+                             [self.MainSecondView setHidden:NO];
+                         }completion:^(BOOL finished) {
+                             //---   사진과 핀셋이 MainSecondView의 좌측 상단에서 점점 내려오면서 뚜렷하게 보이게 한다.
+                             [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION*2
+                                                   delay: 0.0
+                                                 options: UIViewAnimationOptionCurveEaseInOut
+                                              animations:^{
+                                                  //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다. 사진인화시에는 selectedButton을 사용하지 않고 동일한 sizei의 imageView를 생성하여 가속도 센서값이 맞게 움직이게 한다.
+                                                  UIImage *image = [UIImage imageNamed:
+                                                                    [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+                                                  
+                                                  [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
+                                                  [selectedButton setAlpha:0.3];
+                                                  
+                                                  selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                  self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+                                                  [self.pincetteImage setAlpha:1];
+                                              } completion:^(BOOL finished){
+                                                  [self beakerDropAnimation];                                                                                                                         
+                                                  //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
+                                                  [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION*5
+//                                                                        delay: MAINVIEW_ANIMATION_DELAY*6
+                                                                        delay: MAINVIEW_ANIMATION_DELAY*2
+                                                                      options: UIViewAnimationOptionCurveEaseInOut
+                                                                   animations:^{
+                                                                       [self setEmptyBeaker:self];                                                                       
+                                                                       [waterImageView setAlpha:1];
+                                                                       [selectedButton setHidden:NO];
+                                                                   } completion:^(BOOL finished){
+                                                                       //[self setEmptyBeakerDone];
+                                                                   }];
+                                                  
+                                                  
+                                              }];
+                             
+                         }];
+                         //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
+                         selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                         [selectedButton setAlpha:0];
+                         
+                         //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
+                         self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+                         [self.pincetteImage setAlpha:0];
+                         
+                     }];
+}
+
+
 
 - (void)mainSecondViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
 {
@@ -802,17 +939,18 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
     [UIView setAnimationDelay:delay];
     if (developing == YES){
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
+        
+        //---   사진이 점점 보이다가 완전히 보이게 된 시간(afterDelay) 이후에 비이커가 비워지게 한다. 대략 비이커가 트레이에 기울어지는 시간과 일치한다.
+        [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
+        
         //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다. 사진인화시에는 selectedButton을 사용하지 않고 동일한 sizei의 imageView를 생성하여 가속도 센서값이 맞게 움직이게 한다.
         UIImage *image = [UIImage imageNamed:
                           [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
         
         [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
         [selectedButton setAlpha:0.3];
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
-        
-        //---   사진이 점점 보이다가 완전히 보이게 된 시간(afterDelay) 이후에 비이커가 비워지게 한다. 대략 비이커가 트레이에 기울어지는 시간과 일치한다.
-        [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
     } else{
         [selectedButton setAlpha:1];        
     }
@@ -821,6 +959,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [self.pincetteImage setAlpha:1];
     [UIView commitAnimations];
 }
+
 
 - (void)mainViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
 {
@@ -882,7 +1021,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 
-- (void)setEmptyBeakerDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
+- (void)setEmptyBeakerDone
 {
     //---   아이폰4,5 해상도 대응
     UIScreen *screen = [UIScreen mainScreen];
@@ -973,10 +1112,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];    
     
     if (photoDevelopingAlpha > 1){
-        NSLog(@"5555");
         [motionManager stopAccelerometerUpdates];
-        photoDevelopingAlpha = 1;
+        photoDevelopingAlpha = 0;
         [self setDevelopingComplete];
+        return;
     }
     
     if (photoYVelocity > 0.1 || photoYVelocity < -0.1){
@@ -1481,7 +1620,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         
         if (float_equal(wantProgressLevel, currentProgress)){
             if (float_equal(currentProgress, 0)){
-                NSLog(@"666");
                 currentProgress += (0.01f * progressDir);
                 [beakerView setProgress: currentProgress];
             }
@@ -1565,15 +1703,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     stopBeakerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:BEAKER_DROP_WATER_TIME target:self selector:@selector(stopBeakerProgress) userInfo:nil repeats:NO];
     
-    //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
-    [UIView beginAnimations:@"water" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];
-    [UIView setAnimationDidStopSelector:@selector(setEmptyBeakerDone:finished:context:)];
-    [UIView setAnimationDelegate:self];
-    [waterImageView setAlpha:1];
-    [selectedButton setHidden:NO];
-    [UIView commitAnimations];
 }
 
 - (void)setLightOnAnimation
@@ -1631,7 +1760,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     [self.MainSecondView setHidden:YES];
     [self setHiddenRootItem:NO];
     [chemicalContentView setHidden:NO];
-
+    
     developing = NO;
     MainVIewMoved = NO;
 }
