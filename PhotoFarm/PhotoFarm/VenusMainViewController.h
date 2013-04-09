@@ -16,9 +16,8 @@
 #define MYDEVICE_IPHONE5                1
 #define MYDEVICE_ETC                    2
 #define IP5_SIZE_WIDTH                  568
-#define IP5_SIZE_HEIGHT                 320
 #define IP4_SIZE_WIDTH                  480
-#define IP4_SIZE_HEIGHT                 320
+#define IP4_IP5_SIZE_HEIGHT             320
 
 #define PREVIEW_ORIGIN_X                0
 #define PREVIEW_ORIGIN_Y                0
@@ -82,7 +81,7 @@
 #define BIG_BEAKER_START_X_IP4          50
 #define BIG_BEAKER_END_X_IP4            IP4_SIZE_WIDTH-50
 #define BIG_BEAKER_START_Y_IP4          50
-#define BIG_BEAKER_END_Y_IP4            IP4_SIZE_HEIGHT-50
+#define BIG_BEAKER_END_Y_IP4            IP4_IP5_SIZE_HEIGHT-50
 
 #define kUpdateInterval    (1.0f/60.0f)
 
