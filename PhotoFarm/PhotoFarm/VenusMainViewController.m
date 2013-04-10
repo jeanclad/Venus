@@ -247,7 +247,7 @@
         [self.MainView addSubview:selectedButton];
         firstSelect = YES;
         
-        ///*/ Photo Save to caches test by jenaclad
+        /*/ Photo Save to caches test by jenaclad
         NSLog(@"asset = %@", asset);
         ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
         
@@ -267,8 +267,7 @@
         NSData * saveImageData2 = UIImagePNGRepresentation(image2);
         [saveImageData2 writeToFile:filePath atomically:NO];
         NSLog(@"2 save path = %@", filePath);
-        //*/
-        
+
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus1"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper1.png"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
@@ -295,8 +294,9 @@
         
         NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
         
-        ///* persist test by jeanclad
+        // persist test by jeanclad
         [self loadPlistFile];
+        //*/
         
     } else {
         NSLog(@"ccc");
