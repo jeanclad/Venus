@@ -83,6 +83,8 @@
 #define BIG_BEAKER_START_Y_IP4          50
 #define BIG_BEAKER_END_Y_IP4            IP4_IP5_SIZE_HEIGHT-50
 
+#define DEVELOPING_PHOTO_ALPHA           0.3f
+
 #define kUpdateInterval    (1.0f/60.0f)
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
@@ -101,6 +103,7 @@
     UIImageView *waterImageView;
     UIImageView *darkRoomOffSteelImageView;
     UIImageView *darkRoomOnSteelImageView;
+    UIImageView *developingPhotoImageView;
   
     //---   Paper View
 	UIImageView *paperPreviewImageView;
@@ -130,6 +133,9 @@
     CGPoint currentPoint;
     CGFloat photoDevelopingAlpha;
     UIProgressView *devleopingProgress;
+    CGFloat developingProgressLevel;
+    
+    NSDate *lastUpdateTime;
 }
 
 @property (nonatomic, strong) ALAsset *asset;
