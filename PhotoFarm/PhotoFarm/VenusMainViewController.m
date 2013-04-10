@@ -14,8 +14,8 @@
 #import "VenusSelectDetailViewController.h"
 #import "chemicalAnimation.h"
 /* persist test by jeanclad
-#import "VenusPersistList.h"
-*/
+ #import "VenusPersistList.h"
+ */
 
 //---   Float Pointing Compare Macro
 #define float_epsilon 0.00001
@@ -194,13 +194,13 @@
         moveXpos = SELECT_RIGHT_MOVE_X_IP5;
     else
         moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-
+    
     
     [self loadPlistFile];
     
     // Will Edit to button position
     [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
-
+    
     NSLog(@"aaa");
     if ((asset != nil) || (firstSelect == YES)){
         NSLog(@"bbb");
@@ -223,13 +223,13 @@
         }
         
         /*  용지가 선택되어 있는 상태에서 사진을 변경하여 선택하였을 경우와 용지를 아무것도 선택하지 않았을경우
-            그 사진에 paper_preview_1 용지를 입혀야 한다.  */
+         그 사진에 paper_preview_1 용지를 입혀야 한다.  */
         [self setPaperPreviewImage];
         result_img = preview_img;
         
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
-
+        
         if (MainVIewMoved == NO)
             selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
         else
@@ -262,7 +262,7 @@
         [saveImageData2 writeToFile:filePath atomically:NO];
         NSLog(@"2 save path = %@", filePath);
         //*/
- 
+        
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus1"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper1.png"];
         [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
@@ -305,70 +305,70 @@
         [self.MainView addSubview:selectedButton];
         
         /* Photo load to caches test by jeanclad
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString * documentsDirectory = [paths objectAtIndex:0];
-        NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
-        NSData * loadImageData = [NSData dataWithContentsOfFile:path];
-        
-        UIImage *testImage = [UIImage imageWithData:loadImageData];
-        UIImageView *testImageView = [[UIImageView alloc] init];
-        [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
-        [testImageView setImage:testImage];
-        [self.view addSubview:testImageView];
+         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+         NSString * documentsDirectory = [paths objectAtIndex:0];
+         NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
+         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
+         
+         UIImage *testImage = [UIImage imageWithData:loadImageData];
+         UIImageView *testImageView = [[UIImageView alloc] init];
+         [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
+         [testImageView setImage:testImage];
+         [self.view addSubview:testImageView];
          */
         
         /* persist test by jeanclad
-        VenusPersistList *persistList = [[VenusPersistList alloc] init];
-        
-        [persistList setPhotoItemName:@"Venus1"];
-        [persistList setPaperPhotoFileName:@"Screenshot1.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_1.png"];
-        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
-        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
-        
-        [persistList fillPlistData];
-        
-        [persistList setPhotoItemName:@"Venus2"];
-        [persistList setPaperPhotoFileName:@"Screenshot2.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_2.png"];
-        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_NORMAL]];
-        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_PINK]];
-        
-        [persistList fillPlistData];
-        
-        [persistList setPhotoItemName:@"Venus3"];
-        [persistList setPaperPhotoFileName:@"Screenshot3.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_3.png"];
-        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_POLAROID]];
-        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_GREEN]];
-        
-        [persistList fillPlistData];
-        
-        [persistList setPhotoItemName:@"Venus4"];
-        [persistList setPaperPhotoFileName:@"Screenshot4.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_4.png"];
-        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_ROLLED_UP]];
-        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_GLOOM]];
-        
-        [persistList fillPlistData];
-        
-        [persistList setPhotoItemName:@"Venus5"];
-        [persistList setPaperPhotoFileName:@"Screenshot5.png"];
-        [persistList setPaperlessPhotoFileName:@"Venus_paperless_5.png"];
-        [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_SPRING]];
-        [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_SUNNY]];
-        
-        [persistList fillPlistData];
-        
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                     initForWritingWithMutableData:data];
-        [archiver encodeObject:persistList forKey:kDataKey];
-        [archiver finishEncoding];
-        [data writeToFile:[self dataFilePath] atomically:YES];
-
-        //NSLog(@"persistList_load = %@", persistList.persistList);
-        */
+         VenusPersistList *persistList = [[VenusPersistList alloc] init];
+         
+         [persistList setPhotoItemName:@"Venus1"];
+         [persistList setPaperPhotoFileName:@"Screenshot1.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_paperless_1.png"];
+         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
+         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
+         
+         [persistList fillPlistData];
+         
+         [persistList setPhotoItemName:@"Venus2"];
+         [persistList setPaperPhotoFileName:@"Screenshot2.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_paperless_2.png"];
+         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_NORMAL]];
+         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_PINK]];
+         
+         [persistList fillPlistData];
+         
+         [persistList setPhotoItemName:@"Venus3"];
+         [persistList setPaperPhotoFileName:@"Screenshot3.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_paperless_3.png"];
+         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_POLAROID]];
+         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_GREEN]];
+         
+         [persistList fillPlistData];
+         
+         [persistList setPhotoItemName:@"Venus4"];
+         [persistList setPaperPhotoFileName:@"Screenshot4.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_paperless_4.png"];
+         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_ROLLED_UP]];
+         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_GLOOM]];
+         
+         [persistList fillPlistData];
+         
+         [persistList setPhotoItemName:@"Venus5"];
+         [persistList setPaperPhotoFileName:@"Screenshot5.png"];
+         [persistList setPaperlessPhotoFileName:@"Venus_paperless_5.png"];
+         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_SPRING]];
+         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_SUNNY]];
+         
+         [persistList fillPlistData];
+         
+         NSMutableData *data = [[NSMutableData alloc] init];
+         NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+         initForWritingWithMutableData:data];
+         [archiver encodeObject:persistList forKey:kDataKey];
+         [archiver finishEncoding];
+         [data writeToFile:[self dataFilePath] atomically:YES];
+         
+         //NSLog(@"persistList_load = %@", persistList.persistList);
+         */
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -428,7 +428,7 @@
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES){
             [imagepickerController setSourceType:UIImagePickerControllerSourceTypeCamera];
             imagepickerController.allowsEditing = YES;
-
+            
             [self presentModalViewController:imagepickerController animated:YES];
         } else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
@@ -441,7 +441,7 @@
         self.navigationController.navigationBar.translucent = YES;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController pushViewController:VenusFilmGroupView animated:YES];
-//        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
+        //        [self.navigationController presentModalViewController:VenusFilmGroupView animated:YES];
     }
     
 }
@@ -457,7 +457,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     firstSelect = YES;
     
     [picker dismissModalViewControllerAnimated:YES];
-
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -530,7 +530,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         NSString *string3 = NSLocalizedString(@"OK", "확인");
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
-        [alert show];        
+        [alert show];
     } else {
         developing = YES;
         //---   암실 트레이 이미지 설정
@@ -574,7 +574,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }
     else if ([buttonName isEqualToString:@"Info"]){
         VenusSelectDetailViewController *venusSelectDetailView = [[VenusSelectDetailViewController alloc] initWithNibName:@"VenusSelectDetailViewController" bundle:nil];
-
+        
         //---   Chemical View
         if (paperScrollView.isHidden == YES){
             [venusSelectDetailView setItemValue:ITEM_VALUE_CHEMICAL];
@@ -598,10 +598,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Select"]){
-        [paperPreviewImageView setHidden:YES];        
+        [paperPreviewImageView setHidden:YES];
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
-         MainVIewMoved = NO;
+        MainVIewMoved = NO;
         
         //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
         [beakerView setProgress: wantProgressLevel];
@@ -678,7 +678,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
- //*/
+//*/
 
 - (void)setChemicalView
 {
@@ -724,73 +724,73 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 /*
--(void)showMainView
-{
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float w,h;
-    
-    if (screen.bounds.size.height== 568) {
-        w = 568;
-        h = 320;
-    }else{
-        w = 480;
-        h = 320;
-    }
-    
-    //---   핀셋과 사진을 MainView에 맞는 위치와 크기로 변경한다.
-    self.pincetteImage.frame = CGRectMake(40, 210, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
-    
-    //---   MainSecondView 가 뒤집히면서 MainView가 보이게 한다.
-    [UIView beginAnimations:@"BigSteelHide" context:nil];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
-                           forView:self.MainView
-                             cache:NO];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2]
-    ;
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(mainViewAnmiationDone:finished:context:)];
-    [self.MainSecondView setHidden:YES];
-    [UIView commitAnimations];
-}
-
--(void)showMainSecondView
-{
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float moveXpos;
-    float delay = 0.0;
-    
-    if (screen.bounds.size.height == 568)
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
-    //---   MainView가 우측으로 이동한다.
-    [UIView beginAnimations:@"MainViewRight" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(mainSecondViewAnmiationDone:finished:context:)];
-    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-    [UIView commitAnimations];
-    
-    if (developing == YES){
-        delay += MAINVIEW_ANIMATION_DELAY*6;
-        
-        //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
-        [UIView beginAnimations:@"water" context:nil];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView setAnimationDelay:delay];
-        [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];
-        [UIView setAnimationDidStopSelector:@selector(setEmptyBeakerDone:finished:context:)];
-        [UIView setAnimationDelegate:self];
-        [waterImageView setAlpha:1];
-        [selectedButton setHidden:NO];
-        [UIView commitAnimations];
-    }
-}
+ -(void)showMainView
+ {
+ //---   아이폰4,5 해상도 대응
+ UIScreen *screen = [UIScreen mainScreen];
+ float w,h;
+ 
+ if (screen.bounds.size.height== 568) {
+ w = 568;
+ h = 320;
+ }else{
+ w = 480;
+ h = 320;
+ }
+ 
+ //---   핀셋과 사진을 MainView에 맞는 위치와 크기로 변경한다.
+ self.pincetteImage.frame = CGRectMake(40, 210, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+ selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
+ 
+ //---   MainSecondView 가 뒤집히면서 MainView가 보이게 한다.
+ [UIView beginAnimations:@"BigSteelHide" context:nil];
+ [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+ forView:self.MainView
+ cache:NO];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2]
+ ;
+ [UIView setAnimationDelegate:self];
+ [UIView setAnimationDidStopSelector:@selector(mainViewAnmiationDone:finished:context:)];
+ [self.MainSecondView setHidden:YES];
+ [UIView commitAnimations];
+ }
+ 
+ -(void)showMainSecondView
+ {
+ //---   아이폰4,5 해상도 대응
+ UIScreen *screen = [UIScreen mainScreen];
+ float moveXpos;
+ float delay = 0.0;
+ 
+ if (screen.bounds.size.height == 568)
+ moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+ else
+ moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+ 
+ //---   MainView가 우측으로 이동한다.
+ [UIView beginAnimations:@"MainViewRight" context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+ [UIView setAnimationDelegate:self];
+ [UIView setAnimationDidStopSelector:@selector(mainSecondViewAnmiationDone:finished:context:)];
+ self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+ [UIView commitAnimations];
+ 
+ if (developing == YES){
+ delay += MAINVIEW_ANIMATION_DELAY*6;
+ 
+ //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
+ [UIView beginAnimations:@"water" context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+ [UIView setAnimationDelay:delay];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*5];
+ [UIView setAnimationDidStopSelector:@selector(setEmptyBeakerDone:finished:context:)];
+ [UIView setAnimationDelegate:self];
+ [waterImageView setAlpha:1];
+ [selectedButton setHidden:NO];
+ [UIView commitAnimations];
+ }
+ }
  */
 -(void)showMainView
 {
@@ -804,7 +804,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     //---   핀셋과 사진을 MainView에 맞는 위치와 크기로 변경한다.
     self.pincetteImage.frame = CGRectMake(40, 210, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
     selectedButton.frame = CGRectMake(moveXpos/2-70, IP4_IP5_SIZE_HEIGHT/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
-
+    
     
     //---   MainSecondView 가 뒤집히면서 MainView가 보이게 한다
     [UIView transitionWithView:self.MainView duration:MAINVIEW_ANIMATION_DURATION*2
@@ -893,7 +893,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         movePincetteXpos = 70;
     }
     
-    
     //---   MainView가 우측으로 이동한다.
     [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
                           delay: 0.0
@@ -930,49 +929,52 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                                                                                         delay: MAINVIEW_ANIMATION_DELAY
                                                                                       options: UIViewAnimationOptionCurveEaseOut
                                                                                    animations:^{
-                                                                                       [self setEmptyBeaker:self];                                                                                         
+                                                                                       [self setEmptyBeaker:self];
                                                                                        [waterImageView setAlpha:1];
                                                                                        [selectedButton setHidden:NO];
                                                                                    } completion:^(BOOL finished){
                                                                                        //---   트레이가 완전히 보이게 하는 애니메이션 (Move Left)
-                                                                                       [UIView transitionWithView:self.MainView
-                                                                                                         duration:MAINVIEW_ANIMATION_DURATION
-                                                                                                          options:UIViewAnimationOptionCurveEaseOut
-                                                                                                       animations:^{
-                                                                                                           self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveViewXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-                                                                                                           
-                                                                                                           //---   트레이가 좌측으로 이동했으므로 사진도 좌측으로 이동시킨다. (현재 selectedButton에는 paper이미지가 설정되어 있다.
-                                                                                                           selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4 + movePincetteXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-                                                                                                           
-                                                                                                           self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + movePincetteXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-                                                                                                           
-                                                                                                       }completion:^(BOOL finished) {
-                                                                                                           //---   가속도 센서 설정
-                                                                                                           if (motionManager == nil){
-                                                                                                               motionManager = [[CMMotionManager alloc] init];
-                                                                                                               photoXVelocity = 0;
-                                                                                                               photoYVelocity = 0;
-                                                                                                               currentPoint = selectedButton.center;
-                                                                                                           }
-                                                                                                           
-                                                                                                           if (motionManager.accelerometerAvailable){
-                                                                                                               //---   사진 인화 프로그레스바 초기화
-                                                                                                               devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-                                                                                                               devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
-                                                                                                               [selectedButton addSubview:devleopingProgress];
-                                                                                                               [devleopingProgress setProgress:0.5 animated:YES];
-                                                                                                               
-                                                                                                               NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-                                                                                                               motionManager.accelerometerUpdateInterval = kUpdateInterval;
-                                                                                                               [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
-                                                                                                                ^(CMAccelerometerData *accelerometerData, NSError *error) {
-                                                                                                                    acceleration = accelerometerData.acceleration;
-                                                                                                                    [self performSelectorOnMainThread:@selector(updatePhotoPostion)
-                                                                                                                                           withObject:nil waitUntilDone:NO];
-                                                                                                                }];
-                                                                                                           }
-
-                                                                                                       }];
+                                                                                       [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
+                                                                                                             delay: 0.0
+                                                                                                           options:UIViewAnimationOptionCurveEaseOut
+                                                                                                        animations:^{
+                                                                                                            self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveViewXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+                                                                                                            
+                                                                                                            //---   트레이가 좌측으로 이동했으므로 사진도 좌측으로 이동시킨다. (현재 selectedButton에는 paper이미지가 설정되어 있다.
+                                                                                                            selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4 + movePincetteXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                                                                            
+                                                                                                            self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + movePincetteXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+                                                                                                            
+                                                                                                        }completion:^(BOOL finished) {
+                                                                                                            /*----   test by hkkwon
+                                                                                                             //---   가속도 센서 설정
+                                                                                                             if (motionManager == nil){
+                                                                                                             motionManager = [[CMMotionManager alloc] init];
+                                                                                                             photoXVelocity = 0;
+                                                                                                             photoYVelocity = 0;
+                                                                                                             currentPoint = selectedButton.center;
+                                                                                                             }
+                                                                                                             
+                                                                                                             if (motionManager.accelerometerAvailable){
+                                                                                                             //---   사진 인화 프로그레스바 초기화
+                                                                                                             devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+                                                                                                             devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
+                                                                                                             [selectedButton addSubview:devleopingProgress];
+                                                                                                             [devleopingProgress setProgress:0.5 animated:YES];
+                                                                                                             
+                                                                                                             NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+                                                                                                             motionManager.accelerometerUpdateInterval = kUpdateInterval;
+                                                                                                             [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
+                                                                                                             ^(CMAccelerometerData *accelerometerData, NSError *error) {
+                                                                                                             acceleration = accelerometerData.acceleration;
+                                                                                                             [self performSelectorOnMainThread:@selector(updatePhotoPostion)
+                                                                                                             withObject:nil waitUntilDone:NO];
+                                                                                                             }];
+                                                                                                             }
+                                                                                                             */
+                                                                                                            [self setDevelopingComplete];
+                                                                                                            
+                                                                                                        }];
                                                                                    }];
                                                                   
                                                                   
@@ -988,80 +990,140 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                          [self.pincetteImage setAlpha:0];
                          
                      }];
-    
 }
 
-
-
-- (void)mainSecondViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
-{
-    float delay = 0;
-    
-    //--- MainView가 뒤집히면서 MainSecondView가 나타나며 암실 트레이가 보인다.
-    [UIView beginAnimations:@"BigSteelShow" context:nil];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
-                           forView:self.MainView
-                             cache:NO];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
-    [self.MainSecondView setHidden:NO];
-    [UIView commitAnimations];
-    
-    delay += MAINVIEW_ANIMATION_DELAY*2;
-    
-    //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
-    selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-    [selectedButton setAlpha:0];
-    
-    //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
-    self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [self.pincetteImage setAlpha:0];
-    
-    //---   사진과 핀셋이 MainSecondView의 좌측 상단에서 점점 내려오면서 뚜렷하게 보이게 한다.
-    [UIView beginAnimations:@"PhotoDown" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
-    [UIView setAnimationDelay:delay];
-    if (developing == YES){
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
-        
-        //---   사진이 점점 보이다가 완전히 보이게 된 시간(afterDelay) 이후에 비이커가 비워지게 한다. 대략 비이커가 트레이에 기울어지는 시간과 일치한다.
-        [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
-        
-        //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다. 사진인화시에는 selectedButton을 사용하지 않고 동일한 sizei의 imageView를 생성하여 가속도 센서값이 맞게 움직이게 한다.
-        UIImage *image = [UIImage imageNamed:
-                          [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-        
-        [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
-        [selectedButton setAlpha:0.3];
-    } else{
-        [selectedButton setAlpha:1];        
-    }
-    selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-    self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [self.pincetteImage setAlpha:1];
-    [UIView commitAnimations];
-}
-
-
-- (void)mainViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
-{
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float moveXpos;
-    
-    if (screen.bounds.size.height == 568)
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
-    //---   MainView가 좌측으로 이동하게 한다.
-    [UIView beginAnimations:@"MainViewLeft" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-    [UIView commitAnimations];
-}
+/*
+ - (void)mainSecondViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
+ {
+ float delay = 0;
+ 
+ //--- MainView가 뒤집히면서 MainSecondView가 나타나며 암실 트레이가 보인다.
+ [UIView beginAnimations:@"BigSteelShow" context:nil];
+ [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+ forView:self.MainView
+ cache:NO];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+ [self.MainSecondView setHidden:NO];
+ [UIView commitAnimations];
+ 
+ delay += MAINVIEW_ANIMATION_DELAY*2;
+ 
+ //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
+ selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+ [selectedButton setAlpha:0];
+ 
+ //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
+ self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+ [self.pincetteImage setAlpha:0];
+ 
+ //---   사진과 핀셋이 MainSecondView의 좌측 상단에서 점점 내려오면서 뚜렷하게 보이게 한다.
+ [UIView beginAnimations:@"PhotoDown" context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*3];
+ [UIView setAnimationDelay:delay];
+ if (developing == YES){
+ [UIView setAnimationDelegate:self];
+ [UIView setAnimationDidStopSelector:@selector(beakerDropAnimation)];
+ 
+ //---   사진이 점점 보이다가 완전히 보이게 된 시간(afterDelay) 이후에 비이커가 비워지게 한다. 대략 비이커가 트레이에 기울어지는 시간과 일치한다.
+ [self performSelector:@selector(setEmptyBeaker:) withObject:nil afterDelay:3.0f];
+ 
+ //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다. 사진인화시에는 selectedButton을 사용하지 않고 동일한 sizei의 imageView를 생성하여 가속도 센서값이 맞게 움직이게 한다.
+ UIImage *image = [UIImage imageNamed:
+ [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
+ 
+ [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
+ [selectedButton setAlpha:0.3];
+ } else{
+ [selectedButton setAlpha:1];
+ }
+ selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+ self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+ [self.pincetteImage setAlpha:1];
+ [UIView commitAnimations];
+ }
+ 
+ 
+ - (void)mainViewAnmiationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*)context
+ {
+ //---   아이폰4,5 해상도 대응
+ UIScreen *screen = [UIScreen mainScreen];
+ float moveXpos;
+ 
+ if (screen.bounds.size.height == 568)
+ moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+ else
+ moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+ 
+ //---   MainView가 좌측으로 이동하게 한다.
+ [UIView beginAnimations:@"MainViewLeft" context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+ self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+ [UIView commitAnimations];
+ }
+ 
+ 
+ - (void)setEmptyBeakerDone
+ {
+ //---   아이폰4,5 해상도 대응
+ UIScreen *screen = [UIScreen mainScreen];
+ float moveXpos;
+ 
+ if (screen.bounds.size.height == 568)
+ moveXpos = SELECT_RIGHT_MOVE_X_IP5;
+ else
+ moveXpos = SELECT_RIGHT_MOVE_X_IP4;
+ 
+ //---   트레이가 완전히 보이게 하는 애니메이션 (Move Left)
+ [UIView beginAnimations:@"MainViewLeft" context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
+ self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+ [UIView commitAnimations];
+ 
+ if (screen.bounds.size.height == 568)
+ moveXpos = 90;
+ else
+ moveXpos = 70;
+ 
+ //---   트레이가 좌측으로 이동했으므로 사진도 우측으로 이동시킨다. (현재 selectedButton에는 paper이미지가 설정되어 있다.
+ [UIView beginAnimations:@"PhotoRight" context:nil];
+ [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+ [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
+ [UIView setAnimationDelay:0.1f];
+ selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4 + moveXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+ 
+ self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + moveXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+ [UIView commitAnimations];
+ 
+ //---   가속도 센서 설정
+ if (motionManager == nil){
+ motionManager = [[CMMotionManager alloc] init];
+ photoXVelocity = 0;
+ photoYVelocity = 0;
+ currentPoint = selectedButton.center;
+ }
+ 
+ if (motionManager.accelerometerAvailable){
+ //---   사진 인화 프로그레스바 초기화
+ devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+ devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
+ [selectedButton addSubview:devleopingProgress];
+ [devleopingProgress setProgress:0.5 animated:YES];
+ 
+ NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+ motionManager.accelerometerUpdateInterval = kUpdateInterval;
+ [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
+ ^(CMAccelerometerData *accelerometerData, NSError *error) {
+ acceleration = accelerometerData.acceleration;
+ [self performSelectorOnMainThread:@selector(updatePhotoPostion)
+ withObject:nil waitUntilDone:NO];
+ }];
+ }
+ }
+ 
+ */
 
 - (void)showPincetteOffAnimation
 {
@@ -1104,65 +1166,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 
-- (void)setEmptyBeakerDone
-{
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float moveXpos;
-    
-    if (screen.bounds.size.height == 568)
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
-    //---   트레이가 완전히 보이게 하는 애니메이션 (Move Left)
-    [UIView beginAnimations:@"MainViewLeft" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-    [UIView commitAnimations];
-    
-    if (screen.bounds.size.height == 568)
-        moveXpos = 90;
-    else
-        moveXpos = 70;
-    
-    //---   트레이가 좌측으로 이동했으므로 사진도 우측으로 이동시킨다. (현재 selectedButton에는 paper이미지가 설정되어 있다.
-    [UIView beginAnimations:@"PhotoRight" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
-    [UIView setAnimationDelay:0.1f];
-    selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4 + moveXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-
-    self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + moveXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [UIView commitAnimations];
-    
-    //---   가속도 센서 설정
-    if (motionManager == nil){
-        motionManager = [[CMMotionManager alloc] init];
-        photoXVelocity = 0;
-        photoYVelocity = 0;
-        currentPoint = selectedButton.center;
-    }
-
-    if (motionManager.accelerometerAvailable){
-        //---   사진 인화 프로그레스바 초기화
-        devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-        devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
-        [selectedButton addSubview:devleopingProgress];
-        [devleopingProgress setProgress:0.5 animated:YES];
-        
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        motionManager.accelerometerUpdateInterval = kUpdateInterval;
-        [motionManager startAccelerometerUpdatesToQueue:queue withHandler:
-         ^(CMAccelerometerData *accelerometerData, NSError *error) {
-             acceleration = accelerometerData.acceleration;
-             [self performSelectorOnMainThread:@selector(updatePhotoPostion)
-                                    withObject:nil waitUntilDone:NO];
-         }];
-    }
-}
-
 - (void)setCurrentPoint:(CGPoint)newPoint {
     currentPoint = newPoint;
     CGPoint beakerEndPoint;
@@ -1178,7 +1181,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         currentPoint.x = BIG_BEAKER_START_Y_IP4;
         photoXVelocity = 0;
     }
-
+    
     if (beakerEndPoint.y > BIG_BEAKER_END_X_IP4) {
         currentPoint.y = BIG_BEAKER_END_X_IP4 - PREVIEW_FRAME_SIZE_WIDTH;
         photoYVelocity = 0;
@@ -1188,11 +1191,11 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         currentPoint.x = BIG_BEAKER_END_Y_IP4 - PREVIEW_FRAME_SIZE_HEIGHT;
         photoXVelocity = 0;
     }
-
+    
     selectedButton.center = CGPointMake(currentPoint.y+PREVIEW_FRAME_SIZE_WIDTH/2, currentPoint.x+PREVIEW_FRAME_SIZE_HEIGHT/2);
-
+    
     [self setPaperPreviewImageAlpha:photoDevelopingAlpha];
-    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];    
+    [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
     
     if (photoDevelopingAlpha > 1){
         [motionManager stopAccelerometerUpdates];
@@ -1204,13 +1207,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     if (photoYVelocity > 0.1 || photoYVelocity < -0.1){
         photoDevelopingAlpha += 0.005;
         devleopingProgress.progressTintColor = [UIColor redColor];
-        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];        
+        [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
     } else{
         photoDevelopingAlpha += 0.0005;
         devleopingProgress.progressTintColor = [UIColor blueColor];
         [devleopingProgress setProgress:photoDevelopingAlpha animated:YES];
     }
-        
+    
     //NSLog(@"paper = %@", NSStringFromCGPoint(selectedButton.frame.origin));
 }
 
@@ -1244,9 +1247,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 - (void)setDevelopingComplete
 {
     [devleopingProgress setHidden:YES];
-    [waterImageView setHidden:YES];
+    [waterImageView setAlpha:0];
     [darkRoomOnSteelImageView setHidden:YES];
     [darkRoomOffSteelImageView setHidden:NO];
+    [self.lightButton setImage:[UIImage imageNamed:@"switch_off_ip4.png"] forState:UIControlStateNormal];
     [self showPincetteOnAnimation];
     [self performSelector:@selector(showAlbumView:) withObject:nil afterDelay:2.0f];
 }
@@ -1255,7 +1259,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 {
     if (isHidden == YES){
         [self.underBarItemView setHidden:YES];
-  
+        
         [UIView beginAnimations:@"anotheranimation" context:nil];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
                                forView:self.underBarItemView
@@ -1264,7 +1268,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [UIView commitAnimations];
     } else {
         [self.underBarItemView setHidden:NO];
-
+        
         [UIView beginAnimations:@"anotheranimation" context:nil];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
                                forView:self.underBarItemView
@@ -1298,7 +1302,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         CGFloat pageHeight = paperScrollView.frame.size.height;
         chemicalPageControl.currentPage = floor((chemicalScrollView.contentOffset.y - pageHeight / 9) / pageHeight) + 1;
     }
-
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -1310,7 +1314,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 						  [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
         paperPreviewImageView.image = image;
         [paperPreviewImageView setHidden:NO];
-
+        
         [self setPaperPreviewImage];
         [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
         [selectedButton setAlpha:0];
@@ -1320,12 +1324,12 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
         [UIView setAnimationDelay:0.5f];
         [selectedButton setAlpha:1.0];
-
+        
         [UIView commitAnimations];
-    //---   ChemicalView
+        //---   ChemicalView
     } else{
         ;
-    }    
+    }
 }
 
 - (void)setPaperPreviewImage
@@ -1353,7 +1357,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
             [_bg drawInRect:CGRectMake(0, 0, PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH, PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT)];
             [_character drawInRect:CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT)];
-            //---   test by hkkwon
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
@@ -1399,7 +1402,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
             [_bg drawInRect:CGRectMake(0, 0, PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH, PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT)];
             [_character drawInRect:CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:alpha];
-            //---   test by hkkwon
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
@@ -1519,7 +1521,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     AnimationChemicalPathUp.duration = chemicalAni.firstAniDuration;
     AnimationChemicalPathUp.fillMode = kCAFillModeForwards;
     CFRelease(thePathUp);
-
+    
     //---   2. 첫번째 애니에이션 : 현상액 회전
     CABasicAnimation *rotation =
     [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -1570,7 +1572,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     group.delegate = self;
     
     [[[chemicalImageView objectAtIndex:chemicalPageControl.currentPage] layer] addAnimation:group forKey:nil];
-
+    
     //--- 현상액 애니메이션 중일때는 터치 이벤트를 받지 않도록 함
     chemicalAni.chemicalAnimating = YES;
     //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하지 않도록 함
@@ -1681,14 +1683,14 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSLog(@"%s", __FUNCTION__);
     //--- 현상액 애니메이션 중일때는 터치 이벤트를 받도록 함
     chemicalAni.chemicalAnimating = NO;
-    //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하도록 함    
+    //--- 현상액 애니메이셩 중일때는 chemicalScrollView의 scroll이 발생하도록 함
     [chemicalScrollView setUserInteractionEnabled:YES];
     [waitBaekerProgressTimer fire];
-    [stopBeakerProgressTimer fire]; 
+    [stopBeakerProgressTimer fire];
 }
 
 - (void)updateProgress
-{    
+{
     CGFloat currentProgress = [beakerView progress];
     CGFloat progressDir = 0.00f;
     
@@ -1872,7 +1874,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             }
         }
         if (point.x > 130 && point.x < 180 && point.y > 110 && point.y < 190){
-            [self showBeakerEmptyAlertView];            
+            [self showBeakerEmptyAlertView];
         }
     }
     else if (point.y > 200){
