@@ -12,6 +12,7 @@
 #import "VenusScroll.h"
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
+#import "VenusSaveItemController.h"
 
 #define MYDEVICE_IPHONE5                1
 #define MYDEVICE_ETC                    2
@@ -136,6 +137,8 @@
     CGFloat developingProgressLevel;
     
     NSDate *lastUpdateTime;
+    
+    VenusSaveItemController *venusSaveItemController;
 }
 
 @property (nonatomic, strong) ALAsset *asset;

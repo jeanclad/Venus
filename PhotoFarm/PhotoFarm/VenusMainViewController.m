@@ -13,7 +13,6 @@
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
 #import "chemicalAnimation.h"
-#import "VenusSaveItemController.h"
 /* persist test by jeanclad
  #import "VenusPersistList.h"
  */
@@ -175,8 +174,7 @@
     [developingPhotoImageView setAlpha:0.0];
     [self.MainSecondView addSubview:developingPhotoImageView];
     
-    VenusSaveItemController *venusSaveItemController = [[VenusSaveItemController alloc] init];
-    NSLog(@"fileName = %@",[venusSaveItemController makeSaveFileName]);
+    venusSaveItemController = [[VenusSaveItemController alloc] init];
 }
 
 
@@ -464,6 +462,9 @@
     //---   비이커 비움 alert의 버튼 처리
     if (buttonIndex == 0){
         [self performSelectorOnMainThread:@selector(setEmptyBeaker:) withObject:nil waitUntilDone:NO];
+        
+        //---   아이템 임시 저장 클래스에 chemicalType에 저장되어 있는값을 초기화 한다.
+        [venusSaveItemController.chemicalType removeAllObjects];
     }
 }
 
@@ -775,6 +776,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                             self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + movePincetteXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
+                                                                                                            /* test by hkkwon
                                                                                                             //---   가속도 센서 설정
                                                                                                             if (motionManager == nil){
                                                                                                                 motionManager = [[CMMotionManager alloc] init];
@@ -809,6 +811,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                                             withObject:nil waitUntilDone:NO];
                                                                                                                  }];
                                                                                                             }
+                                                                                                             */
+                                                                                                            [self setDevelopingComplete];
                                                                                                         }];
                                                                                    }];
                                                                   
@@ -1170,6 +1174,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     MainVIewMoved = NO;
 }
 
+- (void)savePropAndFile
+{
+    //---   아이템 임시 저장 클래스에 아이템 네임과 파일명을 저장한다.
+    NSDictionary *preloadName = [venusSaveItemController makeSaveFileName];
+    [venusSaveItemController setPhotoItemName:[preloadName objectForKey:KEY_ITEM_NAME]];
+    [venusSaveItemController setPaperPhotoFileName:[preloadName objectForKey:KEY_PAPER_FILE_NAME]];
+    [venusSaveItemController setPaperlessPhotoFileName:[preloadName objectForKey:KEY_PAPERLESS_FILE_NAME]];
+}
 
 #pragma mark  -jeanclad
 #pragma mark  -BeakerView Control
@@ -1481,7 +1493,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
-        }else if ([paperPageControl currentPage] == PAPER_INDeX_SPRING){
+        }else if ([paperPageControl currentPage] == PAPER_INDEX_SPRING){
             [_bg drawInRect:CGRectMake(0, 0, PREVIEW_SPRING_FRAME_SIZE_WIDTH, PREVIEW_SPRING_FRAME_SIZE_HEIGHT)];
             [_previewPhoto drawInRect:CGRectMake(PREVIEW_SPRING_PHOTO_ORIGIN_X, PREVIEW_SPRING_PHOTO_ORIGIN_Y, PREVIEW_SPRING_PHOTO_SIZE_WIDTH, PREVIEW_SPRING_PHOTO_SIZE_HEIGHT)];
             preview_img = UIGraphicsGetImageFromCurrentImageContext();
@@ -1514,7 +1526,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
         photoSize.width = PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH;
         photoSize.height = PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT;
-    }else if ([paperPageControl currentPage] == PAPER_INDeX_SPRING){
+    }else if ([paperPageControl currentPage] == PAPER_INDEX_SPRING){
         photoSize.width = PREVIEW_SPRING_FRAME_SIZE_WIDTH;
         photoSize.height = PREVIEW_SPRING_FRAME_SIZE_HEIGHT;
     }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
@@ -1627,6 +1639,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self setHiddenRootItem:YES];
         [self setLightOnAnimation];
         [chemicalContentView setHidden:YES];
+        [self savePropAndFile];
     }
 }
 
@@ -1691,6 +1704,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         
         //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
         [beakerView setProgress: wantProgressLevel];
+        
+        //---   아이템 임시 저장 클래스에 paperType을 저장한다.
+        NSString *paperName = [venusSaveItemController getPaperName:paperPageControl.currentPage];
+        [venusSaveItemController setPaperType:paperName];        
     }
 }
 
@@ -1713,6 +1730,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
                 chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
                 [self fillChemicalAnimation];
                 waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
+                
+                //---   아이템 임시 저장 클래스에 chemicalType을 저장한다.
+                NSString *chemicalName = [venusSaveItemController getChemicalName:chemicalPageControl.currentPage];
+                [venusSaveItemController.chemicalType addObject:chemicalName];                
             }
             else {
                 [self showBeakerEmptyAlertView];

@@ -8,10 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-#define INDEX_PAPER_FILE        0
-#define INDEX_PAPERLESS_FILE    1
+#define KEY_ITEM_NAME               @"keyItemName"
+#define KEY_PAPER_FILE_NAME         @"keyPaperFileName"
+#define KEY_PAPERLESS_FILE_NAME     @"keyPaperlessFileName"
 
 @interface VenusSaveItemController : NSObject
 
-- (NSArray *)makeSaveFileName;
+@property (nonatomic, retain) NSString              *photoItemName;
+@property (nonatomic, retain) NSString              *paperPhotoFileName;
+@property (nonatomic, retain) NSString              *paperlessPhotoFileName;
+@property (nonatomic, retain) NSString              *paperType;
+@property (nonatomic, retain) NSMutableArray        *chemicalType;
+
+- (NSDictionary *)makeSaveFileName;
+- (NSString *)getPaperName:(NSInteger)pageIndex;
+- (NSString *)getChemicalName:(NSInteger)pageIndex;
 @end
