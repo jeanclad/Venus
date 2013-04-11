@@ -211,17 +211,16 @@
     NSLog(@"aaa");
     if ((asset != nil) || (firstSelect == YES)){
         NSLog(@"bbb");
-        UIImage *result_img = nil;
         if (asset != nil){
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
-            //UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
-            UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullResolutionImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
             
-            mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
+            mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT];
             
             //---   파일 저장되어 VenusAlbumDetailView 에서 보기게 한다.
-            paperlessPhoto = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE_HEIGHT];
+            albumPaperPhoto = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PAPER_PHOTO_SIZE_HEIGHT];
+            albumPaperlessPhoto = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE_HEIGHT];
             
             if (asset != oldAsset){
                 if (_bg != nil){
@@ -236,7 +235,7 @@
         /*  용지가 선택되어 있는 상태에서 사진을 변경하여 선택하였을 경우와 용지를 아무것도 선택하지 않았을경우
          그 사진에 paper_preview_1 용지를 입혀야 한다.  */
         [self setPaperPreviewImage];
-        result_img = preview_img;
+        UIImage *result_img = [self makeThumbnailImage:preview_img onlyCrop:NO Size:PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT];
         
         selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
@@ -747,7 +746,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                   [selectedButton setAlpha:1.0f];
                                                         
                                                                   CGSize developingPhotoImageSize = [self getDevelopingPhotoSize];
-                                                                  developingPhotoImageView.image = mainPhotoView;
+                                                                  developingPhotoImageView.image = albumPaperPhoto;
                                                                   developingPhotoImageView.frame = CGRectMake(0, 0, developingPhotoImageSize.width, developingPhotoImageSize.height);
 
                                                                   selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
@@ -780,7 +779,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                             self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + movePincetteXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
-                                                                                                            /* test by hkkwon
+                                                                                                            ///* test by hkkwon
                                                                                                             //---   가속도 센서 설정
                                                                                                             if (motionManager == nil){
                                                                                                                 motionManager = [[CMMotionManager alloc] init];
@@ -815,8 +814,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                                             withObject:nil waitUntilDone:NO];
                                                                                                                  }];
                                                                                                             }
-                                                                                                             */
-                                                                                                            [self setDevelopingComplete];
+                                                                                                             //*/
+                                                                                                            //[self setDevelopingComplete];
                                                                                                         }];
                                                                                    }];
                                                                   
@@ -1213,10 +1212,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [venusSaveItemController setPaperlessPhotoFileName:[preloadName objectForKey:KEY_PAPERLESS_FILE_NAME]];
     
     //---   Save PaperPhotoFile
-    [self writeToCacheImageFile:preview_img fileName:[venusSaveItemController paperPhotoFileName]];
+    [self writeToCacheImageFile:albumPaperPhoto fileName:[venusSaveItemController paperPhotoFileName]];
     
     //---   Save PaperlessPhotoFile
-    [self writeToCacheImageFile:paperlessPhoto fileName:[venusSaveItemController paperlessPhotoFileName]];
+    [self writeToCacheImageFile:albumPaperlessPhoto fileName:[venusSaveItemController paperlessPhotoFileName]];
     
     
     [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:[venusSaveItemController photoItemName]];
@@ -1520,7 +1519,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);
     
     //get character image
-    UIImage *_previewPhoto = mainPhotoView;
+    UIImage *_previewPhoto = albumPaperPhoto;
     _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
     if (_bg != nil) {
         UIGraphicsBeginImageContext(_bg.size);
