@@ -102,7 +102,7 @@
     ALAsset     *asset;
     CGImageRef thumbnailImageRef;
     //UIImage     *thumbnail;
-    UIImage *mainPhotoView;
+    UIImage     *mainPhotoView;
     UIImage     *albumPaperPhoto;
     UIImage     *albumPaperlessPhoto;
     BOOL        firstSelect;

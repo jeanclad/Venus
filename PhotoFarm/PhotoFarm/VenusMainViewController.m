@@ -218,7 +218,7 @@
         h = IP4_IP5_SIZE_HEIGHT;
     }
     
-    [self loadPlistFile];
+    [venusSaveItemController loadPlistFile];
     
     // Will Edit to button position
     [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
@@ -1053,6 +1053,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     developing = NO;
 }
 
+/*
 - (void)writeToDataFile:(VenusPersistList *)persist
 {
     NSMutableData *data = [[NSMutableData alloc] init];
@@ -1103,6 +1104,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //---    Plist파일을 갱신한 후에는 반듯이 다시 읽어와야 한다. 
     [self loadPlistFile];
 }
+ */
 
 #pragma mark  -jeanclad
 #pragma mark  -BeakerView Control
@@ -1461,6 +1463,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return photoSize;
 }
 
+/*
 #pragma mark -
 #pragma mark Persist Control
 - (BOOL)loadPlistFile
@@ -1475,7 +1478,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [GlobalDataManager sharedGlobalDataManager].photoInfoFileList = [unarchiver decodeObjectForKey:kDataKey];
         [unarchiver finishDecoding];
         //NSLog(@"loadPlist = %@ count = %d", loadPersistList.persistList, loadPersistList.persistList.count);
-        //--------------------------------------------------------------------------------------------------
         
         
         //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
@@ -1499,24 +1501,23 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         
         NSLog(@"dictAllKeys = %@", [GlobalDataManager sharedGlobalDataManager].reversePlistKeys);
         
-        /* Debug Code
-         for (int i = 0; i < allKeys.count; i++){
-         NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:INDEX_PAPER_TYPE]);
-         }
-         */
-        //---------------------------------------------------------------------------------------------------------------------------
+        //--- Debug Code
+         //for (int i = 0; i < allKeys.count; i++){
+        // NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:INDEX_PAPER_TYPE]);
+         //}
+        //
         
         return YES;
     }
     return NO;
 }
-
 - (NSString *)dataFilePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(
                                                          NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
+*/
 
 
 #pragma mark -
@@ -1558,7 +1559,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self setHiddenRootItem:YES];
         [self setLightOnAnimation];
         [chemicalContentView setHidden:YES];
-        [self savePropAndFile];
+        [venusSaveItemController savePropAndFile];
     }
 }
 

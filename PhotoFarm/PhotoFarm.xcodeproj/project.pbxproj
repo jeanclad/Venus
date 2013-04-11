@@ -88,6 +88,7 @@
 		E62341A716FA99640003FB52 /* pincette_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E62341A616FA99640003FB52 /* pincette_off_ip4.png */; };
 		E62341AE16FAD3290003FB52 /* VenusSelectDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */; };
 		E62341AF16FAD3290003FB52 /* VenusSelectDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E62341AD16FAD3290003FB52 /* VenusSelectDetailViewController.xib */; };
+		E65A1D2A17171D3A00A040DE /* VenusPhotoImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E65A1D2917171D3A00A040DE /* VenusPhotoImageController.m */; };
 		E65E5CFB170E9CF700A35435 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65E5CFA170E9CF700A35435 /* CoreMotion.framework */; };
 		E69B165A16EC43D10075365E /* GlobalDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E69B165916EC43D10075365E /* GlobalDataManager.m */; };
 		E6ADEFFC16F8808200160B9D /* lamp_off_ip4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6ADEFF016F8808200160B9D /* lamp_off_ip4.png */; };
@@ -212,6 +213,8 @@
 		E62341AB16FAD3290003FB52 /* VenusSelectDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusSelectDetailViewController.h; sourceTree = "<group>"; };
 		E62341AC16FAD3290003FB52 /* VenusSelectDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusSelectDetailViewController.m; sourceTree = "<group>"; };
 		E62341AD16FAD3290003FB52 /* VenusSelectDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenusSelectDetailViewController.xib; sourceTree = "<group>"; };
+		E65A1D2817171D3A00A040DE /* VenusPhotoImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusPhotoImageController.h; sourceTree = "<group>"; };
+		E65A1D2917171D3A00A040DE /* VenusPhotoImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusPhotoImageController.m; sourceTree = "<group>"; };
 		E65E5CFA170E9CF700A35435 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		E69B165716EC43D10075365E /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		E69B165816EC43D10075365E /* GlobalDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataManager.h; sourceTree = "<group>"; };
@@ -462,6 +465,8 @@
 				E61A83321703118C0062071F /* VenusProgressViewController.m */,
 				2175D0AF17163EFD0049D8D4 /* VenusSaveItemController.h */,
 				2175D0B017163EFD0049D8D4 /* VenusSaveItemController.m */,
+				E65A1D2817171D3A00A040DE /* VenusPhotoImageController.h */,
+				E65A1D2917171D3A00A040DE /* VenusPhotoImageController.m */,
 			);
 			name = "Additional Views and Cells";
 			sourceTree = "<group>";
@@ -709,6 +714,7 @@
 				E61A83331703118C0062071F /* VenusProgressViewController.m in Sources */,
 				E61A833F1703CF630062071F /* chemicalAnimation.m in Sources */,
 				2175D0B117163EFD0049D8D4 /* VenusSaveItemController.m in Sources */,
+				E65A1D2A17171D3A00A040DE /* VenusPhotoImageController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
