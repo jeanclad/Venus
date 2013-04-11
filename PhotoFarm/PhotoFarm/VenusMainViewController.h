@@ -24,6 +24,10 @@
 #define PREVIEW_ORIGIN_Y                0
 #define PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH    140
 #define PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT   140
+
+#define PAPERLESS_PHOTO_SIZE_WIDTH      320
+#define PAPERLESS_PHOTO_SIZE_HEIGHT     320
+
 #define PREVIEW_FRAME_SIZE_WIDTH        200
 #define PREVIEW_FRAME_SIZE_HEIGHT       200
 #define PREVIEW_PHOTO_SIZE_WIDTH        200
@@ -96,6 +100,7 @@
     CGImageRef thumbnailImageRef;
     //UIImage     *thumbnail;
     UIImage *mainPhotoView;
+    UIImage *paperlessPhoto;
     BOOL        firstSelect;
     BOOL        MainVIewMoved;
     BOOL        developing;

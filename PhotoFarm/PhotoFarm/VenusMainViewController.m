@@ -215,9 +215,13 @@
         if (asset != nil){
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
-            UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            //UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullResolutionImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
             
             mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
+            
+            //---   파일 저장되어 VenusAlbumDetailView 에서 보기게 한다.
+            paperlessPhoto = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE_HEIGHT];
             
             if (asset != oldAsset){
                 if (_bg != nil){
@@ -886,6 +890,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [darkRoomOffSteelImageView setHidden:NO];
     [self.lightButton setImage:[UIImage imageNamed:@"switch_off_ip4.png"] forState:UIControlStateNormal];
     [self showPincetteOnAnimation];
+    
+    //---   아이템 임시 저장 클래스에 chemicalType에 저장되어 있는값을 초기화 한다.
+    [venusSaveItemController.chemicalType removeAllObjects];
+    
     [self performSelector:@selector(showAlbumView:) withObject:nil afterDelay:2.0f];
 }
 
@@ -1174,6 +1182,28 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     MainVIewMoved = NO;
 }
 
+- (void)writeToDataFile:(VenusPersistList *)persist
+{
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
+                                 initForWritingWithMutableData:data];
+    [archiver encodeObject:persist forKey:kDataKey];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath] atomically:YES];
+    
+    NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+}
+
+- (void)writeToCacheImageFile:(UIImage *)photoImage fileName:(NSString*)fileName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachesDirectory = [paths objectAtIndex:0];
+    NSString *filePath = [cachesDirectory stringByAppendingPathComponent:fileName];
+    UIImage *image = photoImage;
+    NSData *saveImageData = UIImagePNGRepresentation(image);
+    [saveImageData writeToFile:filePath atomically:NO];
+}
+
 - (void)savePropAndFile
 {
     //---   아이템 임시 저장 클래스에 아이템 네임과 파일명을 저장한다.
@@ -1181,6 +1211,26 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [venusSaveItemController setPhotoItemName:[preloadName objectForKey:KEY_ITEM_NAME]];
     [venusSaveItemController setPaperPhotoFileName:[preloadName objectForKey:KEY_PAPER_FILE_NAME]];
     [venusSaveItemController setPaperlessPhotoFileName:[preloadName objectForKey:KEY_PAPERLESS_FILE_NAME]];
+    
+    //---   Save PaperPhotoFile
+    [self writeToCacheImageFile:preview_img fileName:[venusSaveItemController paperPhotoFileName]];
+    
+    //---   Save PaperlessPhotoFile
+    [self writeToCacheImageFile:paperlessPhoto fileName:[venusSaveItemController paperlessPhotoFileName]];
+    
+    
+    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:[venusSaveItemController photoItemName]];
+    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:[venusSaveItemController paperPhotoFileName]];
+    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:[venusSaveItemController paperlessPhotoFileName]];
+    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:[venusSaveItemController paperType]];
+    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[venusSaveItemController chemicalType]];
+    
+    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
+    
+    [self writeToDataFile:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList];
+    
+    //---    Plist파일을 갱신한 후에는 반듯이 다시 읽어와야 한다. 
+    [self loadPlistFile];
 }
 
 #pragma mark  -jeanclad
