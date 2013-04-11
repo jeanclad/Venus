@@ -13,6 +13,7 @@
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
 #import "chemicalAnimation.h"
+#import "VenusSaveItemController.h"
 /* persist test by jeanclad
  #import "VenusPersistList.h"
  */
@@ -172,8 +173,10 @@
     imageViewFrame = CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
     developingPhotoImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
     [developingPhotoImageView setAlpha:0.0];
-        
     [self.MainSecondView addSubview:developingPhotoImageView];
+    
+    VenusSaveItemController *venusSaveItemController = [[VenusSaveItemController alloc] init];
+    NSLog(@"fileName = %@",[venusSaveItemController makeSaveFileName]);
 }
 
 

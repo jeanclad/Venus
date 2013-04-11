@@ -28,6 +28,7 @@
 		215EF5F916E4968C0043C029 /* AlbumContentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */; };
 		215EF5FA16E4968C0043C029 /* AlbumContentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 215EF5F816E4968C0043C029 /* AlbumContentsTableViewCell.xib */; };
 		215EF5FC16E591620043C029 /* 1rg1024_Film.png in Resources */ = {isa = PBXBuildFile; fileRef = 215EF5FB16E591620043C029 /* 1rg1024_Film.png */; };
+		2175D0B117163EFD0049D8D4 /* VenusSaveItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2175D0B017163EFD0049D8D4 /* VenusSaveItemController.m */; };
 		218CC8BE170A6D9800DBC7EC /* paper_preview_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 218CC8BD170A6D9800DBC7EC /* paper_preview_4.png */; };
 		21B3B51716E43C76008A1D15 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B3B51616E43C76008A1D15 /* UIKit.framework */; };
 		21B3B51916E43C76008A1D15 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B3B51816E43C76008A1D15 /* Foundation.framework */; };
@@ -140,6 +141,8 @@
 		215EF5F716E4968C0043C029 /* AlbumContentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumContentsTableViewCell.m; sourceTree = "<group>"; };
 		215EF5F816E4968C0043C029 /* AlbumContentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumContentsTableViewCell.xib; sourceTree = "<group>"; };
 		215EF5FB16E591620043C029 /* 1rg1024_Film.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1rg1024_Film.png; sourceTree = "<group>"; };
+		2175D0AF17163EFD0049D8D4 /* VenusSaveItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenusSaveItemController.h; sourceTree = "<group>"; };
+		2175D0B017163EFD0049D8D4 /* VenusSaveItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenusSaveItemController.m; sourceTree = "<group>"; };
 		218CC8BD170A6D9800DBC7EC /* paper_preview_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper_preview_4.png; sourceTree = "<group>"; };
 		21B3B51316E43C76008A1D15 /* PhotoFarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoFarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21B3B51616E43C76008A1D15 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -457,6 +460,8 @@
 				E6C8FC6C16F096DB00D86CC1 /* VenusPersistList.m */,
 				E61A83311703118C0062071F /* VenusProgressViewController.h */,
 				E61A83321703118C0062071F /* VenusProgressViewController.m */,
+				2175D0AF17163EFD0049D8D4 /* VenusSaveItemController.h */,
+				2175D0B017163EFD0049D8D4 /* VenusSaveItemController.m */,
 			);
 			name = "Additional Views and Cells";
 			sourceTree = "<group>";
@@ -703,6 +708,7 @@
 				E61A832E1701B4490062071F /* VenusScroll.m in Sources */,
 				E61A83331703118C0062071F /* VenusProgressViewController.m in Sources */,
 				E61A833F1703CF630062071F /* chemicalAnimation.m in Sources */,
+				2175D0B117163EFD0049D8D4 /* VenusSaveItemController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
