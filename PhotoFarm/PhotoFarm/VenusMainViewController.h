@@ -96,6 +96,7 @@
 
 @interface VenusMainViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>{
     NSInteger         myDevice;
+    UIButton    *firstNotSelectedButton;
     UIButton    *selectedButton;
     
     ALAsset     *asset;
@@ -105,7 +106,6 @@
     UIImage     *albumPaperPhoto;
     UIImage     *albumPaperlessPhoto;
     BOOL        firstSelect;
-    BOOL        MainVIewMoved;
     BOOL        developing;
     UIImage     *_bg;
     UIImage     *preview_img;

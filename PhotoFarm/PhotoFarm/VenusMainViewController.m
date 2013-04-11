@@ -13,9 +13,6 @@
 #import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
 #import "chemicalAnimation.h"
-/* persist test by jeanclad
- #import "VenusPersistList.h"
- */
 
 //---   Float Pointing Compare Macro
 #define float_epsilon 0.00001
@@ -54,10 +51,27 @@
     }else{
         myDevice = MYDEVICE_ETC;        
         w = IP4_SIZE_WIDTH;
-        h = IP4_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
     }
     
     //--- Will Edtt position
+    //---   Select to touch an image 버튼
+    firstNotSelectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    firstNotSelectedButton.frame = CGRectMake(0, 0, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
+    firstNotSelectedButton.center = CGPointMake(w/2, h/2 - 20);
+    [firstNotSelectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
+    [firstNotSelectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.MainView addSubview:firstNotSelectedButton];
+
+    
+    //---   사진선택된 후의 커스텀 버튼
+    selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];    
+    selectedButton.frame = CGRectMake(0, 0, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
+    selectedButton.center = CGPointMake(w/2, h/2 - 20);
+    [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [selectedButton setHidden:YES];
+    [self.MainView addSubview:selectedButton];
+
     //---   용지 선택 뷰
     paperScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
 	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(70, 90, 240, 2030)];
@@ -127,7 +141,6 @@
     [self.selectView addSubview:beakerView];
     
     [self.navigationController.navigationBar setHidden:YES];
-    MainVIewMoved = NO;
     developing = NO;
     
     //---   MainSecondView 숨기기
@@ -175,7 +188,15 @@
     [developingPhotoImageView setAlpha:0.0];
     [self.MainSecondView addSubview:developingPhotoImageView];
     
+    //---   사진 인화 프로그레스바 초기화
+    devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
+    [devleopingProgress setHidden:YES];
+    [selectedButton addSubview:devleopingProgress];
+    
+    //---   아이템 임시 저장 클래스 초기화
     venusSaveItemController = [[VenusSaveItemController alloc] init];
+    
 }
 
 
@@ -202,9 +223,7 @@
     // Will Edit to button position
     [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
     
-    NSLog(@"aaa");
     if ((asset != nil) || (firstSelect == YES)){
-        NSLog(@"bbb");
         if (asset != nil){
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
@@ -230,30 +249,16 @@
          그 사진에 paper_preview_1 용지를 입혀야 한다.  */
         [self setPaperPreviewImage];
         UIImage *result_img = [self makeThumbnailImage:preview_img onlyCrop:NO Size:PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT];
+        [selectedButton setImage:result_img forState:UIControlStateNormal];
+        selectedButton.center = CGPointMake(w/2, h/2 - 20);
+        [selectedButton setAlpha:1.0f];
+    
+        NSLog(@"selectedButtonItem = %@, %f", NSStringFromCGPoint(selectedButton.frame.origin), selectedButton.alpha);
         
-        selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [selectedButton setBackgroundImage:result_img forState:UIControlStateNormal];
+        [firstNotSelectedButton setHidden:YES];
+        [selectedButton setHidden:NO];
         
-        if (MainVIewMoved == NO)
-            selectedButton.frame = CGRectMake(w/2-70, h/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
-        else
-            //selectedButton.frame = CGRectMake((w/2-90) + moveXpos - 50, (h/2-90) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-            selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-        
-        [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.MainView addSubview:selectedButton];
         firstSelect = YES;
-    } else {
-        NSLog(@"ccc");
-        selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        if (MainVIewMoved == NO) {
-            selectedButton.frame = CGRectMake(w/2-100, h/2-38, 200, 76);
-        }else{
-            selectedButton.frame = CGRectMake((w/2-100) + moveXpos, (h/2-38) - SELECT_RIGHT_MOVE_Y, 200, 76);
-        }
-        [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
-        [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.MainView addSubview:selectedButton];        
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -267,7 +272,7 @@
      1. 필름 선택뷰로 넘어갔을때
      2. 사진 찍어서 선택되었을때
      */
-    [selectedButton removeFromSuperview];
+    //[selectedButton removeFromSuperview];
     
     /* 필름 선택뷰에서 넘어온 selectedAssets값이 해당 class가 pop 되면서 더이상 접어서 nil이 넘어온다.
      그래서 asset값을 강제로 nil로 만든다음 필름 뷰에서 nil이 넘어오면 필름뷰에서 사진을 선택하지 않고 Back 키로
@@ -456,7 +461,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [chemicalScrollView setHidden:NO];
     [chemicalPageControl setHidden:NO];
     [beakerView setHidden:NO];
-    MainVIewMoved = YES;
 }
 
 - (void)setPaperView
@@ -469,7 +473,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [chemicalScrollView setHidden:YES];
     [chemicalPageControl setHidden:YES];
     [beakerView setHidden:YES];
-    MainVIewMoved = YES;
 }
 
 - (void)moveAnimationRootView:(BOOL)move
@@ -656,22 +659,15 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                             self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + movePincetteXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
-                                                                                                            ///* test by hkkwon
+                                                                                                            /* test by hkkwon
                                                                                                             //---   가속도 센서 설정
                                                                                                             if (motionManager == nil){
                                                                                                                 motionManager = [[CMMotionManager alloc] init];
                                                                                                             }
                                                                                                             
                                                                                                             if (motionManager.accelerometerAvailable){
-                                                                                                                //---   사진 인화 프로그레스바 초기화 / selectedButton이 View초기화 시점에는 사진이미지가 적용되기 전이므로 ViewWillAni.. 부분에 적용할수 없고 selectedButton에 이미지가 설정됭후 addSubview를 한다.
-                                                                                                                if (devleopingProgress == nil){
-                                                                                                                    devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-                                                                                                                    devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
-                                                                                                                }
                                                                                                                 developingProgressLevel = 0.0f;
-                                                                                                                [devleopingProgress setProgress:developingProgressLevel];
                                                                                                                 [devleopingProgress setHidden:NO];
-                                                                                                                [selectedButton addSubview:devleopingProgress];
                                                                                                                 
                                                                                                                 //---   사진인화시 사용되는 아이템 초기화
                                                                                                                 lastUpdateTime = nil;
@@ -691,8 +687,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                                             withObject:nil waitUntilDone:NO];
                                                                                                                  }];
                                                                                                             }
-                                                                                                             //*/
-                                                                                                            //[self setDevelopingComplete];
+                                                                                                             */
+                                                                                                            [self setDevelopingComplete];
                                                                                                         }];
                                                                                    }];
                                                                   
@@ -1055,7 +1051,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [chemicalContentView setHidden:NO];
     
     developing = NO;
-    MainVIewMoved = NO;
 }
 
 - (void)writeToDataFile:(VenusPersistList *)persist
@@ -1624,7 +1619,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [paperPreviewImageView setHidden:YES];
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
-        MainVIewMoved = NO;
         
         //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
         [beakerView setProgress: wantProgressLevel];
