@@ -47,13 +47,14 @@
     float w,h;
     
     if (screen.bounds.size.height== 568) {
-        w = 568;
-        h = 320;
         myDevice = MYDEVICE_IPHONE5;
+        w = IP5_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
+
     }else{
-        w = 480;
-        h = 320;
-        myDevice = MYDEVICE_ETC;
+        myDevice = MYDEVICE_ETC;        
+        w = IP4_SIZE_WIDTH;
+        h = IP4_SIZE_WIDTH;
     }
     
     //--- Will Edtt position
@@ -182,26 +183,19 @@
 {
     [super viewWillAppear:animated];
     
-    //---   아이폰4,5 해상도 대응
-    UIScreen *screen = [UIScreen mainScreen];
-    float w,h;
     static ALAsset *oldAsset;
-    
-    if (screen.bounds.size.height== 568) {
-        w = 568;
-        h = 320;
-    }else{
-        w = 480;
-        h = 320;
-    }
-    
+    float w,h;
     float moveXpos;
     
-    if (screen.bounds.size.height == 568)
+    if (myDevice == MYDEVICE_IPHONE5){
         moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
+        w = IP5_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
+    } else{
         moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
+        w = IP4_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
+    }
     
     [self loadPlistFile];
     
@@ -246,62 +240,9 @@
             //selectedButton.frame = CGRectMake((w/2-90) + moveXpos - 50, (h/2-90) + SELECT_RIGHT_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
             selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
         
-        
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.MainView addSubview:selectedButton];
         firstSelect = YES;
-        
-        /*/ Photo Save to caches test by jenaclad
-        NSLog(@"asset = %@", asset);
-        ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
-        
-        UIImage *fullScreenImage = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString * cachesDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paper_2.png"];
-        UIImage * image = fullScreenImage;
-        NSData * saveImageData = UIImagePNGRepresentation(image);
-        [saveImageData writeToFile:filePath atomically:NO];
-        NSLog(@"1 save path = %@", filePath);
-        
-        
-        filePath = [cachesDirectory stringByAppendingPathComponent:@"Venus_Paperless_2.png"];
-        UIImage * image2 = fullScreenImage;
-        NSData * saveImageData2 = UIImagePNGRepresentation(image2);
-        [saveImageData2 writeToFile:filePath atomically:NO];
-        NSLog(@"2 save path = %@", filePath);
-
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus1"];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper1.png"];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_1.png"];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:PAPER_TYPE_CRUMPLED];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSMutableArray arrayWithObjects:CHEMICAL_TYPE_1620, @"\n", CHEMICAL_TYPE_CYAN, @"\n", CHEMICAL_TYPE_DEVELOP_PINK, @"\n", CHEMICAL_TYPE_SPECIAL, nil]];
-        
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
-        
-        
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:@"Venus2"];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:@"Venus_Paper_2.png"];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:@"Venus_Paperless_2.png"];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:PAPER_TYPE_FOLDED];
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[NSMutableArray arrayWithObjects:CHEMICAL_TYPE_DEVELOP_GREEN, @"\n", CHEMICAL_TYPE_VALENTINE, @"\n", CHEMICAL_TYPE_YELLO, @"\n", CHEMICAL_TYPE_GLOOM,  @"\n",CHEMICAL_TYPE_DEVELOP_GREEN, nil]];
-        
-        [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
-        
-        NSMutableData *data = [[NSMutableData alloc] init];
-        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                     initForWritingWithMutableData:data];
-        [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
-        [archiver finishEncoding];
-        [data writeToFile:[self dataFilePath] atomically:YES];
-        
-        NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
-        
-        // persist test by jeanclad
-        [self loadPlistFile];
-        //*/
-        
     } else {
         NSLog(@"ccc");
         selectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -312,73 +253,7 @@
         }
         [selectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
         [selectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.MainView addSubview:selectedButton];
-        
-        /* Photo load to caches test by jeanclad
-         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-         NSString * documentsDirectory = [paths objectAtIndex:0];
-         NSString * path = [documentsDirectory stringByAppendingPathComponent:@"screenshot.png"];
-         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
-         
-         UIImage *testImage = [UIImage imageWithData:loadImageData];
-         UIImageView *testImageView = [[UIImageView alloc] init];
-         [testImageView setFrame:CGRectMake(0, 0, 300, 300)];
-         [testImageView setImage:testImage];
-         [self.view addSubview:testImageView];
-         */
-        
-        /* persist test by jeanclad
-         VenusPersistList *persistList = [[VenusPersistList alloc] init];
-         
-         [persistList setPhotoItemName:@"Venus1"];
-         [persistList setPaperPhotoFileName:@"Screenshot1.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_paperless_1.png"];
-         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_CRUMPLED]];
-         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_1620]];
-         
-         [persistList fillPlistData];
-         
-         [persistList setPhotoItemName:@"Venus2"];
-         [persistList setPaperPhotoFileName:@"Screenshot2.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_paperless_2.png"];
-         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_NORMAL]];
-         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_PINK]];
-         
-         [persistList fillPlistData];
-         
-         [persistList setPhotoItemName:@"Venus3"];
-         [persistList setPaperPhotoFileName:@"Screenshot3.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_paperless_3.png"];
-         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_POLAROID]];
-         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_DEVELOP_GREEN]];
-         
-         [persistList fillPlistData];
-         
-         [persistList setPhotoItemName:@"Venus4"];
-         [persistList setPaperPhotoFileName:@"Screenshot4.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_paperless_4.png"];
-         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_ROLLED_UP]];
-         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_GLOOM]];
-         
-         [persistList fillPlistData];
-         
-         [persistList setPhotoItemName:@"Venus5"];
-         [persistList setPaperPhotoFileName:@"Screenshot5.png"];
-         [persistList setPaperlessPhotoFileName:@"Venus_paperless_5.png"];
-         [persistList setPaperType:[NSNumber numberWithInt:PAPER_TYPE_SPRING]];
-         [persistList setChemicalType:[NSNumber numberWithInt:CHEMICAL_TYPE_SUNNY]];
-         
-         [persistList fillPlistData];
-         
-         NSMutableData *data = [[NSMutableData alloc] init];
-         NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-         initForWritingWithMutableData:data];
-         [archiver encodeObject:persistList forKey:kDataKey];
-         [archiver finishEncoding];
-         [data writeToFile:[self dataFilePath] atomically:YES];
-         
-         //NSLog(@"persistList_load = %@", persistList.persistList);
-         */
+        [self.MainView addSubview:selectedButton];        
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -476,7 +351,9 @@
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    //UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
     UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
+    NSLog(@"selectedButtonSize = %@", NSStringFromCGSize(selectedButton.frame.size));
     mainPhotoView = shrunkenImage;
     firstSelect = YES;
     
@@ -1591,7 +1468,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 #pragma mark -
 #pragma mark Persist Control
-///* persist test by jeanclad
 - (BOOL)loadPlistFile
 {
     NSString *filePath = [self dataFilePath];
@@ -1646,7 +1522,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
-//*/
 
 
 #pragma mark -
