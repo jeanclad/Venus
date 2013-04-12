@@ -393,6 +393,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (scrollView == paperScrollView){
         //---   용지가 먼저 보이고 그 위에 사진이 디졸브 되는 애니메이션을 위해서 selectedButton과 동일한 위치와 동일한 크기로 용지를 먼저 보이게 한다.
         [venusPhotoPaperController changePaperToImageItem:paperPageControl.currentPage];
+        [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
+        
         developingPaperImageVIew.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
         [developingPhotoImageView setAlpha:0.0f];
         [developingPaperImageVIew setAlpha:1.0f];
