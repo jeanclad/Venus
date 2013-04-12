@@ -55,6 +55,10 @@
     }
     
     //--- Will Edtt position
+    
+    //---   사진, 용지 이미지 관리 클래스 초기화
+    venusPhotoPaperController = [[VenusPhotoPaperController alloc] init];
+    
     //---   Select to touch an image 버튼
     firstNotSelectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     firstNotSelectedButton.frame = CGRectMake(0, 0, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
@@ -62,7 +66,6 @@
     [firstNotSelectedButton setTitle:@"Select to image" forState:UIControlStateNormal];
     [firstNotSelectedButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.MainView addSubview:firstNotSelectedButton];
-
     
     //---   사진선택된 후의 커스텀 버튼
     selectedButton = [UIButton buttonWithType:UIButtonTypeCustom];    
@@ -152,14 +155,6 @@
         chemicalAni.chemicalAnimating = NO;
     }
     
-    //---   PaperPreviewImage 초기화
-    if (paperPreviewImageView == nil){
-        CGRect imageViewFrame;
-        imageViewFrame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-        paperPreviewImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
-        [self.MainView addSubview:paperPreviewImageView];
-    }
-    
     //---   암실 트레이 이미지 설정
     CGRect imageViewFrame;
     imageViewFrame = CGRectMake(0, 10, 240, 300);
@@ -182,17 +177,30 @@
     waterImageView.image = image;
     [self.MainView addSubview:waterImageView];
     [waterImageView setAlpha:0];
-    
+
+    //---   MainsSecondView와 암실뷰의 트레이 위의 용지 이미지 뷰 초기화
     imageViewFrame = CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+    developingPaperImageVIew = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    [self.MainSecondView addSubview:developingPaperImageVIew];
+    
+    //---   MainsSecondView와 암실뷰의 트레이 위의 사진 이미지 뷰 초기화
+    imageViewFrame = CGRectMake(0, 0, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT);
     developingPhotoImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
-    [developingPhotoImageView setAlpha:0.0];
     [self.MainSecondView addSubview:developingPhotoImageView];
+    
+    //---   MainSecondView 핀셋 이미지뷰
+    imageViewFrame = CGRectMake(0, 0, PINCETTE_SIZE_WIDTH, PINCETTE_SIZE_HEIGHT);
+    secondPinceeteImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    image = [UIImage imageNamed:@"pincette_off_ip4.png"];
+    secondPinceeteImageView.image = image;
+    [self.MainSecondView addSubview:secondPinceeteImageView];
     
     //---   사진 인화 프로그레스바 초기화
     devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
     [devleopingProgress setHidden:YES];
     [selectedButton addSubview:devleopingProgress];
+
     
     //---   아이템 임시 저장 클래스 초기화
     venusSaveItemController = [[VenusSaveItemController alloc] init];
@@ -204,7 +212,6 @@
 {
     [super viewWillAppear:animated];
     
-    static ALAsset *oldAsset;
     float w,h;
     float moveXpos;
     
@@ -227,31 +234,13 @@
         if (asset != nil){
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
-            UIImage *orgPhotoView = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            UIImage *orgPhoto = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
             
-            mainPhotoView = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT];
-            
-            //---   파일 저장되어 VenusAlbumDetailView 에서 보기게 한다.
-            albumPaperPhoto = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PAPER_PHOTO_SIZE_HEIGHT];
-            albumPaperlessPhoto = [self makeThumbnailImage:orgPhotoView onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE_HEIGHT];
-            
-            if (asset != oldAsset){
-                if (_bg != nil){
-                    oldAsset = asset;
-                } else{
-                    _bg = nil;
-                    oldAsset = asset;
-                }
-            }
+            [venusPhotoPaperController fillImageItem:orgPhoto currentPage:paperPageControl.currentPage];
         }
         
-        /*  용지가 선택되어 있는 상태에서 사진을 변경하여 선택하였을 경우와 용지를 아무것도 선택하지 않았을경우
-         그 사진에 paper_preview_1 용지를 입혀야 한다.  */
-        [self setPaperPreviewImage];
-        UIImage *result_img = [self makeThumbnailImage:preview_img onlyCrop:NO Size:PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT];
-        [selectedButton setImage:result_img forState:UIControlStateNormal];
+        [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
         selectedButton.center = CGPointMake(w/2, h/2 - 20);
-        [selectedButton setAlpha:1.0f];
     
         NSLog(@"selectedButtonItem = %@, %f", NSStringFromCGPoint(selectedButton.frame.origin), selectedButton.alpha);
         
@@ -286,9 +275,7 @@
     [self setMainView:nil];
     [self setSelectView:nil];
     [self setUnderBarItemView:nil];
-    [self setPincetteImage:nil];
     [self setMainSecondView:nil];
-    [self setPincetteImage:nil];
     [self setLightButton:nil];
     [self setDarkRoomInUseTitle:nil];
     [self setLamp:nil];
@@ -359,7 +346,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
     UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
     NSLog(@"selectedButtonSize = %@", NSStringFromCGSize(selectedButton.frame.size));
+    /* will change
     mainPhotoView = shrunkenImage;
+     */
     firstSelect = YES;
     
     [picker dismissModalViewControllerAnimated:YES];
@@ -403,23 +392,24 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //---   PaperView
     if (scrollView == paperScrollView){
         //---   용지가 먼저 보이고 그 위에 사진이 디졸브 되는 애니메이션을 위해서 selectedButton과 동일한 위치와 동일한 크기로 용지를 먼저 보이게 한다.
-		UIImage *image = [UIImage imageNamed:
-						  [NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-        paperPreviewImageView.image = image;
-        [paperPreviewImageView setHidden:NO];
-        
-        [self setPaperPreviewImage];
-        [selectedButton setBackgroundImage:preview_img forState:UIControlStateNormal];
-        [selectedButton setAlpha:0];
+        [venusPhotoPaperController changePaperToImageItem:paperPageControl.currentPage];
+        developingPaperImageVIew.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
+        [developingPhotoImageView setAlpha:0.0f];
+        [developingPaperImageVIew setAlpha:1.0f];
         
         [UIView beginAnimations:@"PaperPhoto" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
         [UIView setAnimationDelay:0.5f];
-        [selectedButton setAlpha:1.0];
+        if ([venusPhotoPaperController isPaperTopLayer:paperPageControl.currentPage])
+            [self.MainSecondView bringSubviewToFront:developingPaperImageVIew];
+        else
+            [self.MainSecondView bringSubviewToFront:developingPhotoImageView];
         
+        [developingPhotoImageView setAlpha:1.0f];
+        [developingPaperImageVIew setAlpha:[venusPhotoPaperController getDevelopingPaperAlpha:paperPageControl.currentPage]];
         [UIView commitAnimations];
-        //---   ChemicalView
+    //---   ChemicalView
     } else{
         ;
     }
@@ -504,11 +494,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         moveButtonXpos = IP4_SIZE_WIDTH;
     }
     
-    //---   핀셋과 사진을 MainView에 맞는 위치와 크기로 변경한다.
-    self.pincetteImage.frame = CGRectMake(40, 210, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    selectedButton.frame = CGRectMake(moveButtonXpos/2-70, IP4_IP5_SIZE_HEIGHT/2-90, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
-    
-    
     //---   MainSecondView 가 뒤집히면서 MainView가 보이게 한다
     [UIView transitionWithView:self.MainView duration:MAINVIEW_ANIMATION_DURATION*2
                        options:UIViewAnimationOptionTransitionFlipFromLeft
@@ -534,12 +519,18 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 -(void)showMainSecondView
 {
     float moveXpos = 0;
+    float w,h;
     
-    if (myDevice == MYDEVICE_IPHONE5)
+    if (myDevice == MYDEVICE_IPHONE5){
         moveXpos = SELECT_RIGHT_MOVE_X_IP5;
-    else
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;
-    
+        w = IP5_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
+        moveXpos = SELECT_RIGHT_MOVE_X_IP5;        
+    } else{
+        w = IP4_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
+        moveXpos = SELECT_RIGHT_MOVE_X_IP4;        
+    }
     
     //---   MainView가 우측으로 이동한다.
     [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
@@ -558,25 +549,42 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                              //---   사진과 핀셋이 MainSecondView의 좌측 상단에서 점점 내려오면서 뚜렷하게 보이게 한다.
                                              [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION*2
                                                                    delay: 0.0
-                                                                 options: UIViewAnimationOptionCurveEaseInOut
+                                                                 options: UIViewAnimationOptionCurveEaseIn
                                                               animations:^{
-                                                                  [selectedButton setAlpha:1];
-                                                                  selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-                                                                  self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-                                                                  [self.pincetteImage setAlpha:1];
+                                                                  if ([venusPhotoPaperController isPaperTopLayer:paperPageControl.currentPage])
+                                                                      [self.MainSecondView bringSubviewToFront:developingPaperImageVIew];
+                                                                  else
+                                                                      [self.MainSecondView bringSubviewToFront:developingPhotoImageView];
+                                                                  
+                                                                  developingPaperImageVIew.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
+                                                                  developingPaperImageVIew.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                                  [developingPaperImageVIew setAlpha:[venusPhotoPaperController getDevelopingPaperAlpha:paperPageControl.currentPage]];
+                                                                  
+                                                                  developingPhotoImageView.image = [venusPhotoPaperController mainSecondPreviewPhotoImage];
+                                                                  developingPhotoImageView.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                                  [developingPhotoImageView setAlpha:1];
+                                                                  
+                                                                  
+                                                                  secondPinceeteImageView.frame = CGRectMake(0, 200, PINCETTE_SIZE_WIDTH, PINCETTE_SIZE_HEIGHT);
+                                                                  [secondPinceeteImageView setAlpha:1];
                                                               }
                                                               completion:^(BOOL finished){
                                                                   ;
                                                               }];
                                              
                                          }];
+                         
                          //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
-                         selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-                         [selectedButton setAlpha:0];
+                         developingPaperImageVIew.frame = CGRectMake(0, -(PREVIEW_FRAME_SIZE_HEIGHT), PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                         [developingPaperImageVIew setAlpha:0];
+                         developingPhotoImageView.frame = CGRectMake(0, -(PREVIEW_FRAME_SIZE_HEIGHT), PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                         [developingPhotoImageView setAlpha:0];
                          
                          //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
-                         self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-                         [self.pincetteImage setAlpha:0];
+                         secondPinceeteImageView.frame = CGRectMake(-60, -60, PINCETTE_SIZE_WIDTH, PINCETTE_SIZE_HEIGHT);
+                         [secondPinceeteImageView setAlpha:0];
+                         
+                         [selectedButton setHidden:YES];
                          
                      }];
     
@@ -622,16 +630,18 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                   
                                                                   [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
                                                                    */
+                                                                  /*    will change
                                                                   [selectedButton setBackgroundImage:_bg forState:UIControlStateNormal];
                                                                   [selectedButton setAlpha:1.0f];
-                                                        
+                                                                   
                                                                   CGSize developingPhotoImageSize = [self getDevelopingPhotoSize];
                                                                   developingPhotoImageView.image = albumPaperPhoto;
                                                                   developingPhotoImageView.frame = CGRectMake(0, 0, developingPhotoImageSize.width, developingPhotoImageSize.height);
-
+                                                                   */
+                                                                  
                                                                   selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-                                                                  self.pincetteImage.frame = CGRectMake(0, 200, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-                                                                  [self.pincetteImage setAlpha:1];
+                                                                  secondPinceeteImageView.frame = CGRectMake(0, 200, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
+                                                                  [secondPinceeteImageView setAlpha:1];
                                                               } completion:^(BOOL finished){
                                                                   [self beakerDropAnimation];
                                                                   //---   트레이에 사진 용액이 점점 퍼지게 하는 애니메이션
@@ -656,7 +666,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                             else
                                                                                                                 selectedButton.center = CGPointMake(IP4_SIZE_WIDTH/2, IP4_IP5_SIZE_HEIGHT/2);
                                                                                                             
-                                                                                                            self.pincetteImage.frame = CGRectMake(self.pincetteImage.frame.origin.x + movePincetteXpos, self.pincetteImage.frame.origin.y, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+                                                                                                            secondPinceeteImageView.frame = CGRectMake(secondPinceeteImageView.frame.origin.x + movePincetteXpos, secondPinceeteImageView.frame.origin.y, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
                                                                                                             /* test by hkkwon
@@ -701,8 +711,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                          [selectedButton setAlpha:0];
                          
                          //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
-                         self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-                         [self.pincetteImage setAlpha:0];
+                         secondPinceeteImageView.frame = CGRectMake(0, -30, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
+                         [secondPinceeteImageView setAlpha:0];
                          
                      }];
 }
@@ -714,8 +724,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [UIView beginAnimations:@"PincettOff" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
-    self.pincetteImage.frame = CGRectMake(0, -30, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [self.pincetteImage setAlpha:0];
+    secondPinceeteImageView.frame = CGRectMake(0, -30, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
+    [secondPinceeteImageView setAlpha:0];
     [UIView commitAnimations];
     
 }
@@ -727,8 +737,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(showPincetteOnAnimationDone)];
-    self.pincetteImage.frame = CGRectMake(currentPoint.y-90, currentPoint.x+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
-    [self.pincetteImage setAlpha:1];
+    secondPinceeteImageView.frame = CGRectMake(currentPoint.y-90, currentPoint.x+150, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
+    [secondPinceeteImageView setAlpha:1];
     [UIView commitAnimations];
     
 }
@@ -749,7 +759,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //---   사진 인화시 사용되었던 사진 이미지는 용지가 우측으로 이동할때 함께 우측으로 이동하면서 알파값을 초기화한다.
     developingPhotoImageView.frame = CGRectMake(moveX, developingPhotoImageView.frame.origin.y, developingPhotoImageView.frame.size.width, developingPhotoImageView.frame.size.height);
         [developingPhotoImageView setAlpha:0.0f];
-    self.pincetteImage.frame = CGRectMake(moveX, currentPoint.x+150, self.pincetteImage.frame.size.width, self.pincetteImage.frame.size.height);
+    secondPinceeteImageView.frame = CGRectMake(moveX, currentPoint.x+150, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
     [UIView commitAnimations];
 }
 
@@ -1325,6 +1335,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     return final;
 }
 
+/*
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size
 {
     CGRect rcCrop;
@@ -1462,6 +1473,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     return photoSize;
 }
+ */
 
 /*
 #pragma mark -
@@ -1604,7 +1616,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         }
         //---   Paper View
         else{
-            [paperPreviewImageView setHidden:YES];
             [venusSelectDetailView setItemValue:ITEM_VALUE_PAPER];
             [venusSelectDetailView setCurrentItem:[paperPageControl currentPage]];
         }
@@ -1617,9 +1628,9 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self.navigationController pushViewController:venusSelectDetailView animated:YES];
     }
     else if ([buttonName isEqualToString:@"Select"]){
-        [paperPreviewImageView setHidden:YES];
         [self moveAnimationRootView:NO];
         [self setHiddenRootItem:NO];
+        [selectedButton setHidden:NO];
         
         //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
         [beakerView setProgress: wantProgressLevel];

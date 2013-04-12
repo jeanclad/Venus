@@ -12,6 +12,7 @@
 #import "VenusScroll.h"
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
+#import "VenusPhotoPaperController.h"
 #import "VenusSaveItemController.h"
 
 #define MYDEVICE_IPHONE5                1
@@ -20,49 +21,6 @@
 #define IP4_SIZE_WIDTH                  480
 #define IP4_IP5_SIZE_HEIGHT             320
 
-#define PREVIEW_ORIGIN_X                0
-#define PREVIEW_ORIGIN_Y                0
-#define PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH    140
-#define PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT   140
-
-#define PAPER_PHOTO_SIZE_WIDTH          200
-#define PAPER_PHOTO_SIZE_HEIGHT         200
-#define PAPERLESS_PHOTO_SIZE_WIDTH      320
-#define PAPERLESS_PHOTO_SIZE_HEIGHT     320
-
-#define PREVIEW_FRAME_SIZE_WIDTH        200
-#define PREVIEW_FRAME_SIZE_HEIGHT       200
-#define PREVIEW_PHOTO_SIZE_WIDTH        200
-#define PREVIEW_PHOTO_SIZE_HEIGHT       200
-
-#define PREVIEW_POLAROID_PHOTO_ORIGIN_X         8
-#define PREVIEW_POLAROID_PHOTO_ORIGIN_Y         2
-#define PREVIEW_POLAROID_FRAME_SIZE_WIDTH       125
-#define PREVIEW_POLAROID_FRAME_SIZE_HEIGHT      140
-#define PREVIEW_POLAROID_PHOTO_SIZE_WIDTH       110
-#define PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT      110
-
-#define PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X        10
-#define PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y        10
-#define PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH      130
-#define PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT     140
-#define PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH      110
-#define PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT     110
-
-#define PREVIEW_SPRING_PHOTO_ORIGIN_X        10
-#define PREVIEW_SPRING_PHOTO_ORIGIN_Y        10
-#define PREVIEW_SPRING_FRAME_SIZE_WIDTH      130
-#define PREVIEW_SPRING_FRAME_SIZE_HEIGHT     140
-#define PREVIEW_SPRING_PHOTO_SIZE_WIDTH      110
-#define PREVIEW_SPRING_PHOTO_SIZE_HEIGHT     110
-
-#define PREVIEW_VINTAGE_PHOTO_ORIGIN_X        10
-#define PREVIEW_VINTAGE_PHOTO_ORIGIN_Y        10
-#define PREVIEW_VINTAGE_FRAME_SIZE_WIDTH      130
-#define PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT     140
-#define PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH      110
-#define PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT     110
-
 #define SELECT_RIGHT_MOVE_X_IP5         284
 #define SELECT_RIGHT_MOVE_X_IP4         240
 #define SELECT_RIGHT_MOVE_Y             50
@@ -70,6 +28,57 @@
 #define SELECT_BUTTON_MOVE_X_IP5        80
 #define SELECT_BUTTON_MOVE_X_IP4        60
 #define SELECT_BUTTON_MOVE_Y            60
+
+#define PINCETTE_SIZE_WIDTH             95
+#define PINCETTE_SIZE_HEIGHT            68
+
+#define PREVIEW_ORIGIN_X                    0
+#define PREVIEW_ORIGIN_Y                    0
+#define PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH    140
+#define PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT   140
+
+#define PAPER_PHOTO_SIZE                    200
+#define PAPERLESS_PHOTO_SIZE                320
+
+#define PREVIEW_FRAME_SIZE_WIDTH            200
+#define PREVIEW_FRAME_SIZE_HEIGHT           200
+#define PREVIEW_PHOTO_SIZE_WIDTH            200
+#define PREVIEW_PHOTO_SIZE_HEIGHT           200
+
+#define PREVIEW_NOT_PAPER_PHOTO_ORIGIN_X        0
+#define PREVIEW_NOT_PAPER_PHOTO_ORIGIN_Y        0
+#define PREVIEW_NOT_PAPER_PHOTO_SIZE_WIDTH      200
+#define PREVIEW_NOT_PAPER_PHOTO_SIZE_HEIGHT     200
+
+#define PREVIEW_POLAROID_PHOTO_ORIGIN_X         8
+#define PREVIEW_POLAROID_PHOTO_ORIGIN_Y         2
+#define PREVIEW_POLAROID_PHOTO_SIZE_WIDTH       110
+#define PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT      110
+
+#define PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X        10
+#define PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y        10
+#define PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH      110
+#define PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT     110
+
+#define PREVIEW_SPRING_PHOTO_ORIGIN_X           10
+#define PREVIEW_SPRING_PHOTO_ORIGIN_Y           10
+#define PREVIEW_SPRING_PHOTO_SIZE_WIDTH         110
+#define PREVIEW_SPRING_PHOTO_SIZE_HEIGHT        110
+
+#define PREVIEW_VINTAGE_PHOTO_ORIGIN_X          10
+#define PREVIEW_VINTAGE_PHOTO_ORIGIN_Y          10
+#define PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH        110
+#define PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT       110
+
+#define PREVIEW_CRUMPLED_PHOTO_ORIGIN_X         0
+#define PREVIEW_CRUMPLED_PHOTO_ORIGIN_Y         0
+#define PREVIEW_CRUMPLED_PHOTO_SIZE_WIDTH      200
+#define PREVIEW_CRUMPLED_PHOTO_SIZE_HEIGHT     200
+
+#define PREVIEW_FOLDED_PHOTO_ORIGIN_X           0
+#define PREVIEW_FOLDED_PHOTO_ORIGIN_Y           0
+#define PREVIEW_FOLDED_PHOTO_SIZE_WIDTH         200
+#define PREVIEW_FOLDED_PHOTO_SIZE_HEIGHT        200
 
 #define CHEMICAL_ROTATION_ANGLE         100
 #define BEAKER_ROTATION_ANGLE           -100
@@ -102,20 +111,19 @@
     ALAsset     *asset;
     CGImageRef thumbnailImageRef;
     //UIImage     *thumbnail;
-    UIImage     *mainPhotoView;
-    UIImage     *albumPaperPhoto;
-    UIImage     *albumPaperlessPhoto;
+    
+    VenusPhotoPaperController   *venusPhotoPaperController;
+    
     BOOL        firstSelect;
     BOOL        developing;
-    UIImage     *_bg;
-    UIImage     *preview_img;
+    //UIImage     *_bg;
+    //UIImage     *preview_img;
     UIImageView *waterImageView;
     UIImageView *darkRoomOffSteelImageView;
     UIImageView *darkRoomOnSteelImageView;
+    UIImageView *secondPinceeteImageView;
     UIImageView *developingPhotoImageView;
-  
-    //---   Paper View
-	UIImageView *paperPreviewImageView;
+    UIImageView *developingPaperImageVIew;
     
     //---   Scroll View
     UIScrollView * paperScrollView;
@@ -154,7 +162,6 @@
 @property (weak, nonatomic) IBOutlet UIView *MainSecondView;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (weak, nonatomic) IBOutlet UIView *underBarItemView;
-@property (weak, nonatomic) IBOutlet UIImageView *pincetteImage;
 
 @property (weak, nonatomic) IBOutlet UIImageView *room;
 @property (weak, nonatomic) IBOutlet UIButton *lightButton;

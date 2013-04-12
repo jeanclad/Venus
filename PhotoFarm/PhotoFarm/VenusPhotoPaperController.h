@@ -1,14 +1,14 @@
 //
-//  VenusPhotoImageController.h
+//  VenusPhotoPaperController.h
 //  PhotoFarm
 //
 //  Created by kwon hoekyung on 13. 4. 12..
 //  Copyright (c) 2013년 Max. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface VenusPhotoImageController : UIView
+@interface VenusPhotoPaperController : NSObject
 
 //---   원본 이미지
 @property (nonatomic, retain) UIImage   *orgPhotoImage;
@@ -24,5 +24,10 @@
 @property (nonatomic, retain) UIImage   *albumPaperPhotoImage;
 //---   앨범뷰에 사용될 사진 이미지 (320*320)
 @property (nonatomic, retain) UIImage   *albumPaperlessPhotoImage;
+
+- (BOOL)isPaperTopLayer:(NSInteger)currentPage;
+- (CGFloat)getDevelopingPaperAlpha:(NSInteger)currentPage;
+- (void)fillImageItem:(UIImage *)refImage currentPage:(NSInteger)currentPage;
+- (void)changePaperToImageItem:(NSInteger)currentPage;
 
 @end
