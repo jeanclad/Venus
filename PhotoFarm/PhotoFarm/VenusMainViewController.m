@@ -177,16 +177,21 @@
     waterImageView.image = image;
     [self.MainView addSubview:waterImageView];
     [waterImageView setAlpha:0];
-
+    
+    //----  암실 용지, 사진 이미지뷰를 포함하는 뷰
+    imageViewFrame = CGRectMake(0, 0, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT);
+    developingImageView = [[UIView alloc] initWithFrame:imageViewFrame];
+    [self.MainSecondView addSubview:developingImageView];
+    
     //---   MainsSecondView와 암실뷰의 트레이 위의 용지 이미지 뷰 초기화
     imageViewFrame = CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
     developingPaperImageVIew = [[UIImageView alloc] initWithFrame:imageViewFrame];
-    [self.MainSecondView addSubview:developingPaperImageVIew];
+    [developingImageView addSubview:developingPaperImageVIew];
     
     //---   MainsSecondView와 암실뷰의 트레이 위의 사진 이미지 뷰 초기화
     imageViewFrame = CGRectMake(0, 0, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT);
     developingPhotoImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
-    [self.MainSecondView addSubview:developingPhotoImageView];
+    [developingImageView addSubview:developingPhotoImageView];
     
     //---   MainSecondView 핀셋 이미지뷰
     imageViewFrame = CGRectMake(0, 0, PINCETTE_SIZE_WIDTH, PINCETTE_SIZE_HEIGHT);
@@ -404,9 +409,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
         [UIView setAnimationDelay:0.5f];
         if ([venusPhotoPaperController isPaperTopLayer:paperPageControl.currentPage])
-            [self.MainSecondView bringSubviewToFront:developingPaperImageVIew];
+            [developingImageView bringSubviewToFront:developingPaperImageVIew];
         else
-            [self.MainSecondView bringSubviewToFront:developingPhotoImageView];
+            [developingImageView bringSubviewToFront:developingPhotoImageView];
         
         [developingPhotoImageView setAlpha:1.0f];
         [developingPaperImageVIew setAlpha:[venusPhotoPaperController getDevelopingPaperAlpha:paperPageControl.currentPage]];
@@ -520,18 +525,20 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 -(void)showMainSecondView
 {
-    float moveXpos = 0;
+    float moveViewXpos = 0.0f;;
+    float movePhotoXpos = 0.0f;
     float w,h;
     
     if (myDevice == MYDEVICE_IPHONE5){
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;
         w = IP5_SIZE_WIDTH;
         h = IP4_IP5_SIZE_HEIGHT;
-        moveXpos = SELECT_RIGHT_MOVE_X_IP5;        
+        moveViewXpos = SELECT_RIGHT_MOVE_X_IP5;
+        movePhotoXpos = SELECT_BUTTON_MOVE_X_IP5;
     } else{
         w = IP4_SIZE_WIDTH;
         h = IP4_IP5_SIZE_HEIGHT;
-        moveXpos = SELECT_RIGHT_MOVE_X_IP4;        
+        moveViewXpos = SELECT_RIGHT_MOVE_X_IP4;
+        movePhotoXpos = SELECT_BUTTON_MOVE_X_IP4;
     }
     
     //---   MainView가 우측으로 이동한다.
@@ -539,7 +546,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                           delay: 0.0
                         options: UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
+                         self.MainView.frame = CGRectMake(self.MainView.frame.origin.x + moveViewXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          //--- MainView가 뒤집히면서 MainSecondView가 나타나며 암실 트레이가 보인다.
@@ -554,18 +561,17 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                  options: UIViewAnimationOptionCurveEaseIn
                                                               animations:^{
                                                                   if ([venusPhotoPaperController isPaperTopLayer:paperPageControl.currentPage])
-                                                                      [self.MainSecondView bringSubviewToFront:developingPaperImageVIew];
+                                                                      [developingImageView bringSubviewToFront:developingPaperImageVIew];
                                                                   else
-                                                                      [self.MainSecondView bringSubviewToFront:developingPhotoImageView];
+                                                                      [developingImageView bringSubviewToFront:developingPhotoImageView];
                                                                   
                                                                   developingPaperImageVIew.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
-                                                                  developingPaperImageVIew.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                                                                   [developingPaperImageVIew setAlpha:[venusPhotoPaperController getDevelopingPaperAlpha:paperPageControl.currentPage]];
                                                                   
                                                                   developingPhotoImageView.image = [venusPhotoPaperController mainSecondPreviewPhotoImage];
-                                                                  developingPhotoImageView.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                                                                   [developingPhotoImageView setAlpha:1];
                                                                   
+                                                                  developingImageView.frame = CGRectMake(movePhotoXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                                                                   
                                                                   secondPinceeteImageView.frame = CGRectMake(0, 200, PINCETTE_SIZE_WIDTH, PINCETTE_SIZE_HEIGHT);
                                                                   [secondPinceeteImageView setAlpha:1];
@@ -577,10 +583,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                          }];
                          
                          //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
-                         developingPaperImageVIew.frame = CGRectMake(0, -(PREVIEW_FRAME_SIZE_HEIGHT), PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                          [developingPaperImageVIew setAlpha:0];
-                         developingPhotoImageView.frame = CGRectMake(0, -(PREVIEW_FRAME_SIZE_HEIGHT), PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                          [developingPhotoImageView setAlpha:0];
+                         developingImageView.frame = CGRectMake(0, -(PREVIEW_FRAME_SIZE_HEIGHT), PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                          
                          //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
                          secondPinceeteImageView.frame = CGRectMake(-60, -60, PINCETTE_SIZE_WIDTH, PINCETTE_SIZE_HEIGHT);

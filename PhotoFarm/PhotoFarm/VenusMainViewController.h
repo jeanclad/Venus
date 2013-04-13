@@ -122,6 +122,7 @@
     UIImageView *darkRoomOffSteelImageView;
     UIImageView *darkRoomOnSteelImageView;
     UIImageView *secondPinceeteImageView;
+    UIView      *developingImageView;
     UIImageView *developingPhotoImageView;
     UIImageView *developingPaperImageVIew;
     
