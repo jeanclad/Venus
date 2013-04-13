@@ -25,6 +25,7 @@
 //---   앨범뷰에 사용될 사진 이미지 (320*320)
 @property (nonatomic, retain) UIImage   *albumPaperlessPhotoImage;
 
+-(CGRect)getPhotoPosAndSizeFromPaper:(NSInteger)currentPage;
 - (BOOL)isPaperTopLayer:(NSInteger)currentPage;
 - (CGFloat)getDevelopingPaperAlpha:(NSInteger)currentPage;
 - (void)fillImageItem:(UIImage *)refImage currentPage:(NSInteger)currentPage;

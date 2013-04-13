@@ -185,8 +185,8 @@
     
     //---   MainsSecondView와 암실뷰의 트레이 위의 용지 이미지 뷰 초기화
     imageViewFrame = CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-    developingPaperImageVIew = [[UIImageView alloc] initWithFrame:imageViewFrame];
-    [developingImageView addSubview:developingPaperImageVIew];
+    developingPaperImageView = [[UIImageView alloc] initWithFrame:imageViewFrame];
+    [developingImageView addSubview:developingPaperImageView];
     
     //---   MainsSecondView와 암실뷰의 트레이 위의 사진 이미지 뷰 초기화
     imageViewFrame = CGRectMake(0, 0, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT);
@@ -242,9 +242,10 @@
             UIImage *orgPhoto = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
             
             [venusPhotoPaperController fillImageItem:orgPhoto currentPage:paperPageControl.currentPage];
+            [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];            
         }
         
-        [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
+
         selectedButton.center = CGPointMake(w/2, h/2 - 20);
     
         NSLog(@"selectedButtonItem = %@, %f", NSStringFromCGPoint(selectedButton.frame.origin), selectedButton.alpha);
@@ -349,11 +350,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [GlobalDataManager sharedGlobalDataManager].selectedAssets = nil;
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerEditedImage];
     //UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
-    UIImage *shrunkenImage = shrinkImage(chosenImage, selectedButton.frame.size);
-    NSLog(@"selectedButtonSize = %@", NSStringFromCGSize(selectedButton.frame.size));
+    // NSLog(@"selectedButtonSize = %@", NSStringFromCGSize(selectedButton.frame.size));
     /* will change
     mainPhotoView = shrunkenImage;
      */
+    [venusPhotoPaperController fillImageItem:chosenImage currentPage:paperPageControl.currentPage];
+    [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
+    
     firstSelect = YES;
     
     [picker dismissModalViewControllerAnimated:YES];
@@ -396,25 +399,21 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 {
     //---   PaperView
     if (scrollView == paperScrollView){
-        //---   용지가 먼저 보이고 그 위에 사진이 디졸브 되는 애니메이션을 위해서 selectedButton과 동일한 위치와 동일한 크기로 용지를 먼저 보이게 한다.
+        //---   용지가 먼저 보이고 그 위에 브랜딩된 사진이 디졸브 되는 애니메이션을 위해서 selectedButton과 동일한 위치와 동일한 크기로 용지를 먼저 보이게 한다.
         [venusPhotoPaperController changePaperToImageItem:paperPageControl.currentPage];
         [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
         
-        developingPaperImageVIew.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
+        developingPaperImageView.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
+        developingPhotoImageView.image = [venusPhotoPaperController albumPaperPhotoImage];
+        
         [developingPhotoImageView setAlpha:0.0f];
-        [developingPaperImageVIew setAlpha:1.0f];
+        [developingPaperImageView setAlpha:1.0f];
         
         [UIView beginAnimations:@"PaperPhoto" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
         [UIView setAnimationDelay:0.5f];
-        if ([venusPhotoPaperController isPaperTopLayer:paperPageControl.currentPage])
-            [developingImageView bringSubviewToFront:developingPaperImageVIew];
-        else
-            [developingImageView bringSubviewToFront:developingPhotoImageView];
-        
         [developingPhotoImageView setAlpha:1.0f];
-        [developingPaperImageVIew setAlpha:[venusPhotoPaperController getDevelopingPaperAlpha:paperPageControl.currentPage]];
         [UIView commitAnimations];
     //---   ChemicalView
     } else{
@@ -560,15 +559,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                    delay: 0.0
                                                                  options: UIViewAnimationOptionCurveEaseIn
                                                               animations:^{
-                                                                  if ([venusPhotoPaperController isPaperTopLayer:paperPageControl.currentPage])
-                                                                      [developingImageView bringSubviewToFront:developingPaperImageVIew];
-                                                                  else
-                                                                      [developingImageView bringSubviewToFront:developingPhotoImageView];
-                                                                  
-                                                                  developingPaperImageVIew.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
-                                                                  [developingPaperImageVIew setAlpha:[venusPhotoPaperController getDevelopingPaperAlpha:paperPageControl.currentPage]];
-                                                                  
-                                                                  developingPhotoImageView.image = [venusPhotoPaperController mainSecondPreviewPhotoImage];
+                                                                  developingPaperImageView.image = [venusPhotoPaperController mainSecondPreviewPaperImage];                                                                  
+                                                                  developingPhotoImageView.image = [venusPhotoPaperController albumPaperPhotoImage];
                                                                   [developingPhotoImageView setAlpha:1];
                                                                   
                                                                   developingImageView.frame = CGRectMake(movePhotoXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
@@ -583,7 +575,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                          }];
                          
                          //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
-                         [developingPaperImageVIew setAlpha:0];
+                         [developingPaperImageView setAlpha:0];
                          [developingPhotoImageView setAlpha:0];
                          developingImageView.frame = CGRectMake(0, -(PREVIEW_FRAME_SIZE_HEIGHT), PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
                          

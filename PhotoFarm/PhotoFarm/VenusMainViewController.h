@@ -124,7 +124,8 @@
     UIImageView *secondPinceeteImageView;
     UIView      *developingImageView;
     UIImageView *developingPhotoImageView;
-    UIImageView *developingPaperImageVIew;
+    UIImageView *developingPaperImageView;
+    UIImageView *developingBlendImageView;
     
     //---   Scroll View
     UIScrollView * paperScrollView;

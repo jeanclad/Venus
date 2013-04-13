@@ -39,7 +39,6 @@
 {
     //---   암실뷰, mainSecondView에 사용될 용지 이미지 (200*200)
     _mainSecondPreviewPaperImage = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", currentPage]];
-    [_mainSecondPreviewPaperImage drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
     
     //---   암실뷰, mainSecondView에 사용될 사진 이미지 (200*200) / 용지에 따라 사진의 시작점과 사이즈가 약간씩 다르다.
     CGSize photoSize = [self getDevelopingPhotoSize:currentPage];
@@ -100,6 +99,35 @@
             UIGraphicsEndImageContext();
         }
     }
+}
+
+-(CGRect)getPhotoPosAndSizeFromPaper:(NSInteger)currentPage
+{
+    CGRect retRect;
+    switch (currentPage) {
+        case PAPER_INDEX_WHITE:
+        case PAPER_INDEX_FOLDED:
+        case PAPER_INDEX_CRUMPLED:
+            retRect = CGRectMake(0, 0, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT);
+            break;
+        case PAPER_INDEX_POLARIOD:
+            retRect = CGRectMake(PREVIEW_POLAROID_PHOTO_ORIGIN_X, PREVIEW_POLAROID_PHOTO_ORIGIN_Y, PREVIEW_POLAROID_PHOTO_SIZE_WIDTH, PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT);
+            break;
+        case PAPER_INDEX_ROLLED_UP:
+            retRect = CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT);
+            break;
+        case PAPER_INDEX_SPRING:
+            retRect = CGRectMake(PREVIEW_SPRING_PHOTO_ORIGIN_X, PREVIEW_SPRING_PHOTO_ORIGIN_Y, PREVIEW_SPRING_PHOTO_SIZE_WIDTH, PREVIEW_SPRING_PHOTO_SIZE_HEIGHT);
+            break;
+        case PAPER_INDEX_VINTAGE:
+            retRect = CGRectMake(PREVIEW_VINTAGE_PHOTO_ORIGIN_X, PREVIEW_VINTAGE_PHOTO_ORIGIN_Y, PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH, PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT);
+            break;
+        default:
+            retRect = CGRectMake(0, 0, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT);
+            break;
+    }
+    
+    return retRect;
 }
 
 
