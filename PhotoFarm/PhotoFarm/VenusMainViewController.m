@@ -204,7 +204,7 @@
     devleopingProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
     [devleopingProgress setHidden:YES];
-    [selectedButton addSubview:devleopingProgress];
+    [developingImageView addSubview:devleopingProgress];
 
     
     //---   아이템 임시 저장 클래스 초기화
@@ -245,7 +245,6 @@
             [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];            
         }
         
-
         selectedButton.center = CGPointMake(w/2, h/2 - 20);
     
         NSLog(@"selectedButtonItem = %@, %f", NSStringFromCGPoint(selectedButton.frame.origin), selectedButton.alpha);
@@ -590,19 +589,26 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 }
 
 -(void)showMainSecondViewForDeveloping
-{
-    float moveViewXpos = 0;
-    float movePincetteXpos = 0;
+{    
+    float moveViewXpos = 0.0f;;
+    float movePhotoXpos = 0.0f;
+    float movePincetteXpos = 0.0f;
+    float w,h;
     
     if (myDevice == MYDEVICE_IPHONE5){
+        w = IP5_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
         moveViewXpos = SELECT_RIGHT_MOVE_X_IP5;
-        movePincetteXpos = 90;
-    }
-    else{
+        movePhotoXpos = SELECT_BUTTON_MOVE_X_IP5;
+        movePincetteXpos = 90;        
+    } else{
+        w = IP4_SIZE_WIDTH;
+        h = IP4_IP5_SIZE_HEIGHT;
         moveViewXpos = SELECT_RIGHT_MOVE_X_IP4;
-        movePincetteXpos = 70;
+        movePhotoXpos = SELECT_BUTTON_MOVE_X_IP4;
+        movePincetteXpos = 70;        
     }
-    
+        
     //---   MainView가 우측으로 이동한다.
     [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
                           delay: 0.0
@@ -623,22 +629,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                  options: UIViewAnimationOptionCurveEaseInOut
                                                               animations:^{
                                                                   //---   사진 인화시에는 용지가 먼저 보이게 하고 인화작업 도중 점점 사진이 보이게 한다. 사진인화시에는 selectedButton을 사용하지 않고 동일한 sizei의 imageView를 생성하여 가속도 센서값이 맞게 움직이게 한다.
-                                                                  /*
-                                                                  UIImage *image = [UIImage imageNamed:
-                                                                                    //[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-                                                                  
-                                                                  [selectedButton setBackgroundImage:image forState:UIControlStateNormal];
-                                                                   */
-                                                                  /*    will change
-                                                                  [selectedButton setBackgroundImage:_bg forState:UIControlStateNormal];
-                                                                  [selectedButton setAlpha:1.0f];
-                                                                   
-                                                                  CGSize developingPhotoImageSize = [self getDevelopingPhotoSize];
-                                                                  developingPhotoImageView.image = albumPaperPhoto;
-                                                                  developingPhotoImageView.frame = CGRectMake(0, 0, developingPhotoImageSize.width, developingPhotoImageSize.height);
-                                                                   */
-                                                                  
-                                                                  selectedButton.frame = CGRectMake(SELECT_BUTTON_MOVE_X_IP4, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                                  developingImageView.frame = CGRectMake(movePhotoXpos, SELECT_BUTTON_MOVE_Y, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                                                                  [developingPaperImageView setAlpha:1.0f];
                                                                   secondPinceeteImageView.frame = CGRectMake(0, 200, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
                                                                   [secondPinceeteImageView setAlpha:1];
                                                               } completion:^(BOOL finished){
@@ -650,7 +642,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                    animations:^{
                                                                                        [self setEmptyBeaker:self];
                                                                                        [waterImageView setAlpha:1];
-                                                                                       [selectedButton setAlpha:DEVELOPING_PHOTO_ALPHA];                                                                                                                                                                                                   
+                                                                                       [developingPaperImageView setAlpha:DEVELOPING_PHOTO_ALPHA];
                                                                                    } completion:^(BOOL finished){
                                                                                        //---   트레이가 완전히 보이게 하는 애니메이션 (Move Left)
                                                                                        [UIView animateWithDuration:MAINVIEW_ANIMATION_DURATION
@@ -658,17 +650,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                            options:UIViewAnimationOptionCurveEaseOut
                                                                                                         animations:^{
                                                                                                             self.MainView.frame = CGRectMake(self.MainView.frame.origin.x - moveViewXpos, self.MainView.frame.origin.y, self.MainView.frame.size.width, self.MainView.frame.size.height);
-                                                                                                            
-                                                                                                            //---   트레이가 좌측으로 이동했으므로 사진도 좌측으로 이동시킨다. (현재 selectedButton에는 paper이미지가 설정되어 있다.
-                                                                                                            if (myDevice == MYDEVICE_IPHONE5)
-                                                                                                                selectedButton.center = CGPointMake(IP5_SIZE_WIDTH/2, IP4_IP5_SIZE_HEIGHT/2);
-                                                                                                            else
-                                                                                                                selectedButton.center = CGPointMake(IP4_SIZE_WIDTH/2, IP4_IP5_SIZE_HEIGHT/2);
-                                                                                                            
                                                                                                             secondPinceeteImageView.frame = CGRectMake(secondPinceeteImageView.frame.origin.x + movePincetteXpos, secondPinceeteImageView.frame.origin.y, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
-                                                                                                            /* test by hkkwon
+                                                                                                            ///* test by hkkwon
                                                                                                             //---   가속도 센서 설정
                                                                                                             if (motionManager == nil){
                                                                                                                 motionManager = [[CMMotionManager alloc] init];
@@ -684,8 +669,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                 photoYVelocity = 0;
 
                                                                                                                 //---   사진인화시 용지의 시작점 설정 currentPoint의 x,y 값이 실좌표와 반대이므로 x,y 를 반대로 설정해줘야함
-                                                                                                                currentPoint.x = selectedButton.frame.origin.y;
-                                                                                                                currentPoint.y = selectedButton.frame.origin.x;
+                                                                                                                currentPoint.x = developingImageView.frame.origin.y;
+                                                                                                                currentPoint.y = developingImageView.frame.origin.x;
                                                                                                                 
                                                                                                                 NSOperationQueue *queue = [[NSOperationQueue alloc] init];
                                                                                                                 motionManager.accelerometerUpdateInterval = kUpdateInterval;
@@ -696,8 +681,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                                             withObject:nil waitUntilDone:NO];
                                                                                                                  }];
                                                                                                             }
-                                                                                                             */
-                                                                                                            [self setDevelopingComplete];
+                                                                                                             //*/
+                                                                                                            //[self setDevelopingComplete];
                                                                                                         }];
                                                                                    }];
                                                                   
@@ -705,14 +690,18 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                               }];
                                              
                                          }];
+                         [selectedButton setHidden:YES];
+                         
                          //---   사진이 MainSceondView에 움직이기 위해서 좌측으로 빠져있게 한다. 사진이 점점 뚜렷하게 보이게 하기 위해서 alpha 값을 0으로 설정한다.
-                         selectedButton.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
-                         [selectedButton setAlpha:0];
+                         developingImageView.frame = CGRectMake(0, -170, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT);
+                         [developingPaperImageView setAlpha:0.0f];
+                         [developingPhotoImageView setAlpha:0.0f];
                          
                          //---   핀셋이 사진을 잡고 MainSecondView로 움직이기 위해서 좌측으로 빠져있게 한다. 핀셋이 점점 뚜렷하게 보이게 하기 위해서 alpha값을 0으로 설정한다
                          secondPinceeteImageView.frame = CGRectMake(0, -30, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
-                         [secondPinceeteImageView setAlpha:0];
+                         [secondPinceeteImageView setAlpha:0.0f];
                          
+                         [selectedButton setUserInteractionEnabled:YES];
                      }];
 }
 
@@ -731,6 +720,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 - (void)showPincetteOnAnimation
 {
+    secondPinceeteImageView.frame = CGRectMake(0, -30, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
+    
     [UIView beginAnimations:@"PincettOn" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
@@ -753,11 +744,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [UIView beginAnimations:@"selectedButtonToAlbum" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION];
-    selectedButton.frame = CGRectMake(moveX, selectedButton.frame.origin.y, selectedButton.frame.size.width, selectedButton.frame.size.height);
-    [selectedButton setAlpha:0.0f];
+    
     //---   사진 인화시 사용되었던 사진 이미지는 용지가 우측으로 이동할때 함께 우측으로 이동하면서 알파값을 초기화한다.
-    developingPhotoImageView.frame = CGRectMake(moveX, developingPhotoImageView.frame.origin.y, developingPhotoImageView.frame.size.width, developingPhotoImageView.frame.size.height);
-        [developingPhotoImageView setAlpha:0.0f];
+    developingImageView.frame = CGRectMake(moveX, developingImageView.frame.origin.y, developingImageView.frame.size.width, developingImageView.frame.size.height);
+    [developingPhotoImageView setAlpha:0.0f];
     secondPinceeteImageView.frame = CGRectMake(moveX, currentPoint.x+150, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
     [UIView commitAnimations];
 }
@@ -1053,6 +1043,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     image = [UIImage imageNamed:@"steel_off_ip4.png"];
     [self.bigSteel setImage:image];
     
+    [selectedButton setHidden:NO];
     [darkRoomOnSteelImageView setHidden:YES];
     [darkRoomOffSteelImageView setHidden:NO];
     [self.MainSecondView setHidden:YES];
@@ -1197,10 +1188,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     centerPoint.y = startPoint.y + (PREVIEW_FRAME_SIZE_WIDTH / 2);
     centerPoint.x = startPoint.x + (PREVIEW_FRAME_SIZE_HEIGHT / 2);
 
-    selectedButton.center = CGPointMake(centerPoint.y, centerPoint.x);
-    developingPhotoImageView.center = CGPointMake(centerPoint.y, centerPoint.x);
-    
-    
+    developingImageView.center = CGPointMake(centerPoint.y, centerPoint.x);
     [developingPhotoImageView setAlpha:photoDevelopingAlpha];
 }
 
@@ -1237,6 +1225,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         NSLog(@"photoDevelopingAlpha = %f", photoDevelopingAlpha);
         [motionManager stopAccelerometerUpdates];
         photoDevelopingAlpha = 0.0f;
+        [devleopingProgress setProgress:0.0f];
         [self setDevelopingComplete];
         return;
     }
@@ -1335,146 +1324,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 /*
-- (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size
-{
-    CGRect rcCrop;
-    if (image.size.width == image.size.height) {
-        rcCrop = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
-    }
-    else if (image.size.width > image.size.height) {
-        int xGap = (image.size.width - image.size.height)/2;
-        rcCrop = CGRectMake(xGap, 0.0, image.size.height, image.size.height);
-    }
-    else {
-        int yGap = (image.size.height - image.size.width)/2;
-        rcCrop = CGRectMake(0.0, yGap, image.size.width, image.size.width);
-    }
-    
-    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], rcCrop);
-    UIImage* cropImage = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    if (bOnlyCrop)
-        return cropImage;
-    
-    NSData* dataCrop = UIImagePNGRepresentation(cropImage);
-    UIImage* imgResize = [[UIImage alloc] initWithData:dataCrop];
-    
-    UIGraphicsBeginImageContext(CGSizeMake(size,size));
-    [imgResize drawInRect:CGRectMake(0.0f, 0.0f, size, size)];
-    UIImage* imgThumb = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return imgThumb;
-}
-
--(UIImage *)maskingImage:(UIImage *)image maskImage:(UIImage *)_maskImage{
-    CGImageRef imageRef = [image CGImage];
-    CGImageRef maskRef = [_maskImage CGImage];
-    
-    CGImageRef mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
-                                        CGImageGetHeight(maskRef),
-                                        CGImageGetBitsPerComponent(maskRef),
-                                        CGImageGetBitsPerPixel(maskRef),
-                                        CGImageGetBytesPerRow(maskRef),
-                                        CGImageGetDataProvider(maskRef),
-                                        NULL, false);
-    
-    CGImageRef masked = CGImageCreateWithMask(imageRef, mask);
-    CGImageRelease(mask);
-    
-    UIImage *maskedImage = [UIImage imageWithCGImage:masked];
-    CGImageRelease(masked);
-    return maskedImage;
-}
-
--(UIImage *) shadowImage:(UIImage *)image{
-    //3 pixel shadow blur 픽셀치를 조정해서 세도우 블뤄 효과의 크기를 조절할수 있습니다.
-    UIGraphicsBeginImageContext(CGSizeMake(image.size.width + 6, image.size.height + 6));
-    CGContextSetShadow(UIGraphicsGetCurrentContext(),CGSizeMake(3.0f, -3.0f),3.0f);
-    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
-
-- (void)setPaperPreviewImage
-{
-    NSLog(@"paperPagecontrol.currentPage = %d", paperPageControl.currentPage);
-    
-    //get character image
-    UIImage *_previewPhoto = albumPaperPhoto;
-    _bg = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", paperPageControl.currentPage]];
-    if (_bg != nil) {
-        UIGraphicsBeginImageContext(_bg.size);
-        if ([paperPageControl currentPage] == PAPER_INDEX_WHITE){
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
-            [_previewPhoto drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-        }
-        
-        else if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_POLAROID_FRAME_SIZE_WIDTH, PREVIEW_POLAROID_FRAME_SIZE_HEIGHT)];
-            [_previewPhoto drawInRect:CGRectMake(PREVIEW_POLAROID_PHOTO_ORIGIN_X, PREVIEW_POLAROID_PHOTO_ORIGIN_Y, PREVIEW_POLAROID_PHOTO_SIZE_WIDTH, PREVIEW_POLAROID_PHOTO_SIZE_HEIGHT)];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-        }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH, PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT)];
-            [_previewPhoto drawInRect:CGRectMake(PREVIEW_ROLLED_UP_PHOTO_ORIGIN_X, PREVIEW_ROLLED_UP_PHOTO_ORIGIN_Y, PREVIEW_ROLLED_UP_PHOTO_SIZE_WIDTH, PREVIEW_ROLLED_UP_PHOTO_SIZE_HEIGHT)];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-        }else if ([paperPageControl currentPage] == PAPER_INDEX_SPRING){
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_SPRING_FRAME_SIZE_WIDTH, PREVIEW_SPRING_FRAME_SIZE_HEIGHT)];
-            [_previewPhoto drawInRect:CGRectMake(PREVIEW_SPRING_PHOTO_ORIGIN_X, PREVIEW_SPRING_PHOTO_ORIGIN_Y, PREVIEW_SPRING_PHOTO_SIZE_WIDTH, PREVIEW_SPRING_PHOTO_SIZE_HEIGHT)];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-        }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_VINTAGE_FRAME_SIZE_WIDTH, PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT)];
-            [_previewPhoto drawInRect:CGRectMake(PREVIEW_VINTAGE_PHOTO_ORIGIN_X, PREVIEW_VINTAGE_PHOTO_ORIGIN_Y, PREVIEW_VINTAGE_PHOTO_SIZE_WIDTH, PREVIEW_VINTAGE_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-        }else{
-            [_bg drawInRect:CGRectMake(0, 0, PREVIEW_FRAME_SIZE_WIDTH, PREVIEW_FRAME_SIZE_HEIGHT)];
-            [_previewPhoto drawInRect:CGRectMake(PREVIEW_ORIGIN_X, PREVIEW_ORIGIN_Y, PREVIEW_PHOTO_SIZE_WIDTH, PREVIEW_PHOTO_SIZE_HEIGHT) blendMode:kCGBlendModeMultiply alpha:1.0];
-            preview_img = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-        }
-    }
-}
-
-- (CGSize)getDevelopingPhotoSize
-{
-    CGSize photoSize;
-    
-    if ([paperPageControl currentPage] == PAPER_INDEX_WHITE){
-        photoSize.width = PREVIEW_PHOTO_SIZE_WIDTH;
-        photoSize.height = PREVIEW_PHOTO_SIZE_HEIGHT;
-    }else if ([paperPageControl currentPage] == PAPER_INDEX_POLARIOD){
-        photoSize.width = PREVIEW_POLAROID_FRAME_SIZE_WIDTH;
-        photoSize.height = PREVIEW_POLAROID_FRAME_SIZE_HEIGHT;
-    }else if([paperPageControl currentPage] == PAPER_INDEX_ROLLED_UP){
-        photoSize.width = PREVIEW_ROLLED_UP_FRAME_SIZE_WIDTH;
-        photoSize.height = PREVIEW_ROLLED_UP_FRAME_SIZE_HEIGHT;
-    }else if ([paperPageControl currentPage] == PAPER_INDEX_SPRING){
-        photoSize.width = PREVIEW_SPRING_FRAME_SIZE_WIDTH;
-        photoSize.height = PREVIEW_SPRING_FRAME_SIZE_HEIGHT;
-    }else if ([paperPageControl currentPage] == PAPER_INDEX_VINTAGE){
-        photoSize.width = PREVIEW_VINTAGE_FRAME_SIZE_WIDTH;
-        photoSize.height = PREVIEW_VINTAGE_FRAME_SIZE_HEIGHT;
-    }else{
-        photoSize.width = PREVIEW_PHOTO_SIZE_WIDTH;
-        photoSize.height = PREVIEW_PHOTO_SIZE_HEIGHT;
-    }
-    
-    return photoSize;
-}
- */
-
-/*
 #pragma mark -
 #pragma mark Persist Control
 - (BOOL)loadPlistFile
@@ -1570,6 +1419,10 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self setHiddenRootItem:YES];
         [self setLightOnAnimation];
         [chemicalContentView setHidden:YES];
+        
+        //---   File and Prop 저장
+        [venusSaveItemController setAlbumPaperPhotoImage:[venusPhotoPaperController albumPaperPhotoImage]];
+        [venusSaveItemController setAlbumPaperlessPhotoImage:[venusPhotoPaperController albumPaperlessPhotoImage]];
         [venusSaveItemController savePropAndFile];
     }
 }

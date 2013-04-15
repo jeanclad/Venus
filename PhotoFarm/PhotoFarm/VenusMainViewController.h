@@ -125,7 +125,6 @@
     UIView      *developingImageView;
     UIImageView *developingPhotoImageView;
     UIImageView *developingPaperImageView;
-    UIImageView *developingBlendImageView;
     
     //---   Scroll View
     UIScrollView * paperScrollView;
