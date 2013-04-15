@@ -246,7 +246,8 @@
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size
 {
     CGRect rcCrop;
-    NSLog(@"refImage size = %@", NSStringFromCGSize(image.size));
+
+    NSLog(@"image.size = %@", NSStringFromCGSize(image.size));
     if (image.size.width == image.size.height) {
         rcCrop = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     }
@@ -258,7 +259,7 @@
         int yGap = (image.size.height - image.size.width)/2;
         rcCrop = CGRectMake(0.0, yGap, image.size.width, image.size.width);
     }
-    
+        
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], rcCrop);
     UIImage* cropImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);

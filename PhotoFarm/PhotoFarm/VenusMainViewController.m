@@ -239,10 +239,11 @@
         if (asset != nil){
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
             
-            UIImage *orgPhoto = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            //UIImage *orgPhoto = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientation)[assetRepresentation orientation]];
+            UIImage *orgPhoto = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:(UIImageOrientationDownMirrored)];
             
             [venusPhotoPaperController fillImageItem:orgPhoto currentPage:paperPageControl.currentPage];
-            [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];            
+            [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
         }
         
         selectedButton.center = CGPointMake(w/2, h/2 - 20);
@@ -409,7 +410,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [UIView beginAnimations:@"PaperPhoto" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
-        //[UIView setAnimationDelay:0.5f];
+        [UIView setAnimationDelay:MAINVIEW_ANIMATION_DELAY];
         [developingPhotoImageView setAlpha:1.0f];
         [UIView commitAnimations];
         

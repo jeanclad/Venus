@@ -30,5 +30,6 @@
 - (CGFloat)getDevelopingPaperAlpha:(NSInteger)currentPage;
 - (void)fillImageItem:(UIImage *)refImage currentPage:(NSInteger)currentPage;
 - (void)changePaperToImageItem:(NSInteger)currentPage;
+- (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size;
 
 @end
