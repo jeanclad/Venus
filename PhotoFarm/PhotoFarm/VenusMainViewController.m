@@ -400,8 +400,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (scrollView == paperScrollView){
         //---   용지가 먼저 보이고 그 위에 브랜딩된 사진이 디졸브 되는 애니메이션을 위해서 selectedButton과 동일한 위치와 동일한 크기로 용지를 먼저 보이게 한다.
         [venusPhotoPaperController changePaperToImageItem:paperPageControl.currentPage];
-        [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
-        
         developingPaperImageView.image = [venusPhotoPaperController mainSecondPreviewPaperImage];
         developingPhotoImageView.image = [venusPhotoPaperController albumPaperPhotoImage];
         
@@ -411,9 +409,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [UIView beginAnimations:@"PaperPhoto" context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:MAINVIEW_ANIMATION_DURATION*2];
-        [UIView setAnimationDelay:0.5f];
+        //[UIView setAnimationDelay:0.5f];
         [developingPhotoImageView setAlpha:1.0f];
         [UIView commitAnimations];
+        
+        [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
+                
     //---   ChemicalView
     } else{
         ;
@@ -1053,58 +1054,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     developing = NO;
 }
 
-/*
-- (void)writeToDataFile:(VenusPersistList *)persist
-{
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                 initForWritingWithMutableData:data];
-    [archiver encodeObject:persist forKey:kDataKey];
-    [archiver finishEncoding];
-    [data writeToFile:[self dataFilePath] atomically:YES];
-    
-    NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
-}
-
-- (void)writeToCacheImageFile:(UIImage *)photoImage fileName:(NSString*)fileName
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [cachesDirectory stringByAppendingPathComponent:fileName];
-    UIImage *image = photoImage;
-    NSData *saveImageData = UIImagePNGRepresentation(image);
-    [saveImageData writeToFile:filePath atomically:NO];
-}
-
-- (void)savePropAndFile
-{
-    //---   아이템 임시 저장 클래스에 아이템 네임과 파일명을 저장한다.
-    NSDictionary *preloadName = [venusSaveItemController makeSaveFileName];
-    [venusSaveItemController setPhotoItemName:[preloadName objectForKey:KEY_ITEM_NAME]];
-    [venusSaveItemController setPaperPhotoFileName:[preloadName objectForKey:KEY_PAPER_FILE_NAME]];
-    [venusSaveItemController setPaperlessPhotoFileName:[preloadName objectForKey:KEY_PAPERLESS_FILE_NAME]];
-    
-    //---   Save PaperPhotoFile
-    [self writeToCacheImageFile:albumPaperPhoto fileName:[venusSaveItemController paperPhotoFileName]];
-    
-    //---   Save PaperlessPhotoFile
-    [self writeToCacheImageFile:albumPaperlessPhoto fileName:[venusSaveItemController paperlessPhotoFileName]];
-    
-    
-    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:[venusSaveItemController photoItemName]];
-    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:[venusSaveItemController paperPhotoFileName]];
-    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:[venusSaveItemController paperlessPhotoFileName]];
-    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperType:[venusSaveItemController paperType]];
-    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setChemicalType:[venusSaveItemController chemicalType]];
-    
-    [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList fillPlistData];
-    
-    [self writeToDataFile:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList];
-    
-    //---    Plist파일을 갱신한 후에는 반듯이 다시 읽어와야 한다. 
-    [self loadPlistFile];
-}
- */
 
 #pragma mark  -jeanclad
 #pragma mark  -BeakerView Control
@@ -1322,63 +1271,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     return final;
 }
-
-/*
-#pragma mark -
-#pragma mark Persist Control
-- (BOOL)loadPlistFile
-{
-    NSString *filePath = [self dataFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        //---   아카이빙 으로 plist을 읽어온다.
-        NSData *data = [[NSMutableData alloc]
-                        initWithContentsOfFile:[self dataFilePath]];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]
-                                         initForReadingWithData:data];
-        [GlobalDataManager sharedGlobalDataManager].photoInfoFileList = [unarchiver decodeObjectForKey:kDataKey];
-        [unarchiver finishDecoding];
-        //NSLog(@"loadPlist = %@ count = %d", loadPersistList.persistList, loadPersistList.persistList.count);
-        
-        
-        //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
-        NSArray *allKeys = [[NSArray alloc] initWithArray:[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList allKeys]];
-        NSLog(@"Allkeys = %@", allKeys);
-        
-        NSArray *tmpArray = [[NSArray alloc] initWithArray:allKeys];
-        
-        tmpArray = [allKeys sortedArrayUsingSelector:@selector(compare:)];
-        //NSLog(@"sort = %@", tmpArray);
-        
-        NSEnumerator *enumReverse = [tmpArray reverseObjectEnumerator];
-        NSString *tmpString;
-        
-        [GlobalDataManager sharedGlobalDataManager].reversePlistKeys = [[NSMutableArray alloc] init];
-        
-        while(tmpString = [enumReverse nextObject]){
-            //NSLog(@"tmpString = %@", tmpString);
-            [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys addObject:tmpString];
-        }
-        
-        NSLog(@"dictAllKeys = %@", [GlobalDataManager sharedGlobalDataManager].reversePlistKeys);
-        
-        //--- Debug Code
-         //for (int i = 0; i < allKeys.count; i++){
-        // NSLog(@"first key paper type = %@", [[venusloadPlist.persistList objectForKey:[tmpDictArray objectAtIndex:i]] objectAtIndex:INDEX_PAPER_TYPE]);
-         //}
-        //
-        
-        return YES;
-    }
-    return NO;
-}
-- (NSString *)dataFilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(
-                                                         NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kFilename];
-}
-*/
-
 
 #pragma mark -
 #pragma mark BUtton Action

@@ -25,7 +25,8 @@
 - (NSDictionary *)makeSaveFileName
 {
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYMMdd_hhmmss_a"];
+    //[dateFormatter setDateFormat:@"YYMMdd_hhmmss_a"];
+    [dateFormatter setDateFormat:@"YYMMdd_HHmmss"];    
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     //NSLog(@"%@",dateString);
 

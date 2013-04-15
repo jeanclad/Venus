@@ -174,6 +174,4 @@
 - (IBAction)UnderButtonPressed:(UIButton *)sender;
 - (IBAction)lightSwitchPressed:(UIButton *)sender;
 
-- (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size;
-
 @end

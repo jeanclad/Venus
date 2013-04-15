@@ -14,19 +14,23 @@
 - (void)changePaperToImageItem:(NSInteger)currentPage
 {
     //---   앨범뷰에 사용될 이미지를 먼저 생성한후 그 이미지를 리사이징 하여 MainView에 사용될 이미지를 만든다.
-    [self makeAlbumPaperAndPaperlessPhotoImage:_orgPhotoImage currentPage:currentPage];
+    [self makeAlbumPaperImage:_orgPhotoImage currentPage:currentPage];
     [self makeMainPreviewPhotoImage];
-    [self makeMainSecondPreViwePaperAndPaperlessPhotoImage:_orgPhotoImage currentPage:currentPage];
+    [self makeMainSecondPreviewPaperImage:currentPage];
 }
 
 - (void)fillImageItem:(UIImage *)refImage currentPage:(NSInteger)currentPage
 {
     _orgPhotoImage = refImage;
-    
+
     //---   앨범뷰에 사용될 이미지를 먼저 생성한후 그 이미지를 리사이징 하여 MainView에 사용될 이미지를 만든다.
-    [self makeAlbumPaperAndPaperlessPhotoImage:refImage currentPage:currentPage];
+    //[self makeAlbumPaperAndPaperlessPhotoImage:refImage currentPage:currentPage];
+    [self makeAlbumPaperImage:refImage currentPage:currentPage];
+    [self makeAlbumPaperlessPhotoImage:refImage currentPage:currentPage];
     [self makeMainPreviewPhotoImage];
-    [self makeMainSecondPreViwePaperAndPaperlessPhotoImage:refImage currentPage:currentPage];
+    //[self makeMainSecondPreViwePaperAndPhotoImage:refImage currentPage:currentPage];
+    [self makeMainSecondPreviewPaperImage:currentPage];
+    [self makeMainSecondPreviewPhotoImage:refImage currentPage:currentPage];
 }
 
 - (void)makeMainPreviewPhotoImage
@@ -35,25 +39,57 @@
     _mainPreviewPhotoImage = [self makeThumbnailImage:_albumPaperPhotoImage onlyCrop:NO Size:PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT];
 }
 
-- (void)makeMainSecondPreViwePaperAndPaperlessPhotoImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
+- (void)makeMainSecondPreviewPaperImage:(NSInteger)currentPage
+{
+    //---   암실뷰, mainSecondView에 사용될 용지 이미지 (200*200)
+    _mainSecondPreviewPaperImage = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", currentPage]];
+}
+
+- (void)makeMainSecondPreviewPhotoImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
+{
+    //---   암실뷰, mainSecondView에 사용될 사진 이미지 (200*200) / 용지에 따라 사진의 시작점과 사이즈가 약간씩 다르다. : 사진은 변경사항이 없다.
+    CGSize photoSize = [self getDevelopingPhotoSize:currentPage];
+    _mainSecondPreviewPhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:photoSize.height];
+
+}
+
+/*
+- (void)makeMainSecondPreViwePaperAndPhotoImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
 {
     //---   암실뷰, mainSecondView에 사용될 용지 이미지 (200*200)
     _mainSecondPreviewPaperImage = [UIImage imageNamed:[NSString stringWithFormat:@"paper_preview_%d.png", currentPage]];
     
-    //---   암실뷰, mainSecondView에 사용될 사진 이미지 (200*200) / 용지에 따라 사진의 시작점과 사이즈가 약간씩 다르다.
-    CGSize photoSize = [self getDevelopingPhotoSize:currentPage];
-    _mainSecondPreviewPhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:photoSize.height];
+    //---   암실뷰, mainSecondView에 사용될 사진 이미지 (200*200) / 용지에 따라 사진의 시작점과 사이즈가 약간씩 다르다. : 사진은 변경사항이 없다.
+    //CGSize photoSize = [self getDevelopingPhotoSize:currentPage];
+    //_mainSecondPreviewPhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:photoSize.height];
+}
+*/
+
+- (void)makeAlbumPaperImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
+{
+    //---   앨범뷰에 사용될 사진+용지 이미지 (200*200)
+    UIImage *resizePhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
+    [self setAlbumPaperImage:resizePhotoImage currentPage:currentPage];
+   
 }
 
+- (void)makeAlbumPaperlessPhotoImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
+{
+    //---   앨범뷰에 사용될 사진 이미지 (320*320) : 사진은 변경사항이 없다.
+    _albumPaperlessPhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE];
+}
+
+/*
 - (void)makeAlbumPaperAndPaperlessPhotoImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
 {
     //---   앨범뷰에 사용될 사진+용지 이미지 (200*200)
     UIImage *resizePhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:PREVIEW_FRAME_SIZE_HEIGHT];
     [self setAlbumPaperImage:resizePhotoImage currentPage:currentPage];
     
-    //---   앨범뷰에 사용될 사진 이미지 (320*320)
-    _albumPaperlessPhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE];
+    //---   앨범뷰에 사용될 사진 이미지 (320*320) : 사진은 변경사항이 없다.
+    //_albumPaperlessPhotoImage = [self makeThumbnailImage:refImage onlyCrop:NO Size:PAPERLESS_PHOTO_SIZE];
 }
+*/
 
 - (void)setAlbumPaperImage:(UIImage *)refImage currentPage:(NSInteger)currentPage
 {
@@ -210,6 +246,7 @@
 - (UIImage*) makeThumbnailImage:(UIImage*)image onlyCrop:(BOOL)bOnlyCrop Size:(float)size
 {
     CGRect rcCrop;
+    NSLog(@"refImage size = %@", NSStringFromCGSize(image.size));
     if (image.size.width == image.size.height) {
         rcCrop = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     }
