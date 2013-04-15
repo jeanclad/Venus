@@ -247,7 +247,6 @@
 {
     CGRect rcCrop;
 
-    NSLog(@"image.size = %@", NSStringFromCGSize(image.size));
     if (image.size.width == image.size.height) {
         rcCrop = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     }

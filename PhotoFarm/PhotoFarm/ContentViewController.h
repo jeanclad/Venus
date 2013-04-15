@@ -17,6 +17,8 @@
 @property (strong, nonatomic) NSString* mContentString;
 @property (strong, nonatomic) UILabel* mContentLabel;
 
+@property (nonatomic) BOOL  afterDeveloping;
+
 @property (weak, nonatomic) IBOutlet UIImageView *albumTitleImage;
 @property (weak, nonatomic) IBOutlet UIImageView *albumSubImage;
 @property (weak, nonatomic) IBOutlet UIImageView *albumtPhotoImage;

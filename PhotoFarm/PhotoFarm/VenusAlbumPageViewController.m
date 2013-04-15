@@ -88,6 +88,11 @@
     
     barButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Detail" style:UIBarButtonItemStyleBordered target:self action:@selector(rightBarButtonPressed:)];
     self.navigationItem.rightBarButtonItem = nil;
+    
+    //---   사진 인화후에 앨범뷰로 넘어 왔을시에는 자동으로 앨범페이지를 한장 넘겨준다.
+    if (_afterDeveloping == YES){
+        [self performSelector:@selector(viewAlbumPageAfterDeveloping) withObject:self afterDelay:0.5f];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,6 +136,9 @@
     
     //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
     if (index != 0){
+        if (index == 1)
+            [contentViewController setAfterDeveloping:_afterDeveloping];
+
         contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
         
         NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
@@ -199,16 +207,23 @@
                              cache:NO];
     [UIView setAnimationDuration:0.5];
     [UIView commitAnimations];
-
 }
 
--(void) viewUpdateAfterDelete
+#pragma jecnclad
+- (void)viewUpdateAfterDelete
 {
     self.mCurrentPage = self.mCurrentPage - 1;
     initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     [self.mPageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
     NSLog(@"mcurrenpage = %d", self.mCurrentPage);
+}
+
+- (void)viewAlbumPageAfterDeveloping
+{
+    self.mCurrentPage = 1;
+    initialViewController = [self viewControllerAtIndex:1];
+    [self.mPageViewController setViewControllers:[NSArray arrayWithObject:initialViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
 @end

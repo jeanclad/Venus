@@ -433,16 +433,18 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     return NO;
 }
 
-- (void) showAlbumView:(id)sender
+- (void) showAlbumView:(NSNumber *)afterDeveloping
 {
     VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
     venusAlbumPageView.rootNaviController = self.navigationController;
+    [venusAlbumPageView setAfterDeveloping:[afterDeveloping boolValue]];
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.tintColor = [UIColor clearColor];
     self.navigationController.navigationBar.translucent = YES;
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
     [self.navigationController pushViewController:venusAlbumPageView animated:YES];
     
     [self setLightOffNotAnimationItem];
@@ -655,7 +657,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                             secondPinceeteImageView.frame = CGRectMake(secondPinceeteImageView.frame.origin.x + movePincetteXpos, secondPinceeteImageView.frame.origin.y, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
-                                                                                                            ///* test by hkkwon
+                                                                                                            /* test by hkkwon
                                                                                                             //---   가속도 센서 설정
                                                                                                             if (motionManager == nil){
                                                                                                                 motionManager = [[CMMotionManager alloc] init];
@@ -683,8 +685,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                                             withObject:nil waitUntilDone:NO];
                                                                                                                  }];
                                                                                                             }
-                                                                                                             //*/
-                                                                                                            //[self setDevelopingComplete];
+                                                                                                             */
+                                                                                                            [self setDevelopingComplete];
                                                                                                         }];
                                                                                    }];
                                                                   
@@ -717,7 +719,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     secondPinceeteImageView.frame = CGRectMake(0, -30, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
     [secondPinceeteImageView setAlpha:0];
     [UIView commitAnimations];
-    
 }
 
 - (void)showPincetteOnAnimation
@@ -767,7 +768,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     //---   아이템 임시 저장 클래스에 chemicalType에 저장되어 있는값을 초기화 한다.
     [venusSaveItemController.chemicalType removeAllObjects];
     
-    [self performSelector:@selector(showAlbumView:) withObject:nil afterDelay:2.0f];
+    NSNumber *afterDeveloping = [NSNumber numberWithBool:YES];
+    
+    //[self performSelector:@selector(showAlbumView:) withObject:nil afterDelay:2.0f];
+    [self performSelector:@selector(showAlbumView:) withObject:afterDeveloping afterDelay:2.0f];
 }
 
 - (void)setHiddenRootItem:(BOOL)isHidden
@@ -1330,7 +1334,8 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSString *string3 = NSLocalizedString(@"OK", "확인");
     
     if ([buttonName isEqualToString:@"Album"]){
-        [self showAlbumView:self];
+        NSNumber *afterDeveloping = [NSNumber numberWithBool:NO];
+        [self showAlbumView:afterDeveloping];
     }
     else if ([buttonName isEqualToString:@"Papers"]){
         if (firstSelect == YES){

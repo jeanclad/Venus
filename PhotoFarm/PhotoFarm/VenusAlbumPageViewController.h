@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;
 @property (nonatomic) int mMaxPage;
+@property (nonatomic) BOOL    afterDeveloping;
 @property (nonatomic, strong) UINavigationController *rootNaviController;
 
 @end
