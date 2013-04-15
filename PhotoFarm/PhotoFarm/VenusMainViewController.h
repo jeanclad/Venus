@@ -13,6 +13,7 @@
 #import "VenusProgressViewController.h"
 #import "chemicalAnimation.h"
 #import "VenusPhotoPaperController.h"
+#import "VenusAlbumPageViewController.h"
 #import "VenusSaveItemController.h"
 
 

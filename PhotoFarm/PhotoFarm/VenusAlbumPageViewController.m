@@ -28,6 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _afterDeveloping = NO;
     }
     return self;
 }
@@ -106,7 +107,8 @@
         [mReverseKey setArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
         NSLog(@"mReverseKey = %@", mReverseKey);
     
-        [self performSelector:@selector(viewUpdateAfterDelete) withObject:self afterDelay:0.3];
+        [contentViewController contentPhotoAnimatingAfterDelete];
+        [self performSelector:@selector(viewUpdateAfterDelete) withObject:self afterDelay:1.5f];
     }
 
 }
@@ -136,8 +138,10 @@
     
     //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
     if (index != 0){
-        if (index == 1)
+        if (index == 1){
             [contentViewController setAfterDeveloping:_afterDeveloping];
+            _afterDeveloping = NO;
+        }
 
         contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
         
@@ -211,10 +215,11 @@
 
 #pragma jecnclad
 - (void)viewUpdateAfterDelete
-{
+{    
     self.mCurrentPage = self.mCurrentPage - 1;
     initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
+    
     [self.mPageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
     NSLog(@"mcurrenpage = %d", self.mCurrentPage);
 }
@@ -223,6 +228,7 @@
 {
     self.mCurrentPage = 1;
     initialViewController = [self viewControllerAtIndex:1];
+    
     [self.mPageViewController setViewControllers:[NSArray arrayWithObject:initialViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 

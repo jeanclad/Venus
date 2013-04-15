@@ -23,6 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _afterDeveloping = NO;
     }
     return self;
 }
@@ -56,8 +57,10 @@
         [self.albumtPhotoImage setImage:loadImage];
         [self.view addSubview:self.albumtPhotoImage];
         
-        if (_afterDeveloping == YES)
+        if (_afterDeveloping == YES){
             [self contentPhotoAnimationAfterDeveloping];
+            _afterDeveloping = NO;
+        }
     }
     
     // Navigation Bar 설정
@@ -79,7 +82,7 @@
 }
 
 #pragma mark  -jeanclad
-- (void) contentPhotoAnimationAfterDeveloping
+- (void)contentPhotoAnimationAfterDeveloping
 {
     CGRect orgRect = self.albumtPhotoImage.frame;
     
@@ -99,8 +102,25 @@
     [UIView setAnimationDelay:0.5f];
     [self.albumtPhotoImage setAlpha:1.0f];
     [UIView commitAnimations];
+}
 
-
+- (void)contentPhotoAnimatingAfterDelete
+{
+    [self.albumtPhotoImage setAlpha:1.0f];
+    
+    //---   알파값을 조금 늦게 변하게 하여 사진이 점점 뚜렷하게 보이도록 한다.
+    [UIView beginAnimations:@"albumPhotoImageDownAnimation" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationDelay:0.5f];
+    self.albumtPhotoImage.frame = CGRectMake(0-self.albumtPhotoImage.frame.size.width, IP4_IP5_SIZE_HEIGHT+self.albumtPhotoImage.frame.size.height, self.albumtPhotoImage.frame.size.width, self.albumtPhotoImage.frame.size.height);
+    [UIView commitAnimations];
+    
+    [UIView beginAnimations:@"albumPhotoImageAlphaDownAnimation" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:1.0f];
+    [self.albumtPhotoImage setAlpha:0.0f];
+    [UIView commitAnimations];
 }
 
 // IOS 6.0 이하 버전에서 landscape로 시작하지 않기 때문에 강제로 설정해주는 부분 (IOS 6.0 이상에서는 Call 되지 않음)

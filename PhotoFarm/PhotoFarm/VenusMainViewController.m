@@ -10,7 +10,6 @@
 #import "VenusMainViewController.h"
 #import "GlobalDataManager.h"
 #import "VenusFilmGroupViewController.h"
-#import "VenusAlbumPageViewController.h"
 #import "VenusSelectDetailViewController.h"
 #import "chemicalAnimation.h"
 
@@ -206,7 +205,6 @@
     [devleopingProgress setHidden:YES];
     [developingImageView addSubview:devleopingProgress];
 
-    
     //---   아이템 임시 저장 클래스 초기화
     venusSaveItemController = [[VenusSaveItemController alloc] init];
     
@@ -435,6 +433,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 - (void) showAlbumView:(NSNumber *)afterDeveloping
 {
+    //---   앨범 뷰 초기화
     VenusAlbumPageViewController *venusAlbumPageView = [[VenusAlbumPageViewController alloc] initWithNibName:@"VenusAlbumPageViewController" bundle:nil];
     venusAlbumPageView.rootNaviController = self.navigationController;
     [venusAlbumPageView setAfterDeveloping:[afterDeveloping boolValue]];

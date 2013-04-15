@@ -25,4 +25,5 @@
 
 @property (strong, nonatomic) NSMutableArray *currentPagePlistData;
 
+- (void)contentPhotoAnimatingAfterDelete;
 @end
