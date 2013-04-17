@@ -134,7 +134,7 @@
 
 - (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
-    NSLog(@"index = %d, reversePlistKeys = %@, mCurrentPage = %d", index, [GlobalDataManager sharedGlobalDataManager].reversePlistKeys, self.mCurrentPage);
+    //NSLog(@"index = %d, reversePlistKeys = %@, mCurrentPage = %d", index, [GlobalDataManager sharedGlobalDataManager].reversePlistKeys, self.mCurrentPage);
     contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
     contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
     //NSLog(@"content = %@", [[self.photoInfoList persistList] objectForKey:@"Venus1"]);
@@ -148,7 +148,7 @@
 
         contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
         
-        NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
+        //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     }
     //---------------------------------------------------------------------------------------------
     
@@ -165,6 +165,8 @@
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
+    pageDirect = DIRECT_BACKWARD;
+ 
     if (self.mCurrentPage == 0) {
         return nil;
     }
@@ -176,18 +178,33 @@
 - (UIViewController *)pageViewController:
 (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
+    pageDirect = DIRECT_FORWARD;
+    
     if (self.mCurrentPage >= self.mMaxPage -1) {
         return nil;
     }
 
     self.mCurrentPage++;  
     return [self viewControllerAtIndex:self.mCurrentPage];
+
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
+    if (completed == NO) {
+        if (pageDirect == DIRECT_FORWARD){
+            self.mCurrentPage--;
+        } else if (pageDirect == DIRECT_BACKWARD){
+            self.mCurrentPage++;
+        }
+        contentViewController = [pageViewController.viewControllers lastObject];        
+    } else{
+        NSLog(@"complet yes");
+    }
 
+    NSLog(@"mmCur = %d", self.mCurrentPage);
 }
+
 
 #pragma jeanclad
 - (void) onSingleTap:(UIGestureRecognizer *)gestureRecognizer {

@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "ContentViewController.h"
 
+typedef enum {
+    DIRECT_FORWARD,
+    DIRECT_BACKWARD,
+} _direct;
+
 @interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>{
     UIPageViewController* _mPageViewController;
     int _mCurrentPage;
@@ -19,6 +24,7 @@
     ContentViewController *contentViewController;
     NSMutableArray *mReverseKey;
     UIBarButtonItem *barButtonItem;
+    NSUInteger pageDirect;
 }
 @property (nonatomic, strong) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;

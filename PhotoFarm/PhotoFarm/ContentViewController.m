@@ -44,7 +44,7 @@
         NSString *paperFile = [self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOTO_FILE_NAME];
         NSString *path = [cachesDirectory stringByAppendingPathComponent:paperFile];
     
-        NSLog(@"load path = %@", path);
+        //NSLog(@"load path = %@", path);
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
         /* FIle Read Error test by jeanclad

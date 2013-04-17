@@ -138,7 +138,6 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString *cachesDirectory = [paths objectAtIndex:0];
     NSString *path = [cachesDirectory stringByAppendingPathComponent:fileName];
-    NSLog(@"load path = %@", path);
     NSData *loadImageData = [NSData dataWithContentsOfFile:path];
     
     return loadImageData;
