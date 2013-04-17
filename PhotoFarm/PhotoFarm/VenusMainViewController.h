@@ -53,8 +53,6 @@
     
     BOOL        firstSelect;
     BOOL        developing;
-    //UIImage     *_bg;
-    //UIImage     *preview_img;
     UIImageView *waterImageView;
     UIImageView *darkRoomOffSteelImageView;
     UIImageView *darkRoomOnSteelImageView;
@@ -64,13 +62,13 @@
     UIImageView *developingPaperImageView;
     
     //---   Scroll View
-    UIScrollView * paperScrollView;
-	UIView * paperContentView;
-	UIPageControl * paperPageControl;
+    VenusScroll *paperScrollView;
+	UIView *paperContentView;
+	UIPageControl *paperPageControl;
     
     VenusScroll *chemicalScrollView;
-	UIView * chemicalContentView;
-	UIPageControl * chemicalPageControl;
+	UIView *chemicalContentView;
+	UIPageControl *chemicalPageControl;
     NSMutableArray *chemicalImageView;
     
     VenusProgressViewController *beakerView;

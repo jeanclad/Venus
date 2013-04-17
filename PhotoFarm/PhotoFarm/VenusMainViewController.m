@@ -75,7 +75,7 @@
     [self.MainView addSubview:selectedButton];
 
     //---   용지 선택 뷰
-    paperScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
+    paperScrollView = [[VenusScroll alloc] initWithFrame:CGRectMake(0, 0, 240, 290)];
 	paperContentView = [[UIView alloc] initWithFrame:CGRectMake(70, 90, 240, 2030)];
     int paperTotal = 0;
     
@@ -244,14 +244,17 @@
             [selectedButton setImage:[venusPhotoPaperController mainPreviewPhotoImage] forState:UIControlStateNormal];
         }
         
-        selectedButton.center = CGPointMake(w/2, h/2 - 20);
-    
-        NSLog(@"selectedButtonItem = %@, %f", NSStringFromCGPoint(selectedButton.frame.origin), selectedButton.alpha);
-        
-        [firstNotSelectedButton setHidden:YES];
-        [selectedButton setHidden:NO];
-        
-        firstSelect = YES;
+        //---   Info 뷰에서 메인뷰로 돌아왔을때는 현재 MainSecondView가 보이는 상태이므로 아래의 내용을 실행하면 안된다.
+        if (self.MainSecondView.hidden == YES){
+            selectedButton.center = CGPointMake(w/2, h/2 - 20);
+            
+            NSLog(@"selectedButtonItem = %@, %f", NSStringFromCGPoint(selectedButton.frame.origin), selectedButton.alpha);
+            
+            [firstNotSelectedButton setHidden:YES];
+            [selectedButton setHidden:NO];
+            
+            firstSelect = YES;
+        }
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -769,7 +772,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSNumber *afterDeveloping = [NSNumber numberWithBool:YES];
     
-    //[self performSelector:@selector(showAlbumView:) withObject:nil afterDelay:2.0f];
     [self performSelector:@selector(showAlbumView:) withObject:afterDeveloping afterDelay:2.0f];
 }
 
@@ -794,6 +796,46 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [UIView setAnimationDuration:0.5];
         [UIView commitAnimations];
     }
+}
+
+- (void)showInfoView
+{
+    VenusSelectDetailViewController *venusSelectDetailView = [[VenusSelectDetailViewController alloc] initWithNibName:@"VenusSelectDetailViewController" bundle:nil];
+    
+    //---   Chemical View
+    if (paperScrollView.isHidden == YES){
+        [venusSelectDetailView setItemValue:ITEM_VALUE_CHEMICAL];
+        [venusSelectDetailView setCurrentItem:[chemicalPageControl currentPage]];
+        
+        //--- 용액 채우는 애니메이션 중 Info 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
+        [beakerView setProgress: wantProgressLevel];
+    }
+    //---   Paper View
+    else{
+        [venusSelectDetailView setItemValue:ITEM_VALUE_PAPER];
+        [venusSelectDetailView setCurrentItem:[paperPageControl currentPage]];
+    }
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
+    self.navigationController.navigationBar.translucent = NO;
+    
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController pushViewController:venusSelectDetailView animated:YES];
+}
+
+- (void)setSelectButtonAction
+{
+    [self moveAnimationRootView:NO];
+    [self setHiddenRootItem:NO];
+    [selectedButton setHidden:NO];
+    
+    //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
+    [beakerView setProgress: wantProgressLevel];
+    
+    //---   아이템 임시 저장 클래스에 paperType을 저장한다.
+    NSString *paperName = [venusSaveItemController getPaperName:paperPageControl.currentPage];
+    [venusSaveItemController setPaperType:paperName];
 }
 
 -(void) paperPageChangeValue:(id)sender
@@ -1298,28 +1340,31 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     //---(1번안) 사진 용액을 하나도 추가 하지 않았거나 사진용지를 No Paper상태에서 변경하지 않으면 원본사진과 동일하므로 사진인화를 진행하지 않고 alertView를 띄운다. 사진용액을 추가 하였거나 사진 용지가 No Paper 상태가 아니라면 사진 인화를 진행한다.
     //if (((float_equal([beakerView progress], 0)) || ([beakerView progress] < 0)) && (paperPageControl.currentPage == PAPER_INDEX_WHITE)){
     //---(2번안) 사진 용액과 사진 용지 둘다 선택해야만 사진인화를 진행한다.
-    if ((float_equal([beakerView progress], 0)) || ([beakerView progress] < 0)){
-        NSString *string1 = NSLocalizedString(@"ErrDevelopingTitle", @"사진인화 에러 타이틀");
-        NSString *string2 = NSLocalizedString(@"ErrDevelopingMessage", @"사진인화 에러 메세지");
-        NSString *string3 = NSLocalizedString(@"OK", "확인");
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
-        [alert show];
-    } else {
-        developing = YES;
-        //---   암실 트레이 이미지 설정
-        [darkRoomOffSteelImageView setHidden:YES];
-        [darkRoomOnSteelImageView setHidden:NO];
-        
-        [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
-        [self setHiddenRootItem:YES];
-        [self setLightOnAnimation];
-        [chemicalContentView setHidden:YES];
-        
-        //---   File and Prop 저장
-        [venusSaveItemController setAlbumPaperPhotoImage:[venusPhotoPaperController albumPaperPhotoImage]];
-        [venusSaveItemController setAlbumPaperlessPhotoImage:[venusPhotoPaperController albumPaperlessPhotoImage]];
-        [venusSaveItemController savePropAndFile];
+    //---   인화버튼을 더블클릭하면 아래의 내용이 두번 실행되므로 developing 조건을 걸어서 한번만 실행되게 한다.
+    if (developing == NO){
+        if ((float_equal([beakerView progress], 0)) || ([beakerView progress] < 0)){
+            NSString *string1 = NSLocalizedString(@"ErrDevelopingTitle", @"사진인화 에러 타이틀");
+            NSString *string2 = NSLocalizedString(@"ErrDevelopingMessage", @"사진인화 에러 메세지");
+            NSString *string3 = NSLocalizedString(@"OK", "확인");
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:string1 message:string2 delegate:nil cancelButtonTitle:string3 otherButtonTitles:nil];
+            [alert show];
+        } else {
+            developing = YES;
+            //---   암실 트레이 이미지 설정
+            [darkRoomOffSteelImageView setHidden:YES];
+            [darkRoomOnSteelImageView setHidden:NO];
+            
+            [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
+            [self setHiddenRootItem:YES];
+            [self setLightOnAnimation];
+            [chemicalContentView setHidden:YES];
+            
+            //---   File and Prop 저장
+            [venusSaveItemController setAlbumPaperPhotoImage:[venusPhotoPaperController albumPaperPhotoImage]];
+            [venusSaveItemController setAlbumPaperlessPhotoImage:[venusPhotoPaperController albumPaperlessPhotoImage]];
+            [venusSaveItemController savePropAndFile];
+        }
     }
 }
 
@@ -1352,42 +1397,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [alert show];
         }
     }
-    else if ([buttonName isEqualToString:@"Info"]){
-        VenusSelectDetailViewController *venusSelectDetailView = [[VenusSelectDetailViewController alloc] initWithNibName:@"VenusSelectDetailViewController" bundle:nil];
-        
-        //---   Chemical View
-        if (paperScrollView.isHidden == YES){
-            [venusSelectDetailView setItemValue:ITEM_VALUE_CHEMICAL];
-            [venusSelectDetailView setCurrentItem:[chemicalPageControl currentPage]];
-            
-            //--- 용액 채우는 애니메이션 중 Info 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
-            [beakerView setProgress: wantProgressLevel];
-        }
-        //---   Paper View
-        else{
-            [venusSelectDetailView setItemValue:ITEM_VALUE_PAPER];
-            [venusSelectDetailView setCurrentItem:[paperPageControl currentPage]];
-        }
-        
-        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-        self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
-        self.navigationController.navigationBar.translucent = NO;
-        
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
-        [self.navigationController pushViewController:venusSelectDetailView animated:YES];
-    }
-    else if ([buttonName isEqualToString:@"Select"]){
-        [self moveAnimationRootView:NO];
-        [self setHiddenRootItem:NO];
-        [selectedButton setHidden:NO];
-        
-        //--- 용액 채우는 애니메이션 중 Select 버튼을 누르면 NSTimer가 중단되면서 비이커 레벨 채우는 작업이 중단된다.그래서 아래로 코드로 강제로 비이커 최종레벨로 셋팅한다.
-        [beakerView setProgress: wantProgressLevel];
-        
-        //---   아이템 임시 저장 클래스에 paperType을 저장한다.
-        NSString *paperName = [venusSaveItemController getPaperName:paperPageControl.currentPage];
-        [venusSaveItemController setPaperType:paperName];        
-    }
 }
 
 
@@ -1402,28 +1411,62 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
     NSLog(@"point %f, %f", point.x, point.y);
     
 	// Only move the placard view if the touch was in the placard view
-    if (chemicalAni.chemicalAnimating == NO){
-        if (point.x > 65 && point.x < 110 && point.y > 90 && point.y < 200) {
-            BOOL isMaxProgress = [beakerView isMaxProgress];
-            if (isMaxProgress == NO) {
-                chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
-                [self fillChemicalAnimation];
-                waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
-                
-                //---   아이템 임시 저장 클래스에 chemicalType을 저장한다.
-                NSString *chemicalName = [venusSaveItemController getChemicalName:chemicalPageControl.currentPage];
-                [venusSaveItemController.chemicalType addObject:chemicalName];                
+    //---   MainSelecView가 숨겨져 있지 않으면 용지선택뷰나 용액선택뷰 상태라고 판단하고, chemicalScrollView가 숨겨져 있지 않으면 용지선택뷰이며, paperScrollView가 숨겨져 있지 않으면 용액 선택뷰라고 판단한다.
+    if (self.MainSecondView.hidden == NO){
+        if (chemicalScrollView.hidden == NO){
+            if (chemicalAni.chemicalAnimating == NO){
+                //---   용액 선택 범위
+                if (point.x > 65 && point.x < 110 && point.y > 90 && point.y < 200) {
+                    BOOL isMaxProgress = [beakerView isMaxProgress];
+                    if (isMaxProgress == NO) {
+                        chemicalAni.selectedChemicalIndex = chemicalPageControl.currentPage;
+                        [self fillChemicalAnimation];
+                        waitBaekerProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(fillBaakerProgress) userInfo:nil repeats:NO];
+                        
+                        //---   아이템 임시 저장 클래스에 chemicalType을 저장한다.
+                        NSString *chemicalName = [venusSaveItemController getChemicalName:chemicalPageControl.currentPage];
+                        [venusSaveItemController.chemicalType addObject:chemicalName];
+                    }
+                    else {
+                        [self showBeakerEmptyAlertView];
+                    }
+                }
+                //---   비이커 선택 범위
+                if (point.x > 130 && point.x < 180 && point.y > 110 && point.y < 190){
+                    [self showBeakerEmptyAlertView];
+                }
             }
-            else {
-                [self showBeakerEmptyAlertView];
+            //---   Info 선택 범위
+            if (point.x > 30 && point.x < 70 && point.y > 75 && point.y < 110){
+                [self showInfoView];
+            }
+            
+            //---   Select  선택 범위
+            if (myDevice == MYDEVICE_IPHONE5){
+                if (point.x > IP5_SIZE_WIDTH/2+1 && point.x < IP5_SIZE_WIDTH && point.y > 0 && point.y < IP4_IP5_SIZE_HEIGHT){
+                    [self setSelectButtonAction];
+                }
+            } else{
+                if (point.x > IP4_SIZE_WIDTH/2+1 && point.x < IP4_SIZE_WIDTH && point.y > 0 && point.y < IP4_IP5_SIZE_HEIGHT){
+                    [self setSelectButtonAction];
+                }
+            }
+        } else if (paperScrollView.hidden == NO){
+            //---   Info 선택 범위
+            if (point.x > 30 && point.x < 70 && point.y > 75 && point.y < 110){
+                [self showInfoView];
+            }
+            //---   Select  선택 범위
+            if (myDevice == MYDEVICE_IPHONE5){
+                if (point.x > IP5_SIZE_WIDTH/2+1 && point.x < IP5_SIZE_WIDTH && point.y > 0 && point.y < IP4_IP5_SIZE_HEIGHT){
+                    [self setSelectButtonAction];
+                }
+            } else{
+                if (point.x > IP4_SIZE_WIDTH/2+1 && point.x < IP4_SIZE_WIDTH && point.y > 0 && point.y < IP4_IP5_SIZE_HEIGHT){
+                    [self setSelectButtonAction];
+                }
             }
         }
-        if (point.x > 130 && point.x < 180 && point.y > 110 && point.y < 190){
-            [self showBeakerEmptyAlertView];
-        }
-    }
-    else if (point.y > 200){
-        NSLog(@"select steel touched!");
     }
 }
 
