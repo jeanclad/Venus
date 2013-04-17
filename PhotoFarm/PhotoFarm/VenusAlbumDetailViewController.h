@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VenusSaveItemController.h"
 
 @interface VenusAlbumDetailViewController : UIViewController <UIActionSheetDelegate> {
+    VenusSaveItemController *venusSaveItemController;
     UIActivityIndicatorView *indicatorView;
     UIActionSheet *deleteActionSheet;
     UIActionSheet *SnsActionSheet;

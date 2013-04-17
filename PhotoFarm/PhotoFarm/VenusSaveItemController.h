@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VenusPersistList.h"
 
 #define KEY_ITEM_NAME               @"keyItemName"
 #define KEY_PAPER_FILE_NAME         @"keyPaperFileName"
@@ -28,6 +29,10 @@
 - (NSDictionary *)makeSaveFileName;
 - (NSString *)getPaperName:(NSInteger)pageIndex;
 - (NSString *)getChemicalName:(NSInteger)pageIndex;
+- (void)writeToDataFile:(VenusPersistList *)persist;
 - (BOOL)loadPlistFile;
-- (void)savePropAndFile;
+- (void)savePropFile;
+- (void)saveImageFile;
+- (void)deleteImageFile:(NSString *)fileOne fileTwo:(NSString *)fileTwo;
+- (NSData *)loadToCacheImageFile:(NSString *)fileName;
 @end

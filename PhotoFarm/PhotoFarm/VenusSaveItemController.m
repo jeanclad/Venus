@@ -7,7 +7,6 @@
 //
 
 #import "VenusSaveItemController.h"
-#import "VenusPersistList.h"
 #import "GlobalDataManager.h"
 
 @implementation VenusSaveItemController
@@ -133,7 +132,19 @@
     [saveImageData writeToFile:filePath atomically:NO];
 }
 
-- (void)savePropAndFile
+- (NSData *)loadToCacheImageFile:(NSString *)fileName
+{
+    //---   저장된 파일을 로딩한다.
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachesDirectory = [paths objectAtIndex:0];
+    NSString *path = [cachesDirectory stringByAppendingPathComponent:fileName];
+    NSLog(@"load path = %@", path);
+    NSData *loadImageData = [NSData dataWithContentsOfFile:path];
+    
+    return loadImageData;
+}
+
+- (void)saveImageFile
 {
     //---   아이템 임시 저장 클래스에 아이템 네임과 파일명을 저장한다.
     NSDictionary *preloadName = [self makeSaveFileName];
@@ -146,8 +157,10 @@
     
     //---   Save PaperlessPhotoFile
     [self writeToCacheImageFile:_albumPaperlessPhotoImage fileName:_paperlessPhotoFileName];
-    
-    
+}
+
+- (void)savePropFile
+{
     [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPhotoItemName:_photoItemName];
     [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperPhotoFileName:_paperPhotoFileName];
     [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList setPaperlessPhotoFileName:_paperlessPhotoFileName];
@@ -160,6 +173,25 @@
     
     //---    Plist파일을 갱신한 후에는 반듯이 다시 읽어와야 한다.
     [self loadPlistFile];
+}
+
+- (void)deleteImageFile:(NSString *)fileOne fileTwo:(NSString *)fileTwo
+{
+    // documents 폴더의 경로 얻기
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [paths objectAtIndex:0];
+    
+    //---   Paper 파일 삭제
+    NSString *filePath = [docPath stringByAppendingPathComponent:fileOne];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:filePath error:nil];
+    
+    //---   Paperless 파일 삭제
+    docPath = nil;
+    docPath = [paths objectAtIndex:0];
+    filePath = [docPath stringByAppendingPathComponent:fileTwo];
+    [fileManager removeItemAtPath:filePath error:nil];
+    
 }
 
 #pragma mark -

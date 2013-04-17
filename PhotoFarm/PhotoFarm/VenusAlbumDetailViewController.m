@@ -6,9 +6,9 @@
 //  Copyright (c) 2013년 Max. All rights reserved.
 //
 
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "GlobalDataManager.h"
 #import "VenusAlbumDetailViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface VenusAlbumDetailViewController ()
 
@@ -30,6 +30,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    //---   프로퍼티, 파일 관리 클래스 초기화
+    venusSaveItemController = [[VenusSaveItemController alloc] init];
     
     //=== 사진 저장에서 사용되는 인디케이터 초기화
     indicatorView = nil;
@@ -62,22 +65,11 @@
     [self.paperLable setHidden:YES];
     
     //---   저장된 파일을 로딩한다.
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString * cachesDirectory = [paths objectAtIndex:0];
     NSString *fileName = [[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList objectForKey:self.selectedKey] objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME];
-    NSString * path = [cachesDirectory stringByAppendingPathComponent:fileName];
-    NSLog(@"load path = %@", path);
-    NSData * loadImageData = [NSData dataWithContentsOfFile:path];
-    
-    /* File Read test by jeanclad
-    NSError *error = nil;
-    NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
-    NSLog(@"error = %@", error.localizedDescription);
-    */
+    NSData *loadImageData = [venusSaveItemController loadToCacheImageFile:fileName];
     
     //----- 넘어온 이미지를 화면에 표시하고 라벨 뷰는 숨긴다.
     loadImage = [[UIImage alloc] initWithData:loadImageData];
-//    loadImage = [UIImage imageWithData:loadImageData];
 
     [self.detailPageLabelView setHidden:YES];
     [self.detailPagePhotoVIew setImage:loadImage];
@@ -112,18 +104,20 @@
     
     if (actionSheet == deleteActionSheet){
         if (buttonIndex == 0){
+            //--- 사진 라벨의 용액 리스트 텍스트 추가
+            NSMutableArray *item = [[NSMutableArray alloc] initWithArray:[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList objectForKey:self.selectedKey]];
+            
+            //---   삭제할 파일명 추출 (해당 Prop키를 삭제하기전에 먼저 추출해야 한다.
+            NSString *deletedPaperFileName = [item objectAtIndex:INDEX_PAPER_PHOTO_FILE_NAME];
+            NSString *deletedPaperlessFileName = [item objectAtIndex:INDEX_PAPERLESS_PHOTO_FILE_NAME];
+            
+            //---   삭제될 Prop 제거후 Prop 저장
             [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList removeObjectForKey:self.selectedKey];
-            
-            NSMutableData *data = [[NSMutableData alloc] init];
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]
-                                         initForWritingWithMutableData:data];
-            [archiver encodeObject:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList forKey:kDataKey];
-            [archiver finishEncoding];
-            [data writeToFile:[self dataFilePath] atomically:YES];
-            
+            [venusSaveItemController writeToDataFile:[GlobalDataManager sharedGlobalDataManager].photoInfoFileList];
             [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys removeObject:self.selectedKey];
-            // Will Edited by jeanclad
-            // 이 부분에서 차후 사진 파일도 삭제해야 한다.
+           
+            //---   파일 삭제
+            [venusSaveItemController deleteImageFile:deletedPaperFileName fileTwo:deletedPaperlessFileName];
             
             [self.navigationController popViewControllerAnimated:YES];
             NSLog(@"%@ : persist", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);

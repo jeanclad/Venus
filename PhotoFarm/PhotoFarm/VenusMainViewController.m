@@ -1360,10 +1360,13 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [self setLightOnAnimation];
             [chemicalContentView setHidden:YES];
             
-            //---   File and Prop 저장
+            //---   저장할 파일이미지 설정
             [venusSaveItemController setAlbumPaperPhotoImage:[venusPhotoPaperController albumPaperPhotoImage]];
             [venusSaveItemController setAlbumPaperlessPhotoImage:[venusPhotoPaperController albumPaperlessPhotoImage]];
-            [venusSaveItemController savePropAndFile];
+            
+            //---   File and Prop 저장 (saveImageFile에서 파일명을 생성하기 때문에 반드시 ImageFile부터 저장해야 한다.)
+            [venusSaveItemController saveImageFile];            
+            [venusSaveItemController savePropFile];
         }
     }
 }
