@@ -91,6 +91,11 @@
     [self.view addGestureRecognizer:singleTap];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self performSelector:@selector(setHiddenNavBar) withObject:nil afterDelay:3.0f];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -219,6 +224,8 @@
     
     if (self.navigationController.isNavigationBarHidden){
         [self.navigationController setNavigationBarHidden:NO animated:YES];
+        
+        [self performSelector:@selector(setHiddenNavBar) withObject:nil afterDelay:3.0f];
     }
     else{
         [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -245,6 +252,13 @@
     }
     [self.view bringSubviewToFront:indicatorView];
     [indicatorView startAnimating];
+}
+
+- (void)setHiddenNavBar
+{
+    if (!self.navigationController.isNavigationBarHidden){
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
 }
 
 /*

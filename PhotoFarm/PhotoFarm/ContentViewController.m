@@ -69,8 +69,6 @@
     //[self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }
 
-
-
 - (void)viewDidUnload
 {
     [self setAlbumTitleImage:nil];
@@ -131,5 +129,4 @@
     
     return NO;
 }
-
 @end

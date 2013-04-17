@@ -111,6 +111,7 @@
         [self performSelector:@selector(viewUpdateAfterDelete) withObject:self afterDelay:1.5f];
     }
 
+    //[self startNaviThread];
 }
 
 - (void)didReceiveMemoryWarning
@@ -231,5 +232,4 @@
     
     [self.mPageViewController setViewControllers:[NSArray arrayWithObject:initialViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
-
 @end
