@@ -67,6 +67,7 @@
                                 options: options];
     
     self.mPageViewController.dataSource = self;
+    self.mPageViewController.delegate = self;
     self.mPageViewController.view.frame = self.view.bounds;
     
     initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
@@ -94,6 +95,7 @@
     if (_afterDeveloping == YES){
         [self performSelector:@selector(viewAlbumPageAfterDeveloping) withObject:self afterDelay:0.5f];
     }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -180,6 +182,11 @@
 
     self.mCurrentPage++;  
     return [self viewControllerAtIndex:self.mCurrentPage];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+
 }
 
 #pragma jeanclad
