@@ -44,14 +44,9 @@
         NSString *paperFile = [self.currentPagePlistData objectAtIndex:INDEX_PAPER_PHOTO_FILE_NAME];
         NSString *path = [cachesDirectory stringByAppendingPathComponent:paperFile];
     
-        //NSLog(@"load path = %@", path);
+        NSLog(@"load path = %@", path);
         NSData * loadImageData = [NSData dataWithContentsOfFile:path];
         
-        /* FIle Read Error test by jeanclad
-        NSError *error = nil;
-        NSData * loadImageData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:&error];
-        NSLog(@"error = %@", error.localizedDescription);
-        -----------------------------------------------------------------------------------------------------------*/
 
         UIImage *loadImage = [UIImage imageWithData:loadImageData];
         [self.albumtPhotoImage setImage:loadImage];
@@ -68,6 +63,7 @@
     
     //[self performSelector:@selector(viewDidDisappear:) withObject:nil afterDelay:1.0];
 }
+
 
 - (void)viewDidUnload
 {
@@ -129,4 +125,5 @@
     
     return NO;
 }
+
 @end

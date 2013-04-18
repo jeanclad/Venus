@@ -23,6 +23,8 @@ typedef enum {
     BOOL    currentNavBarHidden;
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
+    //---   test by hkkwon
+    NSMutableArray  *contentArray;
     NSMutableArray *mReverseKey;
     UIBarButtonItem *barButtonItem;
     NSUInteger pageDirect;

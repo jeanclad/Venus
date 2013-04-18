@@ -54,6 +54,15 @@
     // Detail View에서 Page View 로 돌아왔을때 key 값이 다르면 사진이 삭제되었다고 판단한다.
     mReverseKey = [[NSMutableArray alloc] initWithArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
     
+    /*---   test by hkkwon
+    contentArray = [[NSMutableArray alloc] initWithCapacity:[self mMaxPage]];
+    for (int i=0; i<self.mMaxPage; i++) {
+        contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
+        
+        [contentArray addObject:contentViewController];
+    }
+    */
+    
     // Page Option 설정.
     NSDictionary *options =
     [NSDictionary dictionaryWithObject:
@@ -96,7 +105,6 @@
     if (_afterDeveloping == YES){
         [self performSelector:@selector(viewAlbumPageAfterDeveloping) withObject:self afterDelay:0.5f];
     }
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,6 +141,7 @@
     return NO;
 }
 
+/*
 - (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     //NSLog(@"index = %d, reversePlistKeys = %@, mCurrentPage = %d", index, [GlobalDataManager sharedGlobalDataManager].reversePlistKeys, self.mCurrentPage);
@@ -140,22 +149,21 @@
     contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
     //NSLog(@"content = %@", [[self.photoInfoList persistList] objectForKey:@"Venus1"]);
     
-    //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
+    //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다. 
     if (index != 0){
         if (index == 1){
             [contentViewController setAfterDeveloping:_afterDeveloping];
             _afterDeveloping = NO;
         }
         
-        /*
-         contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
-         */
+        //contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+
         contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:index-1]]];
         
         
         //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     }
-    //---------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------
     
     if (self.mCurrentPage != 0)
         self.navigationItem.rightBarButtonItem = barButtonItem;
@@ -164,6 +172,38 @@
     
     return contentViewController;
 }
+*/
+- (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    //NSLog(@"index = %d, reversePlistKeys = %@, mCurrentPage = %d", index, [GlobalDataManager sharedGlobalDataManager].reversePlistKeys, self.mCurrentPage);
+    contentViewController = [[ContentViewController alloc] initWithNibName:@"ContentViewController" bundle:nil];
+    //---   test by hkkwon
+    //contentViewController = [contentArray objectAtIndex:index];
+    contentViewController.mContentString =[NSString stringWithFormat:@"Page %d",index];
+    
+    //---   앨범 표지의 다음 페이지부터는 해당 plist data를 contentviewcontroller에게 넘긴다.
+    if (index != 0){
+        if (index == 1){
+            [contentViewController setAfterDeveloping:_afterDeveloping];
+            _afterDeveloping = NO;
+        }
+                
+        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:index-1]]];
+        
+        
+        //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
+    }
+    //-------------------------------------------------------------------------------------------
+    
+    //if (self.mCurrentPage != 0)
+    if (index != 0)
+        self.navigationItem.rightBarButtonItem = barButtonItem;
+    else
+        self.navigationItem.rightBarButtonItem = nil;
+    
+    return contentViewController;
+}
+
 
 // UIPageViewController Delegate 함수들.
 /*
@@ -199,7 +239,6 @@
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
-    NSLog(@"111");
     if (pageIsAnimating)
         return nil;
     
@@ -214,7 +253,6 @@
 - (UIViewController *)pageViewController:
 (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSLog(@"222");
     if (pageIsAnimating)
         return nil;
     
@@ -223,6 +261,7 @@
     }
     
     pageDirect = DIRECT_FORWARD;
+    
     return [self viewControllerAtIndex:self.mCurrentPage+1];
 }
 
@@ -234,7 +273,7 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    NSLog(@"currentPage = %d",self.mCurrentPage);
+    //NSLog(@"currentPage = %d",self.mCurrentPage);
     NSLog(@"finidhsed = %s, completed = %s", (finished) ? "YES" : "NO", (completed) ? "YES" : "NO");
     
     if (completed == YES) {
