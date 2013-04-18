@@ -39,13 +39,13 @@
     // Do any additional setup after loading the view from its nib.
     
     /*
-    if (self.loadPlistFile == YES){
-        self.mCurrentPage = 0;
-        self.mMaxPage = photoInfoList.persistList.count + 1;
-    } else{
-        self.mCurrentPage = 0;
-        self.mMaxPage = photoInfoList.persistList.count + 1;
-    }
+     if (self.loadPlistFile == YES){
+     self.mCurrentPage = 0;
+     self.mMaxPage = photoInfoList.persistList.count + 1;
+     } else{
+     self.mCurrentPage = 0;
+     self.mMaxPage = photoInfoList.persistList.count + 1;
+     }
      */
     NSLog(@"plist = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
     self.mCurrentPage = 0;
@@ -53,7 +53,7 @@
     
     // Detail View에서 Page View 로 돌아왔을때 key 값이 다르면 사진이 삭제되었다고 판단한다.
     mReverseKey = [[NSMutableArray alloc] initWithArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
-
+    
     // Page Option 설정.
     NSDictionary *options =
     [NSDictionary dictionaryWithObject:
@@ -68,6 +68,7 @@
     
     self.mPageViewController.dataSource = self;
     self.mPageViewController.delegate = self;
+    //self.mPageViewController.doubleSided = YES;
     self.mPageViewController.view.frame = self.view.bounds;
     
     initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
@@ -108,11 +109,11 @@
         mReverseKey = [[NSMutableArray alloc] initWithArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
         [mReverseKey setArray:[GlobalDataManager sharedGlobalDataManager].reversePlistKeys];
         NSLog(@"mReverseKey = %@", mReverseKey);
-    
+        
         [contentViewController contentPhotoAnimatingAfterDelete];
         [self performSelector:@selector(viewUpdateAfterDelete) withObject:self afterDelay:1.5f];
     }
-
+    
     //[self startNaviThread];
 }
 
@@ -145,8 +146,12 @@
             [contentViewController setAfterDeveloping:_afterDeveloping];
             _afterDeveloping = NO;
         }
-
-        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+        
+        /*
+         contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1]]];
+         */
+        contentViewController.currentPagePlistData = [[NSMutableArray alloc] initWithArray:[[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList] objectForKey:[[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:index-1]]];
+        
         
         //NSLog(@"self.plist = %@", contentViewController.currentPagePlistData);
     }
@@ -161,48 +166,98 @@
 }
 
 // UIPageViewController Delegate 함수들.
+/*
+ - (UIViewController *)pageViewController:
+ (UIPageViewController *)pageViewController viewControllerBeforeViewController:
+ (UIViewController *)viewController
+ {
+ NSLog(@"111");
+ pageDirect = DIRECT_BACKWARD;
+ if (self.mCurrentPage == 0) {
+ return nil;
+ }
+ 
+ self.mCurrentPage--;
+ return [self viewControllerAtIndex:self.mCurrentPage];
+ }
+ 
+ - (UIViewController *)pageViewController:
+ (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+ {
+ NSLog(@"222");
+ pageDirect = DIRECT_FORWARD;
+ 
+ if (self.mCurrentPage >= self.mMaxPage -1) {
+ return nil;
+ }
+ 
+ self.mCurrentPage++;
+ return [self viewControllerAtIndex:self.mCurrentPage];
+ }
+ */
 - (UIViewController *)pageViewController:
 (UIPageViewController *)pageViewController viewControllerBeforeViewController:
 (UIViewController *)viewController
 {
-    pageDirect = DIRECT_BACKWARD;
- 
+    NSLog(@"111");
+    if (pageIsAnimating)
+        return nil;
+    
     if (self.mCurrentPage == 0) {
         return nil;
     }
- 
-    self.mCurrentPage--;     
-    return [self viewControllerAtIndex:self.mCurrentPage];
+    
+    pageDirect = DIRECT_BACKWARD;
+    return [self viewControllerAtIndex:self.mCurrentPage-1];
 }
 
 - (UIViewController *)pageViewController:
 (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    pageDirect = DIRECT_FORWARD;
+    NSLog(@"222");
+    if (pageIsAnimating)
+        return nil;
     
     if (self.mCurrentPage >= self.mMaxPage -1) {
         return nil;
     }
+    
+    pageDirect = DIRECT_FORWARD;
+    return [self viewControllerAtIndex:self.mCurrentPage+1];
+}
 
-    self.mCurrentPage++;  
-    return [self viewControllerAtIndex:self.mCurrentPage];
 
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+    pageIsAnimating = YES;
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    if (completed == NO) {
+    NSLog(@"currentPage = %d",self.mCurrentPage);
+    NSLog(@"finidhsed = %s, completed = %s", (finished) ? "YES" : "NO", (completed) ? "YES" : "NO");
+    
+    if (completed == YES) {
         if (pageDirect == DIRECT_FORWARD){
-            self.mCurrentPage--;
-        } else if (pageDirect == DIRECT_BACKWARD){
+            if (self.mCurrentPage >= self.mMaxPage -1) {
+                return;
+            }
             self.mCurrentPage++;
+        } else if (pageDirect == DIRECT_BACKWARD){
+            if (self.mCurrentPage == 0){
+                return;
+            }
+            self.mCurrentPage--;
         }
-        contentViewController = [pageViewController.viewControllers lastObject];        
     } else{
-        NSLog(@"complet yes");
+        initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
+        NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
+        
+        [self.mPageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
     }
-
-    NSLog(@"mmCur = %d", self.mCurrentPage);
+    
+    if (completed || finished)
+        pageIsAnimating = NO;    
 }
 
 
@@ -219,7 +274,7 @@
 }
 
 - (void) rightBarButtonPressed:(id)sender
-{    
+{
     VenusAlbumDetailViewController *venusAlbumDetailView = [[VenusAlbumDetailViewController alloc] initWithNibName:@"VenusAlbumDetailViewController" bundle:nil];
     
     NSString *selectedKey = [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys objectAtIndex:self.mCurrentPage-1];
@@ -228,7 +283,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController pushViewController:venusAlbumDetailView animated:NO];
-
+    
     // 네비게이션 스택 Push에 transition animation
     [UIView beginAnimations:@"anotheranimation" context:nil];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
@@ -240,7 +295,7 @@
 
 #pragma jecnclad
 - (void)viewUpdateAfterDelete
-{    
+{
     self.mCurrentPage = self.mCurrentPage - 1;
     initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
@@ -251,8 +306,8 @@
 
 - (void)viewAlbumPageAfterDeveloping
 {
-    self.mCurrentPage = 1;
-    initialViewController = [self viewControllerAtIndex:1];
+    self.mCurrentPage++;
+    initialViewController = [self viewControllerAtIndex:self.mCurrentPage];
     
     [self.mPageViewController setViewControllers:[NSArray arrayWithObject:initialViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }

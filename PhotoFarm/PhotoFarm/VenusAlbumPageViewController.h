@@ -12,7 +12,8 @@
 typedef enum {
     DIRECT_FORWARD,
     DIRECT_BACKWARD,
-} _direct;
+}_direction;
+
 
 @interface VenusAlbumPageViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>{
     UIPageViewController* _mPageViewController;
@@ -25,6 +26,7 @@ typedef enum {
     NSMutableArray *mReverseKey;
     UIBarButtonItem *barButtonItem;
     NSUInteger pageDirect;
+    BOOL pageIsAnimating;
 }
 @property (nonatomic, strong) UIPageViewController* mPageViewController;
 @property (nonatomic) int mCurrentPage;
