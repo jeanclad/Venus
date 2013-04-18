@@ -213,8 +213,6 @@
     
     if (self.navigationController.isNavigationBarHidden){
         [self.navigationController setNavigationBarHidden:NO animated:YES];
-        
-        [self performSelector:@selector(setHiddenNavBar) withObject:nil afterDelay:3.0f];
     }
     else{
         [self.navigationController setNavigationBarHidden:YES animated:YES];

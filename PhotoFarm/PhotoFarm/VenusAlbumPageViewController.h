@@ -24,7 +24,7 @@ typedef enum {
     ContentViewController *initialViewController;
     ContentViewController *contentViewController;
     //---   test by hkkwon
-    NSMutableArray  *contentArray;
+    //NSMutableArray  *contentArray;
     NSMutableArray *mReverseKey;
     UIBarButtonItem *barButtonItem;
     NSUInteger pageDirect;

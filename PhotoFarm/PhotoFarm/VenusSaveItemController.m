@@ -30,8 +30,8 @@
     //NSLog(@"%@",dateString);
 
     NSString *itemName = [NSString stringWithFormat:@"Venus_Paper_%@", dateString];
-    NSString *preloadPaperFileName = [NSString stringWithFormat:@"Venus_Paper_%@.png", dateString];
-    NSString *preloadPaperlessFileName = [NSString stringWithFormat:@"Venus_Paperless_%@.png", dateString];
+    NSString *preloadPaperFileName = [NSString stringWithFormat:@"Venus_Paper_%@.jpg", dateString];
+    NSString *preloadPaperlessFileName = [NSString stringWithFormat:@"Venus_Paperless_%@.jpg", dateString];
     
     NSDictionary *retFileName = [NSDictionary dictionaryWithObjectsAndKeys:itemName, KEY_ITEM_NAME, preloadPaperFileName, KEY_PAPER_FILE_NAME, preloadPaperlessFileName, KEY_PAPERLESS_FILE_NAME, nil];
 
@@ -128,7 +128,8 @@
     NSString *cachesDirectory = [paths objectAtIndex:0];
     NSString *filePath = [cachesDirectory stringByAppendingPathComponent:fileName];
     UIImage *image = photoImage;
-    NSData *saveImageData = UIImagePNGRepresentation(image);
+    //NSData *saveImageData = UIImagePNGRepresentation(image);
+    NSData *saveImageData = UIImageJPEGRepresentation(image, 1.0f);
     [saveImageData writeToFile:filePath atomically:NO];
 }
 

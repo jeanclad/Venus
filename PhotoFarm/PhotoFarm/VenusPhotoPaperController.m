@@ -258,14 +258,14 @@
         int yGap = (image.size.height - image.size.width)/2;
         rcCrop = CGRectMake(0.0, yGap, image.size.width, image.size.width);
     }
-        
+    
     CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], rcCrop);
     UIImage* cropImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     if (bOnlyCrop)
         return cropImage;
-    
-    NSData* dataCrop = UIImagePNGRepresentation(cropImage);
+    //NSData* dataCrop = UIImagePNGRepresentation(cropImage);
+    NSData* dataCrop = UIImageJPEGRepresentation(cropImage, 1.0f);
     UIImage* imgResize = [[UIImage alloc] initWithData:dataCrop];
     
     UIGraphicsBeginImageContext(CGSizeMake(size,size));
