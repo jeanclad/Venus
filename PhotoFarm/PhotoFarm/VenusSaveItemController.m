@@ -119,7 +119,7 @@
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
     
-    NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
+    //NSLog(@"persistList_load = %@", [[GlobalDataManager sharedGlobalDataManager].photoInfoFileList persistList]);
 }
 
 - (void)writeToCacheImageFile:(UIImage *)photoImage fileName:(NSString*)fileName
@@ -212,7 +212,7 @@
         
         //---   plist를 맨 마지막 저장된 것이 맨 처음 인덱스로 오도록 역순으로 sorting 한다.
         NSArray *allKeys = [[NSArray alloc] initWithArray:[[GlobalDataManager sharedGlobalDataManager].photoInfoFileList.persistList allKeys]];
-        NSLog(@"Allkeys = %@", allKeys);
+        //NSLog(@"Allkeys = %@", allKeys);
         
         NSArray *tmpArray = [[NSArray alloc] initWithArray:allKeys];
         
@@ -229,7 +229,7 @@
             [[GlobalDataManager sharedGlobalDataManager].reversePlistKeys addObject:tmpString];
         }
         
-        NSLog(@"dictAllKeys = %@", [GlobalDataManager sharedGlobalDataManager].reversePlistKeys);
+        //NSLog(@"dictAllKeys = %@", [GlobalDataManager sharedGlobalDataManager].reversePlistKeys);
         
         //--- Debug Code
         //for (int i = 0; i < allKeys.count; i++){

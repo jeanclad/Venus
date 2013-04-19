@@ -60,6 +60,7 @@
     UIView      *developingImageView;
     UIImageView *developingPhotoImageView;
     UIImageView *developingPaperImageView;
+    UIImageView *safeLightMaskImageView;
     
     //---   Scroll View
     VenusScroll *paperScrollView;

@@ -58,6 +58,16 @@
     //---   사진, 용지 이미지 관리 클래스 초기화
     venusPhotoPaperController = [[VenusPhotoPaperController alloc] init];
     
+    /*---   Light-Off시 SelectButton의 붉은색 마스크 이미지
+    CGRect safeLightViewFrame = CGRectMake(0, 0, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH);
+    safeLightMaskImageView = [[UIImageView alloc] initWithFrame:safeLightViewFrame];
+    UIImage *safeLightImage = [UIImage imageNamed:@"02_safe_light.png"];
+    safeLightMaskImageView.image = safeLightImage;
+    safeLightMaskImageView.center = CGPointMake(w/2, h/2-20);
+    [safeLightMaskImageView setHidden:YES];
+    [self.MainView addSubview:safeLightMaskImageView];
+     */
+
     //---   Select to touch an image 버튼
     firstNotSelectedButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     firstNotSelectedButton.frame = CGRectMake(0, 0, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT);
@@ -204,7 +214,16 @@
     devleopingProgress.frame = CGRectMake(20, 170, 160, 0);
     [devleopingProgress setHidden:YES];
     [developingImageView addSubview:devleopingProgress];
-
+    
+    //---   Light-Off시 SelectButton의 붉은색 마스크 이미지
+    CGRect safeLightViewFrame = CGRectMake(0, 0, 480, 320);
+    safeLightMaskImageView = [[UIImageView alloc] initWithFrame:safeLightViewFrame];
+    UIImage *safeLightImage = [UIImage imageNamed:@"02_safe_light.png"];
+    safeLightMaskImageView.image = safeLightImage;
+    [safeLightMaskImageView setAlpha:0.0f];
+    [self.MainView addSubview:safeLightMaskImageView];
+    [self.selectView addSubview:safeLightMaskImageView];
+    
     //---   아이템 임시 저장 클래스 초기화
     venusSaveItemController = [[VenusSaveItemController alloc] init];
     
@@ -232,7 +251,10 @@
     
     // Will Edit to button position
     [self setAsset:(ALAsset *)[GlobalDataManager sharedGlobalDataManager].selectedAssets];
+
     
+    //---   Light-On시 알파값을 낮게 조정했기 때문에 알팍값을 롤백해야 함
+    [selectedButton setAlpha:1.0f];
     if ((asset != nil) || (firstSelect == YES)){
         if (asset != nil){
             ALAssetRepresentation *assetRepresentation = [asset defaultRepresentation];
@@ -661,7 +683,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                             secondPinceeteImageView.frame = CGRectMake(secondPinceeteImageView.frame.origin.x + movePincetteXpos, secondPinceeteImageView.frame.origin.y, secondPinceeteImageView.frame.size.width, secondPinceeteImageView.frame.size.height);
                                                                                                             
                                                                                                         }completion:^(BOOL finished) {
-                                                                                                            /* test by hkkwon
+                                                                                                            ///* test by hkkwon
                                                                                                             //---   가속도 센서 설정
                                                                                                             if (motionManager == nil){
                                                                                                                 motionManager = [[CMMotionManager alloc] init];
@@ -689,8 +711,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
                                                                                                                                             withObject:nil waitUntilDone:NO];
                                                                                                                  }];
                                                                                                             }
-                                                                                                             */
-                                                                                                            [self setDevelopingComplete];
+                                                                                                             //*/
+                                                                                                            //[self setDevelopingComplete];
                                                                                                         }];
                                                                                    }];
                                                                   
@@ -763,6 +785,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 - (void)setDevelopingComplete
 {
     [devleopingProgress setHidden:YES];
+    [safeLightMaskImageView setAlpha:0.0f];
     [waterImageView setAlpha:0.0f];
     [darkRoomOnSteelImageView setHidden:YES];
     [darkRoomOffSteelImageView setHidden:NO];
@@ -1044,6 +1067,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
 - (void)setLightOnAnimation
 {
+    NSLog(@"Bbb");
     UIImage *image = nil;
     
     image = [UIImage imageNamed:@"lamp_on_ip4.png"];
@@ -1062,6 +1086,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [self.room setAlpha:0.3];
     [self.bigSteel setAlpha:0.3];
     
+    //--    사진 및 마스크 이미지 알파 초기값 낮게 조정
+    [selectedButton setAlpha:0.3f];
+    [safeLightMaskImageView setAlpha:0.0f];
+    NSLog(@"ccc");
+    
     //---   Dark Room In Use 네온사인만 먼저 On 시키고 나머지 아이템은 애니메이션 처리함
     [UIView beginAnimations:@"SwitchOff" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
@@ -1072,6 +1101,16 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [self.lamp setAlpha:1];
     [self.room setAlpha:1];
     [self.bigSteel setAlpha:1];
+    
+    //---   사진 및 마스크 이미지 알파 값 적용
+    [safeLightMaskImageView setAlpha:0.5f];
+    /*
+    CGImageRef cgImage = [venusPhotoPaperController.mainPreviewPhotoImage CGImage];
+    UIImage *duplicatedImage = [[UIImage alloc] initWithCGImage:cgImage];
+    [duplicatedImage drawInRect:CGRectMake(0, 0, PREVIEW_NO_MOVE_FRAME_SIZE_WIDTH, PREVIEW_NO_MOVE_FRAME_SIZE_HEIGHT) blendMode:kCGBlendModeColorBurn alpha:1.0];
+    [selectedButton setImage:duplicatedImage forState:UIControlStateNormal];
+    [selectedButton setAlpha:1.0];
+     */
     
     [UIView commitAnimations];
 }
@@ -1358,7 +1397,9 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
             [darkRoomOnSteelImageView setHidden:NO];
             
             [self.lightButton setImage:[UIImage imageNamed:@"switch_on_ip4.png"] forState:UIControlStateNormal];
+            NSLog(@"111");
             [self setHiddenRootItem:YES];
+            NSLog(@"222");
             [self setLightOnAnimation];
             [chemicalContentView setHidden:YES];
             
